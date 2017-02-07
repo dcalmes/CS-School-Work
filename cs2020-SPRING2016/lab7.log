@@ -1,0 +1,370 @@
+Script started on Mon Apr 11 20:58:35 2016
+sh-4.3$ ls -l
+total 538
+-rwxr-xr-x   1 dcalmes  ics2020    11156 Apr 11 19:38 a.out
+-rw-rwx---   1 dcalmes  ics2020     4073 Mar 14 09:29 lab1.cpp
+-rw-rwx---   1 dcalmes  ics2020     6188 Mar 14 09:31 lab1.log
+-rw-rwx---   1 dcalmes  ics2020     4784 Mar 25 13:33 lab2.cpp
+-rw-rwx---   1 dcalmes  ics2020     8842 Mar 25 16:20 lab2.log
+-rw-rwx---   1 dcalmes  ics2020     7472 Mar 19 16:57 lab3.cpp
+-rw-rwx---   1 dcalmes  ics2020    14262 Mar 20 18:54 lab3.log
+-rw-rwx---   1 dcalmes  ics2020      626 Jan 29  2013 lab3.txt
+-rw-rwx---   1 dcalmes  ics2020     7109 Feb 24 18:47 lab4.cpp
+-rw-rwx---   1 dcalmes  ics2020    13304 Feb 24 18:53 lab4.log
+-rw-rwx---   1 dcalmes  ics2020      400 Feb 24 17:56 lab4.txt
+-rw-rwx---   1 dcalmes  ics2020     5645 Mar  2 18:51 lab5.cpp
+-rw-rwx---   1 dcalmes  ics2020    10026 Mar  2 18:54 lab5.log
+-rw-rwx---   1 dcalmes  ics2020      315 Mar  2 14:40 lab5.txt
+-rw-rwx---   1 dcalmes  ics2020    11354 Mar 23 21:27 lab6.cpp
+-rw-rwx---   1 dcalmes  ics2020    20495 Mar 23 21:29 lab6.log
+-rw-rwx---   1 dcalmes  ics2020     1937 Mar 23 21:18 lab6H.h
+-rw-rwx---   1 dcalmes  ics2020     2408 Mar 23 21:27 lab6client.cpp
+-rw-r--r--   1 dcalmes  ics2020     3969 Apr 11 20:56 lab7.cpp
+-rw-r--r--   1 dcalmes  ics2020      834 Apr 11 20:56 lab7.h
+-rw-r--r--   1 dcalmes  user           0 Apr 11 20:58 lab7.log
+-rw-r--r--   1 dcalmes  ics2020     1572 Apr 11 20:56 lab7client.cpp
+lrwxrwxrwx   1 dcalmes  ics2020       24 Feb  5 16:39 lib -> /home/classes/cs2020/Lib
+-rw-rwx---   1 dcalmes  ics2020    12117 Mar 16 02:15 prog1.cpp
+-rw-rwx---   1 dcalmes  ics2020    18769 Mar 16 02:34 prog1.log
+-rw-rwx---   1 dcalmes  ics2020      400 Jan  1  2015 prog1.txt
+-rw-rwx---   1 dcalmes  ics2020    11371 Mar 25 16:10 prog2.cpp
+-rw-rwx---   1 dcalmes  ics2020    17551 Mar 25 16:14 prog2.log
+-rw-rwx---   1 dcalmes  ics2020      937 Mar 16 18:31 prog2.txt
+-rw-rwx---   1 dcalmes  ics2020     6668 Feb 23 20:06 prog3.cpp
+-rw-rwx---   1 dcalmes  ics2020     9502 Feb 19 20:20 prog3.log
+-rw-rwx---   1 dcalmes  ics2020      259 Jan  1  2015 prog3.txt
+-rw-rwx---   1 dcalmes  ics2020     4374 Mar 24 18:47 prog5.cpp
+-rw-rwx---   1 dcalmes  ics2020     1089 Mar 24 18:55 prog5.h
+-rw-rwx---   1 dcalmes  ics2020    14447 Mar 24 19:03 prog5.log
+-rw-rwx---   1 dcalmes  ics2020     2036 Mar 24 18:47 prog5client.cpp
+-rw-r--r--   1 dcalmes  ics2020     3729 Apr 11 19:33 prog6.cpp
+-rw-r--r--   1 dcalmes  ics2020     1413 Apr 11 19:33 prog6.h
+-rw-r--r--   1 dcalmes  user       11281 Apr 11 19:38 prog6.log
+-rw-r--r--   1 dcalmes  ics2020     1435 Apr 11 19:33 prog6client.cpp
+-rw-rwx---   1 dcalmes  ics2020       54 Mar 14 09:10 sample.txt
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat lab7.h
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 7
+// Purpose:             This labs purpose is to tell time, add time, and alter time
+// Author:              Douglas Calmes
+// Class:               CS 2020-3
+// Semester:    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef TIME_H
+#define TIME_H
+#include <iostream>
+
+class Time
+{
+private:
+        int hour;
+        int minute;
+
+public:
+        //      Constructors
+        Time() { hour = 0; minute = 0; }        //      Default constructor
+        Time(int hour, int minute);
+
+        //      Mutators
+        void setTime(int hour, int minute);
+        void addOneMinute();
+
+        //      Accessors
+        int getHour(){ return hour; }           //      Get the hour
+        void display();
+
+        //overloaded operators
+        Time operator+ (const Time &) const;
+        bool operator==(const Time &) const;
+};
+
+#endifsh-4.3$ cat lab7.cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 7
+// Purpose:             This labs purpose is to tell time, add time, and alter time
+// Author:              Douglas Calmes
+// Class:               CS 2020-3
+// Semester:    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include "lab7.h"
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    addOneMinute
+// Description: Adds one minute to the time
+// Programmer:  Douglas Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  None
+// Returns:             None
+//////////////////////////////////////////////////////////////////////////////
+
+void Time::addOneMinute()
+{
+        minute++;
+        if (minute == 60)
+        {
+                hour++;
+                minute = 0;
+                if (hour == 24)
+                {
+                        hour = 0;
+                }
+        }
+
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    operator+
+// Description: Adds two time objects together
+// Programmer:  Douglas Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  ExtraTime-      Time added
+// Returns:             Temp-           New Time
+//////////////////////////////////////////////////////////////////////////////
+
+Time Time::operator+ (const Time & ExtraTime) const
+{
+        Time Temp;
+        Temp.hour = hour + ExtraTime.hour;
+        Temp.minute = minute + ExtraTime.minute;
+        return Temp;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    operator==
+// Description: Check to see if the times are equal
+// Programmer:  Douglas Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  ExtraTime-      Time added
+// Returns:             true-           if bool is true
+//                              false-          if bool is false
+//////////////////////////////////////////////////////////////////////////////
+
+bool Time::operator==(const Time & ExtraTime) const
+{
+        if (hour == ExtraTime.hour && minute == ExtraTime.minute)
+        {
+                return true;
+        }
+        else return false;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    display
+// Description: Display the time for each Time variable
+// Programmer:  Douglas Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  None
+// Returns:             None
+//////////////////////////////////////////////////////////////////////////////
+
+void Time::display()
+{
+        if (hour < 10 && minute < 10)
+        {
+                std::cout << "0" << hour << ":" << "0" << minute << std::endl;
+        }
+        else if (hour >= 10 && minute < 10)
+        {
+                std::cout << hour << ":" << "0" << minute << std::endl;
+        }
+        else if (hour < 10 && minute >= 10)
+        {
+                std::cout << "0" << hour << ":" << minute << std::endl;
+        }
+        else
+        {
+                std::cout << hour << ":" << minute << std::endl;
+        }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    setTime
+// Description: Set the Time, check to see if they are within legal limits!
+// Programmer:  Douglas Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  hour-   the number of hours
+//                              minute- the number of minutes
+// Returns:             None
+//////////////////////////////////////////////////////////////////////////////
+
+void Time::setTime(int hour, int minute)
+{
+        if (hour <= 23 && hour >= 0 && minute <= 59 && minute >= 0)
+        {
+                this->hour = hour;
+                this->minute = minute;
+        }
+        else
+        {
+                this->minute = 0;
+                this->hour = 0;
+        }
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    Time
+// Description: This is the overloaded constructor for Time
+// Programmer:  Douglas Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  hour-   the number of hours
+//                              minute- the number of minutes
+// Returns:             None
+//////////////////////////////////////////////////////////////////////////////
+
+Time::Time(int hour, int minute)
+{
+        if (hour <= 23 && hour >= 0 && minute <= 59 && minute >= 0)
+        {
+                this->hour = hour;
+                this->minute = minute;
+        }
+        else
+        {
+                this->minute = 0;
+                this->hour = 0;
+        }
+}sh-4.3$ cat lab7client.cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 7
+// Purpose:             This labs purpose is to tell time, add time, and alter time
+// Author:              Douglas Calmes
+// Class:               CS 2020-3
+// Semester:    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include "lab7.h"
+#include <iomanip>
+
+using namespace std;
+
+int main()
+{
+        Time FreeTime;
+        Time WrongTime(25, 45);
+        Time BGTime(7, 30);
+        int minute;
+        int hour;
+
+        //      Display the different times
+        cout << setw(20) << "Free time: ";
+        FreeTime.display();
+        cout << endl;
+        cout << setw(20) << "Wrong time: ";
+        WrongTime.display();
+        cout << endl;
+        cout << setw(20) << "BG time: ";
+        BGTime.display();
+        cout << endl;
+
+        //      Have user enter their free time in HH MM
+        cout << "Enter your free time as HH and MM: ";
+        cin >> hour >> minute;
+        cout << endl;
+
+        //      Set free time and display
+        FreeTime.setTime(hour, minute);
+        cout << setw(20) << "Free time: ";
+        FreeTime.display();
+        cout << endl;
+
+        //      Loop to add on to free time
+        for (int i = 0; i < 150; i++)
+        {
+                FreeTime.addOneMinute();
+        }
+
+        //      Re display free time
+        cout << setw(20) << "Free time: ";
+        FreeTime.display();
+        cout << endl;
+
+        //      Set and display extra time
+        Time ExtraTime(1, 15);
+        FreeTime = FreeTime + ExtraTime;
+        cout << setw(20) << "Free time: ";
+        FreeTime.display();
+        cout << endl;
+
+        cout << "Is FreeTime equal to ExtraTime? 1(Yes) 0 (No): " << (FreeTime == ExtraTime) << endl;
+
+        system("pause");
+        return 0;
+
+}sh-4.3$ g++ lab7.cpp lab7client.cpp
+sh-4.3$ a.out
+         Free time: 00:00
+
+        Wrong time: 00:00
+
+           BG time: 07:30
+
+Enter your free time as HH and MM: 9 35
+
+         Free time: 09:35
+
+         Free time: 12:05
+
+         Free time: 13:20
+
+Is FreeTime equal to ExtraTime? 1(Yes) 0 (No): 0
+sh: pause: not found
+sh-4.3$ a.out
+         Free time: 00:00
+
+        Wrong time: 00:00
+
+           BG time: 07:30
+
+Enter your free time as HH and MM: 1 45
+
+         Free time: 01:45
+
+         Free time: 04:15
+
+         Free time: 05:30
+
+Is FreeTime equal to ExtraTime? 1(Yes) 0 (No): 0
+sh: pause: not found
+sh-4.3$ a.out
+         Free time: 00:00
+
+        Wrong time: 00:00
+
+           BG time: 07:30
+
+Enter your free time as HH and MM: -1 20
+
+         Free time: 00:00
+
+         Free time: 02:30
+
+         Free time: 03:45
+
+Is FreeTime equal to ExtraTime? 1(Yes) 0 (No): 0
+sh: pause: not found
+sh-4.3$ a.out
+         Free time: 00:00
+
+        Wrong time: 00:00
+
+           BG time: 07:30
+
+Enter your free time as HH and MM: 2 -15
+
+         Free time: 00:00
+
+         Free time: 02:30
+
+         Free time: 03:45
+
+Is FreeTime equal to ExtraTime? 1(Yes) 0 (No): 0
+sh: pause: not found
+sh-4.3$ exit
+exit
+
+script done on Mon Apr 11 21:00:43 2016

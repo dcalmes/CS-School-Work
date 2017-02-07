@@ -1,0 +1,41 @@
+// Douglas G Calmes	CS2170-2 11:30	  proj6b
+// The purpose of this program is that it will call
+// a subroutine to compute the exclusive OR of
+// two values.  It will do this by using the
+// formula of (A'B)'  (AB')'
+
+		ORG	100	// Origin at 100
+		ENTRY	XOR	// Name of project
+		BSA	FLIP	// Branch to FLIP (save address)
+		STA	RSLT	// Store final result
+		DMP		// Dump
+		HLT		// HALT computer
+		END		// End the project
+		
+	FLIP,	HEX	0	// Start FLIP subroutine
+		LDA	OP1	// Load OP1 into the AC
+		CMA		// Compliment the AC
+		STA	OP1P	// Store the result in OP1P
+		LDA	OP2	// Load OP2 into the AC
+		AND	OP1P	// And OP2 with OP1P
+		CMA		// Compliment these two for (A'B)'
+		STA	XOR1	// Store these results in XOR1
+		LDA	OP2	// Load OP2 inot the AC
+		CMA		// Compliment the AC
+		STA	OP2P	// Store the result in OP2P
+		LDA	OP1	// Load OP1 into the AC
+		AND	OP2P	// And OP1 with OP2P
+		CMA		// Compliment these two for (AB')'
+		STA	XOR2	// Store these results in XOR2
+		LDA	XOR1	// Load XOR2 into the AC
+		AND	XOR2	// And XOR2 with XOR1
+		CMA		// Compliment these results for A XOR B
+		BUN	FLIP I	// Branch back to FLIP I address
+	
+	OP1,	HEX	A9B4	// Value of "A"
+	OP2,	HEX	38CF	// Value of "B"
+	OP1P,	HEX	0000	// Compliment of "A"
+	OP2P,	HEX	0000	// Compliment of "B"
+	XOR1,	HEX	0000	// Value of (A'B)'
+	XOR2,	HEX	0000	// Value of (AB')'
+	RSLT,	HEX	0000	// Final Result of A XOR B

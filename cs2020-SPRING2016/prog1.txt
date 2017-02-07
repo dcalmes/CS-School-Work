@@ -1,0 +1,52 @@
+Zip Drive
+89
+Warehouse C
+75.89
+Keyboard
+133
+Warehouse C
+25.95
+Blu Ray
+54
+Warehouse J
+34.87
+Iphone
+110
+Warehouse M
+209.93
+Ipod
+174
+Warehouse M
+180.99
+DVD Player
+85
+Warehouse J
+124.91
+Heat Sink
+157
+Warehouse C
+138.45
+Ext Drive
+245
+Warehouse C
+152.87
+Speakers
+187
+Warehouse J
+163.55
+Camera
+147
+Warehouse J
+138.97
+SD Card
+100
+Warehouse C
+18.87
+Router
+148
+Warehouse C
+115.28
+Printer
+125
+Warehouse M
+145.87

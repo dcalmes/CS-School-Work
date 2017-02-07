@@ -1,0 +1,25 @@
+// Douglas Calmes	CS2170-2 11:30		Lab 6b
+// This program will double the values of an array.
+//	This current Array will have 5 elements
+
+		ORG	100	// Origin is at 100
+		ENTRY	DOUBLE	// Name of lab entry
+	ADD2,	LDA	PTR I	// ADD2 Branch Location. Load PTR
+		CLE		// Clear E
+		CIL		// Double the value in array
+		STA	PTR I	// Store the doubled value
+		LDA	PTR	// Load the address of PTR
+		INC		// Incrementing PTR to get to next value
+		STA	PTR	// Store the new address
+		ISZ	CTR	// Skip next line once CTR is 0
+		BUN	ADD2	// Branch to ADD2 (next double iteration)
+		DMP		// Dump
+		HLT		// Hault lab
+		END		// End lab
+	CTR,	DEC	-5	// Signifies the loop will happen 5x
+	PTR,	HEX	'ARY	// Points PTR at the address of ARY
+	ARY,	DEC	4	// Value of first element in ARY
+		DEC	10	// Value of second element in ARY
+		DEC	7	// Value of third element in ARY
+		DEC	3	// Value of fourth element in ARY
+		DEC	18	// Value of fifth element in ARY

@@ -1,0 +1,219 @@
+Script started on Tue Apr 19 17:53:40 2016
+sh-4.3$ pwd
+/home/93/dcalmes/cs217r2
+sh-4.3$ ls -  
+total 76
+-rw-r--r--   1 dcalmes  ics217r2     229 Apr 19 15:44 Proj5a
+-rw-r--r--   1 dcalmes  ics217r2      89 Apr  6 11:33 lab5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.exec
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.obj
+-rw-r--r--   1 dcalmes  ics217r2     642 Apr  6 11:33 lab5a.src
+-rw-r--r--   1 dcalmes  ics217r2      42 Apr  6 11:33 lab5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     131 Apr  6 12:09 lab5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:09 lab5b.exec
+-rw-r--r--   1 dcalmes  user        3644 Apr  6 12:09 lab5b.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:08 lab5b.obj
+-rw-r--r--   1 dcalmes  ics217r2     523 Apr  6 12:07 lab5b.src
+-rw-r--r--   1 dcalmes  ics217r2      69 Apr  6 12:08 lab5b.sym
+lrwxrwxrwx   1 root     ics217r2      25 Apr  6 11:25 lib -> /home/classes/cs217r2/Lib
+-rw-r--r--   1 dcalmes  ics217r2       1 Apr 19 15:17 proj5a
+-rw-r--r--   1 dcalmes  ics217r2     152 Apr 19 16:49 proj5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:49 proj5a.exec
+-rw-r--r--   1 dcalmes  user        6433 Apr 19 16:49 proj5a.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:49 proj5a.obj
+-rw-------   1 dcalmes  ics217r2     208 Apr 19 17:33 proj5a.save
+-rw-r--r--   1 dcalmes  ics217r2    1140 Apr 19 16:48 proj5a.src
+-rw-------   1 dcalmes  ics217r2     252 Apr 19 15:56 proj5a.src.save
+-rw-r--r--   1 dcalmes  ics217r2      80 Apr 19 16:49 proj5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     101 Apr 19 17:38 proj5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr 19 17:38 proj5b.exec
+-rw-r--r--   1 dcalmes  user           0 Apr 19 17:53 proj5b.log
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr 19 17:38 proj5b.obj
+-rw-r--r--   1 dcalmes  ics217r2    1163 Apr 19 17:53 proj5b.src
+-rw-r--r--   1 dcalmes  ics217r2      63 Apr 19 17:38 proj5b.sym
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat proj5b.src
+/ Douglas Calmes	proj5b        CS2170-2        11:30-12:20
+/ The purpose of this program is to multiply two positive
+/       numbers using the repeated addition method.  For
+/       example, to multiply 5 by 6, the program will
+/       calculate the product by adding 5 six times.
+/               (5 + 5 + 5 + 5 + 5 + 5)
+/       The progam will loop until y = 0.
+
+
+                ORG     100     / Origin of the program is location 100
+                ENTRY   PROJ5b  / Name of the program
+                LDA     y       / Load y into the AC
+        again,  ADD     neg1    / Decrement y by one
+                STA     y       / Store the new value of y
+                LDA     PROD    / Load the product into the AC
+                ADD     x       / Add x into product (until y = 0)
+                STA     PROD    / Store the updated product (final product when y = 0)
+                LDA     y       / Load y into the AC
+                DMP             / Show the result of product each time x is added to it
+                SZA             / Skip next instruction if y = 0 (end of loop)
+                BUN     again   / Branch to again.  This will result in another addition of x into the product.
+                HLT             / Hault the computer
+        x,      DEC     5       / The number you are multiplying
+        y,      DEC     6       / The number you are multiplying by (number of loop iterations)
+        PROD,   DEC     0       / The final product (shown during each completion of the loop)
+        neg1,   DEC     -1      / Decrement variable
+                END             / End program
+sh-4.3$ csos
+[2J[H
+                    Welcome to the csos operating system!
+                               CS 217
+               To see a list of commands type 'help' or '?'
+
+csos: assem proj5b.src
+     / DOUGLAS CALMES	PROJ5B   CS2170-2        11:30-12:20
+     / THE PURPOSE OF THIS PROGRAM IS TO MULTIPLY TWO POSITIVE
+     /  NUMBERS USING THE REPEATED ADDITION METHOD.  FOR
+     /  EXAMPLE, TO MULTIPLY 5 BY 6, THE PROGRAM WILL
+     /  CALCULATE THE PRODUCT BY ADDING 5 SIX TIMES.
+     /          (5 + 5 + 5 + 5 + 5 + 5)
+     /  THE PROGAM WILL LOOP UNTIL Y = 0.
+     
+     
+                ORG     100     / ORIGIN OF THE PROGRAM IS LOCATION 100
+                ENTRY   PROJ5B  / NAME OF THE PROGRAM
+0100            LDA     Y       / LOAD Y INTO THE AC
+0101    AGAIN,  ADD     NEG1    / DECREMENT Y BY ONE
+0102            STA     Y       / STORE THE NEW VALUE OF Y
+0103            LDA     PROD    / LOAD THE PRODUCT INTO THE AC
+0104            ADD     X       / ADD X INTO PRODUCT (UNTIL Y = 0)
+0105            STA     PROD    / STORE THE UPDATED PRODUCT (FINAL PRODUCT WHEN Y = 0)
+0106            LDA     Y       / LOAD Y INTO THE AC
+0107            DMP             / SHOW THE RESULT OF PRODUCT EACH TIME X IS ADDED TO IT
+0108            SZA             / SKIP NEXT INSTRUCTION IF Y = 0 (END OF LOOP)
+0109            BUN     AGAIN   / BRANCH TO AGAIN.  THIS WILL RESULT IN ANOTHER ADDITION OF X INTO THE PRODUCT.
+010a            HLT             / HAULT THE COMPUTER
+010b    X,      DEC     5       / THE NUMBER YOU ARE MULTIPLYING
+010c    Y,      DEC     6       / THE NUMBER YOU ARE MULTIPLYING BY (NUMBER OF LOOP ITERATIONS)
+010d    PROD,   DEC     0       / THE FINAL PRODUCT (SHOWN DURING EACH COMPLETION OF THE LOOP)
+010e    NEG1,   DEC     -1      / DECREMENT VARIABLE
+                END             / END PROGRAM
+
+Symbol Table:
+PROJ5B  0100    1
+AGAIN   0101    0
+X       010b    0
+Y       010c    0
+PROD    010d    0
+NEG1    010e    0
+
+Object code:
+210c 110e 310c 210d 110b 310d 210c f001 
+7004 4101 7001 0005 0006 0000 ffff 0000 
+
+csos: link proj5b.obj
+File to link proj5b.obj
+obj  file name is proj5b.obj
+exec file name is proj5b.exec
+web simulator file name is proj5b.cos
+csos: run proj5b.ecexc    xec
+No input file used, proceeding ...
+
+csos registers:
+   AC = 0005
+   PC = 0108
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: 210c 110e 310c 210d 110b 310d 210c f001 
+0108: 7004 4101 7001 0005 0005 0005 ffff 0000 
+0110: ffff ffff ffff ffff ffff ffff ffff ffff 
+0118: ffff ffff ffff ffff ffff ffff ffff ffff 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos registers:
+   AC = 0004
+   PC = 0108
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: 210c 110e 310c 210d 110b 310d 210c f001 
+0108: 7004 4101 7001 0005 0004 000a ffff 0000 
+0110: ffff ffff ffff ffff ffff ffff ffff ffff 
+0118: ffff ffff ffff ffff ffff ffff ffff ffff 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos registers:
+   AC = 0003
+   PC = 0108
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: 210c 110e 310c 210d 110b 310d 210c f001 
+0108: 7004 4101 7001 0005 0003 000f ffff 0000 
+0110: ffff ffff ffff ffff ffff ffff ffff ffff 
+0118: ffff ffff ffff ffff ffff ffff ffff ffff 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos registers:
+   AC = 0002
+   PC = 0108
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: 210c 110e 310c 210d 110b 310d 210c f001 
+0108: 7004 4101 7001 0005 0002 0014 ffff 0000 
+0110: ffff ffff ffff ffff ffff ffff ffff ffff 
+0118: ffff ffff ffff ffff ffff ffff ffff ffff 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos registers:
+   AC = 0001
+   PC = 0108
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: 210c 110e 310c 210d 110b 310d 210c f001 
+0108: 7004 4101 7001 0005 0001 0019 ffff 0000 
+0110: ffff ffff ffff ffff ffff ffff ffff ffff 
+0118: ffff ffff ffff ffff ffff ffff ffff ffff 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos registers:
+   AC = 0000
+   PC = 0108
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: 210c 110e 310c 210d 110b 310d 210c f001 
+0108: 7004 4101 7001 0005 0000 001e ffff 0000 
+0110: ffff ffff ffff ffff ffff ffff ffff ffff 
+0118: ffff ffff ffff ffff ffff ffff ffff ffff 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos: quit
+sh-4.3$ exit
+exit
+
+script done on Tue Apr 19 17:55:41 2016

@@ -1,0 +1,288 @@
+Script started on Mon Apr 18 14:13:40 2016
+sh-4.3$ ls -l
+total 602
+-rwxr-xr-x   1 dcalmes  ics2020    23244 Apr 18 10:44 a.out
+-rw-rwx---   1 dcalmes  ics2020     4073 Mar 14 09:29 lab1.cpp
+-rw-rwx---   1 dcalmes  ics2020     6188 Mar 14 09:31 lab1.log
+-rw-rwx---   1 dcalmes  ics2020     4784 Mar 25 13:33 lab2.cpp
+-rw-rwx---   1 dcalmes  ics2020     8842 Mar 25 16:20 lab2.log
+-rw-rwx---   1 dcalmes  ics2020     7472 Mar 19 16:57 lab3.cpp
+-rw-rwx---   1 dcalmes  ics2020    14262 Mar 20 18:54 lab3.log
+-rw-rwx---   1 dcalmes  ics2020      626 Jan 29  2013 lab3.txt
+-rw-rwx---   1 dcalmes  ics2020     7109 Feb 24 18:47 lab4.cpp
+-rw-rwx---   1 dcalmes  ics2020    13304 Feb 24 18:53 lab4.log
+-rw-rwx---   1 dcalmes  ics2020      400 Feb 24 17:56 lab4.txt
+-rw-rwx---   1 dcalmes  ics2020     5645 Mar  2 18:51 lab5.cpp
+-rw-rwx---   1 dcalmes  ics2020    10026 Mar  2 18:54 lab5.log
+-rw-rwx---   1 dcalmes  ics2020      315 Mar  2 14:40 lab5.txt
+-rw-rwx---   1 dcalmes  ics2020    11354 Mar 23 21:27 lab6.cpp
+-rw-rwx---   1 dcalmes  ics2020    20495 Mar 23 21:29 lab6.log
+-rw-rwx---   1 dcalmes  ics2020     1937 Mar 23 21:18 lab6H.h
+-rw-rwx---   1 dcalmes  ics2020     2408 Mar 23 21:27 lab6client.cpp
+-rw-rwx---   1 dcalmes  ics2020     3969 Apr 11 20:56 lab7.cpp
+-rw-rwx---   1 dcalmes  ics2020      834 Apr 11 20:56 lab7.h
+-rw-rwx---   1 dcalmes  ics2020    12212 Apr 11 21:00 lab7.log
+-rw-rwx---   1 dcalmes  ics2020     1572 Apr 11 20:56 lab7client.cpp
+-rw-r--r--   1 dcalmes  user           0 Apr 18 14:13 lab8.log
+-rw-r--r--   1 dcalmes  ics2020     1316 Apr 18 14:06 lab8client.cpp
+-rw-r--r--   1 dcalmes  ics2020     1139 Apr 18 14:11 lab8dog.cpp
+-rw-r--r--   1 dcalmes  ics2020      920 Apr 18 14:06 lab8dog.h
+-rw-r--r--   1 dcalmes  ics2020     1917 Apr 18 14:06 lab8show.cpp
+-rw-r--r--   1 dcalmes  ics2020      848 Apr 18 14:06 lab8show.h
+lrwxrwxrwx   1 dcalmes  ics2020       24 Feb  5 16:39 lib -> /home/classes/cs2020/Lib
+-rw-rwx---   1 dcalmes  ics2020    12117 Mar 16 02:15 prog1.cpp
+-rw-rwx---   1 dcalmes  ics2020    18769 Mar 16 02:34 prog1.log
+-rw-rwx---   1 dcalmes  ics2020      400 Jan  1  2015 prog1.txt
+-rw-rwx---   1 dcalmes  ics2020    11371 Mar 25 16:10 prog2.cpp
+-rw-rwx---   1 dcalmes  ics2020    17551 Mar 25 16:14 prog2.log
+-rw-rwx---   1 dcalmes  ics2020      937 Mar 16 18:31 prog2.txt
+-rw-rwx---   1 dcalmes  ics2020     6668 Feb 23 20:06 prog3.cpp
+-rw-rwx---   1 dcalmes  ics2020     9502 Feb 19 20:20 prog3.log
+-rw-rwx---   1 dcalmes  ics2020      259 Jan  1  2015 prog3.txt
+-rw-rwx---   1 dcalmes  ics2020     4374 Mar 24 18:47 prog5.cpp
+-rw-rwx---   1 dcalmes  ics2020     1089 Mar 24 18:55 prog5.h
+-rw-rwx---   1 dcalmes  ics2020    14447 Mar 24 19:03 prog5.log
+-rw-rwx---   1 dcalmes  ics2020     2036 Mar 24 18:47 prog5client.cpp
+-rw-rwx---   1 dcalmes  ics2020     3729 Apr 11 19:33 prog6.cpp
+-rw-rwx---   1 dcalmes  ics2020     1413 Apr 11 19:33 prog6.h
+-rw-rwx---   1 dcalmes  ics2020    11281 Apr 11 19:38 prog6.log
+-rw-rwx---   1 dcalmes  ics2020     1435 Apr 11 19:33 prog6client.cpp
+-rw-rwx---   1 dcalmes  ics2020       54 Mar 14 09:10 sample.txt
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat lab8dog.cpp   h
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 8
+// Purpose:             This Program uses classes and inheritance to display
+//                                              data about Dogs and ShowDogs
+// Author:              Douglas Calmes
+// Class:               CS 2020-3
+// Semester:                    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include<iostream>
+using namespace std;
+
+#ifndef DOG_H
+#define DOG_H
+
+class Dog
+{
+protected:
+        string name;
+        string color;
+        double weight;
+public:
+        //      Constructors
+        Dog() { name = ""; color = ""; weight = 0.0; }  //      Defult constructor
+        Dog(string name, string color, double weight)   //      Overloaded constructor
+        { this->name = name; this->color = color; this->weight = weight; }
+
+        //      Accessors
+        virtual void displayDog(); 
+
+        //      Deconstructor
+        virtual ~Dog() { }
+};
+
+#endif
+#pragma once
+sh-4.3$ cat lab8dog.cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 8
+// Purpose:             This Program uses classes and inheritance to display
+//                                              data about Dogs and ShowDogs
+// Author:              Douglas Calmes
+// Class:               CS 2020-3
+// Semester:                    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include "lab8dog.h"
+#include "lab8show.h"
+#include <iomanip>
+#include <string>
+using namespace std;
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    displayDog
+// Description: This is function displays the Dog name, color, and weight
+// Programmer:  Douglas Calmes
+// Class:       CS 2020, Spring 2016
+// Parameters:  None
+// Returns:     None
+//////////////////////////////////////////////////////////////////////////////
+void Dog::displayDog()
+{
+        cout << left << setw(15) << "Dog's name: " << name << endl;
+        cout << setw(15) << "Dog's color: " << color << endl;
+        cout << setw(15) << "Dog's weight: " << setprecision(2) << weight << endl;
+        cout << fixed;
+}
+sh-4.3$ cat lab8show.h
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 8
+// Purpose:             This Program uses classes and inheritance to display
+//                                              data about Dogs and ShowDogs
+// Author:              Douglas Calmes
+// Class:               CS 2020-3
+// Semester:                    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef SHOWDOG_H
+#define SHOWDOG_H
+#include "lab8dog.h"
+#include <string>
+#include <iostream>
+
+class ShowDog : public Dog      //This class has access to Dog class
+{
+private:
+        int numContest;
+        int contestWon;
+public:
+        //      Constructors
+        ShowDog() { numContest = 0; contestWon = 0; }   // Defult constructor
+        ShowDog(string, string, double, int, int);              // Overloaded constructor
+
+        //      Accessor
+        void displayDog();
+};
+
+#endif
+sh-4.3$ cat lab8show.log   cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 8
+// Purpose:             This Program uses classes and inheritance to display
+//                                              data about Dogs and ShowDogs
+// Author:              Douglas Calmes
+// Class:               CS 2020-3
+// Semester:                    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include "lab8dog.h"
+#include "lab8show.h"
+#include <iomanip>
+#include <string>
+using namespace std;
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    ShowDog
+// Description: This function calls in the Dog overloaded constructor to
+//                              set the name, color, and weight of the ShowDog.  It then
+//                              sets the number of contests entered and won by the ShowDog.
+// Programmer:  Douglas Calmes
+// Class:       CS 2020, Spring 2016
+// Parameters:  None
+// Returns:     None
+//////////////////////////////////////////////////////////////////////////////
+
+ShowDog::ShowDog(string name, string color, double weight, int numContest, int contestWon) :Dog(name, color, weight)
+{
+
+        this->numContest = numContest;
+        this->contestWon = contestWon;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    displayDog
+// Description: This is function calls in the Dog::displayDog function to 
+//                              display the name, color, and weight.  It then displays the
+//                              ShowDog number of contests entered and won
+// Programmer:  Douglas Calmes
+// Class:       CS 2020, Spring 2016
+// Parameters:  None
+// Returns:     None
+//////////////////////////////////////////////////////////////////////////////
+
+void ShowDog::displayDog()
+{
+        Dog::displayDog();
+        cout << name << " was entered in " << numContest << " contests," << endl;
+        cout << name << " won " << contestWon << " of the contests." << endl;
+}sh-4.3$ cat lab8client.cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 8
+// Purpose:             This Program uses classes and inheritance to display
+//                                              data about Dogs and ShowDogs
+// Author:              Douglas Calmes
+// Class:               CS 2020-3
+// Semester:                    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include "lab8dog.h"
+#include "lab8show.h"
+#include <string>
+using namespace std;
+
+int main()
+{
+        //      Declare max array size
+        const int MAX_DOG = 4;
+
+        //      Create array of pointers to Dog & ShowDog
+        Dog * dogList[MAX_DOG];
+
+        //      Setting values to new Dog and ShowDog
+        Dog dog1("Bolt", "White", 20);
+        ShowDog showdog1("Uggie", "Blk/Wht", 30, 3, 1);
+
+        //      Creating our items in our array
+        dogList[0] = new Dog("Bingo", "Tan", 20);
+        dogList[1] = new ShowDog("Beethoven", "Brown", 200, 3, 1);
+        dogList[2] = new ShowDog("Marley", "Yellow", 80, 10, 3);
+        dogList[3] = new  Dog("Fido", "Rust", 50);
+
+        //      Display the dogs that arent in the array
+        dog1.displayDog();
+        cout << endl;
+        showdog1.displayDog();
+        cout << endl;
+
+        //      Loop to display the dogs in the array
+        for (int i = 0; i < MAX_DOG; i++)
+        {
+                dogList[i]->displayDog();
+                cout << endl;
+        }
+
+
+        system("Pause");
+        return 0;
+}sh-4.3$ g++ lab8client.cpp lab8dog.cpp lab8show.cpp
+sh-4.3$ a.out
+Dog's name:    Bolt
+Dog's color:   White
+Dog's weight:  20
+
+Dog's name:    Uggie
+Dog's color:   Blk/Wht
+Dog's weight:  30.00
+Uggie was entered in 3 contests,
+Uggie won 1 of the contests.
+
+Dog's name:    Bingo
+Dog's color:   Tan
+Dog's weight:  20.00
+
+Dog's name:    Beethoven
+Dog's color:   Brown
+Dog's weight:  200.00
+Beethoven was entered in 3 contests,
+Beethoven won 1 of the contests.
+
+Dog's name:    Marley
+Dog's color:   Yellow
+Dog's weight:  80.00
+Marley was entered in 10 contests,
+Marley won 3 of the contests.
+
+Dog's name:    Fido
+Dog's color:   Rust
+Dog's weight:  50.00
+
+sh: Pause: not found
+sh-4.3$ exit
+exit
+
+script done on Mon Apr 18 14:15:37 2016

@@ -1,0 +1,351 @@
+Script started on Mon Apr 25 18:42:04 2016
+sh-4.3$ ls -l
+total 756
+-rwxrwx---   1 dcalmes  ics2020    28356 Apr 20 16:05 a.out
+-rw-rwx---   1 dcalmes  ics2020     4073 Mar 14 09:29 lab1.cpp
+-rw-rwx---   1 dcalmes  ics2020     6188 Mar 14 09:31 lab1.log
+-rw-rwx---   1 dcalmes  ics2020     4784 Mar 25 13:33 lab2.cpp
+-rw-rwx---   1 dcalmes  ics2020     8842 Mar 25 16:20 lab2.log
+-rw-rwx---   1 dcalmes  ics2020     7472 Mar 19 16:57 lab3.cpp
+-rw-rwx---   1 dcalmes  ics2020    14262 Mar 20 18:54 lab3.log
+-rw-rwx---   1 dcalmes  ics2020      626 Jan 29  2013 lab3.txt
+-rw-rwx---   1 dcalmes  ics2020     7109 Feb 24 18:47 lab4.cpp
+-rw-rwx---   1 dcalmes  ics2020    13304 Feb 24 18:53 lab4.log
+-rw-rwx---   1 dcalmes  ics2020      400 Feb 24 17:56 lab4.txt
+-rw-rwx---   1 dcalmes  ics2020     5645 Mar  2 18:51 lab5.cpp
+-rw-rwx---   1 dcalmes  ics2020    10026 Mar  2 18:54 lab5.log
+-rw-rwx---   1 dcalmes  ics2020      315 Mar  2 14:40 lab5.txt
+-rw-rwx---   1 dcalmes  ics2020    11354 Mar 23 21:27 lab6.cpp
+-rw-rwx---   1 dcalmes  ics2020    20495 Mar 23 21:29 lab6.log
+-rw-rwx---   1 dcalmes  ics2020     1937 Mar 23 21:18 lab6H.h
+-rw-rwx---   1 dcalmes  ics2020     2408 Mar 23 21:27 lab6client.cpp
+-rw-rwx---   1 dcalmes  ics2020     3969 Apr 11 20:56 lab7.cpp
+-rw-rwx---   1 dcalmes  ics2020      834 Apr 11 20:56 lab7.h
+-rw-rwx---   1 dcalmes  ics2020    12212 Apr 11 21:00 lab7.log
+-rw-rwx---   1 dcalmes  ics2020     1572 Apr 11 20:56 lab7client.cpp
+-rw-rwx---   1 dcalmes  ics2020    11279 Apr 18 14:15 lab8.log
+-rw-rwx---   1 dcalmes  ics2020     1316 Apr 18 14:06 lab8client.cpp
+-rw-rwx---   1 dcalmes  ics2020     1139 Apr 18 14:11 lab8dog.cpp
+-rw-rwx---   1 dcalmes  ics2020      920 Apr 18 14:06 lab8dog.h
+-rw-rwx---   1 dcalmes  ics2020     1917 Apr 18 14:06 lab8show.cpp
+-rw-rwx---   1 dcalmes  ics2020      848 Apr 18 14:06 lab8show.h
+-rw-r--r--   1 dcalmes  user           0 Apr 25 18:42 lab9.log
+-rw-r--r--   1 dcalmes  ics2020      232 Apr 21  2015 lab9.txt
+-rw-r--r--   1 dcalmes  ics2020     2917 Apr 25 18:40 lab9client.cpp
+-rw-r--r--   1 dcalmes  ics2020     1246 Apr 25 18:40 lab9employee.cpp
+-rw-r--r--   1 dcalmes  ics2020     1069 Apr 25 18:40 lab9employee.h
+-rw-r--r--   1 dcalmes  ics2020     2121 Apr 25 18:40 lab9manager.cpp
+-rw-r--r--   1 dcalmes  ics2020     1006 Apr 25 18:40 lab9manager.h
+lrwxrwxrwx   1 dcalmes  ics2020       24 Feb  5 16:39 lib -> /home/classes/cs2020/Lib
+-rw-rwx---   1 dcalmes  ics2020    12117 Mar 16 02:15 prog1.cpp
+-rw-rwx---   1 dcalmes  ics2020    18769 Mar 16 02:34 prog1.log
+-rw-rwx---   1 dcalmes  ics2020      400 Jan  1  2015 prog1.txt
+-rw-rwx---   1 dcalmes  ics2020    11371 Mar 25 16:10 prog2.cpp
+-rw-rwx---   1 dcalmes  ics2020    17551 Mar 25 16:14 prog2.log
+-rw-rwx---   1 dcalmes  ics2020      937 Mar 16 18:31 prog2.txt
+-rw-rwx---   1 dcalmes  ics2020     6668 Feb 23 20:06 prog3.cpp
+-rw-rwx---   1 dcalmes  ics2020     9502 Feb 19 20:20 prog3.log
+-rw-rwx---   1 dcalmes  ics2020      259 Jan  1  2015 prog3.txt
+-rw-rwx---   1 dcalmes  ics2020     4374 Mar 24 18:47 prog5.cpp
+-rw-rwx---   1 dcalmes  ics2020     1089 Mar 24 18:55 prog5.h
+-rw-rwx---   1 dcalmes  ics2020    14447 Mar 24 19:03 prog5.log
+-rw-rwx---   1 dcalmes  ics2020     2036 Mar 24 18:47 prog5client.cpp
+-rw-rwx---   1 dcalmes  ics2020     3729 Apr 11 19:33 prog6.cpp
+-rw-rwx---   1 dcalmes  ics2020     1413 Apr 11 19:33 prog6.h
+-rw-rwx---   1 dcalmes  ics2020    11281 Apr 11 19:38 prog6.log
+-rw-rwx---   1 dcalmes  ics2020     1435 Apr 11 19:33 prog6client.cpp
+-rw-rwx---   1 dcalmes  ics2020    22822 Apr 20 16:06 prog7.log
+-rw-rwx---   1 dcalmes  ics2020      271 Apr 20 16:01 prog7.txt
+-rw-rwx---   1 dcalmes  ics2020     6014 Apr 18 13:46 prog7.vcxproj
+-rw-rwx---   1 dcalmes  ics2020     1586 Apr 18 13:46 prog7.vcxproj.filters
+-rw-rwx---   1 dcalmes  ics2020     2856 Apr 20 15:56 prog7client.cpp
+-rw-rwx---   1 dcalmes  ics2020     2543 Apr 20 15:56 prog7cruiseship.cpp
+-rw-rwx---   1 dcalmes  ics2020     1032 Apr 20 15:56 prog7cruiseship.h
+-rw-rwx---   1 dcalmes  ics2020     2236 Apr 20 15:56 prog7ferryship.cpp
+-rw-rwx---   1 dcalmes  ics2020      885 Apr 20 15:56 prog7ferryship.h
+-rw-rwx---   1 dcalmes  ics2020     1117 Apr 20 15:56 prog7ship.cpp
+-rw-rwx---   1 dcalmes  ics2020     1077 Apr 20 15:56 prog7ship.h
+-rw-rwx---   1 dcalmes  ics2020       54 Mar 14 09:10 sample.txt
+sh-4.3$ cat lab9employee.h
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 9
+// Purpose:     The purpose of this program is to create an object oriented
+//                                      program that enables polymorphism, uses inheritance, 
+//                                      encapsulation and virtual functions.  This is used in
+//                                      order to find and display the monthly income for employees
+//                                      and managers besed on salary or hourly pay.
+// Author:      Douglas Calmes
+// Class:       CS 2020-3
+// Semester:    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+#ifndef EMPLOYEE_H
+#define EMPLOYEE_H
+
+class Employee
+{
+protected:
+        string name;
+        double payRate;
+public:
+        //      Constructors
+        Employee() { name = ""; payRate = 0; }
+        Employee(string name, double payRate) { this->name = name; this->payRate = payRate; }
+
+        //      Accessors
+        string getName() { return name; }
+        double getPayRate() { return payRate; }
+
+
+        virtual double Pay(double) const;
+};
+
+
+#endif
+
+sh-4.3$ cat lab9employee.cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 9
+// Purpose:     The purpose of this program is to create an object oriented
+//                                      program that enables polymorphism, uses inheritance, 
+//                                      encapsulation and virtual functions.  This is used in
+//                                      order to find and display the monthly income for employees
+//                                      and managers besed on salary or hourly pay.
+// Author:      Douglas Calmes
+// Class:       CS 2020-3
+// Semester:    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <string>
+#include "lab9employee.h"
+using namespace std;
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    Pay
+// Description: This function determines how much the Manager has earned
+//                                      wither he/she is paid by salary or hourly rates.
+// Programmer:  Douglas Calmes
+// Class:       CS 2020, Spring 2016
+// Parameters:  hoursWorked-    number of hours worked
+// Returns:     payRate*hoursWorked     - Salary
+//////////////////////////////////////////////////////////////////////////////
+
+double Employee::Pay(double hoursWorked) const
+{
+        return payRate*hoursWorked;
+}sh-4.3$ cat lab9manager.h
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 9
+// Purpose:     The purpose of this program is to create an object oriented
+//                                      program that enables polymorphism, uses inheritance, 
+//                                      encapsulation and virtual functions.  This is used in
+//                                      order to find and display the monthly income for employees
+//                                      and managers besed on salary or hourly pay.
+// Author:      Douglas Calmes
+// Class:       CS 2020-3
+// Semester:    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <string>
+#include "lab9employee.h"
+using namespace std;
+
+#ifndef MANAGER_H
+#define MANAGER_H
+
+class Manager : public Employee //      Using Employee class
+{
+private:
+        bool salaried;
+public:
+        //      Constructors
+        Manager() { salaried = false; }
+        Manager(string, double, bool);
+
+        //      Accessor
+        bool getSalaried() { return salaried; }
+
+
+        double Pay(double) const;
+};
+
+
+#endifsh-4.3$ cat lab9manager.cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 9
+// Purpose:     The purpose of this program is to create an object oriented
+//                                      program that enables polymorphism, uses inheritance, 
+//                                      encapsulation and virtual functions.  This is used in
+//                                      order to find and display the monthly income for employees
+//                                      and managers besed on salary or hourly pay.
+// Author:      Douglas Calmes
+// Class:       CS 2020-3
+// Semester:    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <string>
+#include "lab9employee.h"
+#include "lab9manager.h"
+using namespace std;
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    Manager : Employee
+// Description: This function calls the Manager overloaded constructor.  It
+//                                      sets salaried variable.  It gets name and payRate from
+//                                      Employee();
+// Programmer:  Douglas Calmes
+// Class:       CS 2020, Spring 2016
+// Parameters:  name-           name of the employee
+//                              payRate-        rate at which employee is paid
+//                              salaried-       determines if employee is salaried or hourly paid
+// Returns:     None
+//////////////////////////////////////////////////////////////////////////////
+
+Manager::Manager(string name, double payRate, bool salaried) : Employee(name, payRate)
+{
+        this->salaried = salaried;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    Pay
+// Description: This function determines how much the Manager has earned
+//                                      wither he/she is paid by salary or hourly rates.
+// Programmer:  Douglas Calmes
+// Class:       CS 2020, Spring 2016
+// Parameters:  hoursWorked-    number of hours worked
+// Returns:     payRate if they are on salary
+//                              payRate*hoursWorked if they are on hourly pay
+//////////////////////////////////////////////////////////////////////////////
+
+double Manager::Pay(double hoursWorked) const
+{
+        if (salaried == true)
+        {
+                return payRate;
+        }
+        else 
+                return payRate * hoursWorked;
+}sh-4.3$ cat lab9client.cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program:             Lab 9
+// Purpose:     The purpose of this program is to create an object oriented
+//                                      program that enables polymorphism, uses inheritance, 
+//                                      encapsulation and virtual functions.  This is used in
+//                                      order to find and display the monthly income for employees
+//                                      and managers besed on salary or hourly pay.
+// Author:      Douglas Calmes
+// Class:       CS 2020-3
+// Semester:    Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include <string>
+#include "lab9employee.h"
+#include "lab9manager.h"
+#include <fstream>
+#include <iomanip>
+using namespace std;
+
+//      Prototype
+void PrintPay(Employee*, double);
+
+const int SIZE = 25;    //      Max size of array
+int main()
+{
+        //      Name input file and open lab9.txt
+        ifstream infile;
+        infile.open("lab9.txt");
+
+        //      Creating employee array and naming the variables used from input file
+        Employee* employeeList[SIZE];
+        int type, i = 0;
+        string firstName, lastName;
+        double payRate = 0, hoursWorked = 40.00;
+        bool salaried;
+
+        //      While loop to read input file and store the data in the respected dynamically
+        //              allocated employee types based in "type" variable
+        while (!infile.eof())
+        {
+                infile >> type;
+
+                //      Create new Employee if type is 1
+                if (type == 1)
+                {
+                        infile >> firstName;
+                        infile >> lastName;
+                        infile >> payRate;
+
+                        employeeList[i] = new Employee(firstName + " " + lastName, payRate);
+
+                }
+                //      Create new Manager if type is 2
+                else if (type == 2)
+                {
+                        infile >> firstName;
+                        infile >> lastName;
+                        infile >> payRate;
+                        infile >> salaried;
+
+                        employeeList[i] = new Manager(firstName + " " + lastName, payRate, salaried);
+
+                }
+                i++;
+        }
+
+        //      Header for employee/manager income output
+        cout << left <<setw(20) << "Employee" << setw(10) << "Monthly Income" << endl;
+        cout << "------------------------------------------------------------------------------" << endl;
+        for (int num = 0; num < i; num++)
+        {
+                PrintPay(employeeList[num], hoursWorked);
+        }
+
+        //      Close input file
+        infile.close();
+
+        system("Pause");
+        return 0;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// Function:    PrintPay
+// Description: This function prints out the list of the pointer of arrays
+// Programmer:  Douglas Calmes
+// Class:       CS 2020, Spring 2016
+// Parameters:  employeeList-   list of employees
+//                              hoursWorked-    number of hours employee worked
+// Returns:     None
+//////////////////////////////////////////////////////////////////////////////
+
+void PrintPay(Employee* employeeList, double hoursWorked)
+{
+        cout << left << fixed << setprecision(2) << setw(20) << employeeList->getName() << setw(10) << "earned" << "$ " << right << employeeList->Pay(hoursWorked) << endl;
+}
+sh-4.3$ g= ++ lab9employee.cpp lab9manager.cpp lab9client.cpp
+sh-4.3$ a.out
+Employee            Monthly Income
+------------------------------------------------------------------------------
+John Burke          earned    $ 1000.00
+Jan Kovacs          earned    $ 1200.00
+Tom Banks           earned    $ 3000.00
+Steven Brown        earned    $ 1180.00
+Edward Brigham      earned    $ 1412.00
+Jack Duckworth      earned    $ 790.00
+Craig Alwan         earned    $ 1300.00
+Matt Brewning       earned    $ 1150.00
+Gale Stevens        earned    $ 635.60
+Janet Thompson      earned    $ 1324.00
+Beth Lucky          earned    $ 1156.00
+sh: Pause: not found
+sh-4.3$ exit
+exit
+
+script done on Mon Apr 25 18:43:42 2016

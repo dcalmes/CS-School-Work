@@ -1,0 +1,40 @@
+// Douglas G Calmes	CS2170-2 11:30	  Proj6a
+// The purpose of this program is to copy the
+// contents of one array into another array.
+//	This program will work with any 
+//	array size
+
+		ORG	100
+		ENTRY	ARYFLIP
+
+	FLOP,	LDA	PTR1 I	// Load PTR1 I. (FLOP Branch Location)
+		STA	PTR2 I	// Store PTR1 I into PTR2 I
+		LDA	CTR	// Load CTR into AC
+		INC		// Increment CTR
+		STA	CTR	// Store incremented CTR
+		LDA	PTR2	// Load address of PTR2
+		INC		// Move to next PTR2 address
+		STA	PTR2	// Save new PTR2 address location
+		LDA	PTR1	// Load address of PTR1
+		INC		// Move to next PTR1 address
+		STA	PTR1	// Save new PTR1 address location
+		LDA	PTR1 I	// Load the value of PTR1 I into AC
+		SZA		// Skip next instruction if AC is 0
+		BUN	FLOP	// Branch to FLIP (Next copy iteration)
+		DMP		// Dump
+		HLT		// Hult computer
+		END		// End project
+			
+	PTR1,	HEX	'ARY1	// Pointer to address of ARY1
+	PTR2,	HEX	'ARY2	// Pointer to address of ARY2
+	CTR,	HEX	0000	// Will show amount of times looped
+	ARY1,	HEX	0015	// Value of first element in ARY1
+		HEX	0003	// Value of second element in ARY1
+		HEX	002C	// Value of third element in ARY1
+		HEX	0008	// Value of fourth element in ARY1
+		HEX	000E	// Value of fifth element in ARY1
+		HEX	0000	// Value of sixty element in ARY1 (sentinal)
+	ARY2,	HEX	0000	// Value of first element in ARY2
+
+				// This program will add more elements
+				// to ARY2 each time the loop iterates

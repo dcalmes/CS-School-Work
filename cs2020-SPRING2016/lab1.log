@@ -1,0 +1,173 @@
+Script started on Mon Mar 14 09:29:56 2016
+sh-4.3$ ls -l
+total 160
+-rwxr-xr-x   1 dcalmes  ics2020     9924 Mar 14 09:21 a.out
+-rw-r--r--   1 dcalmes  ics2020     4073 Mar 14 09:29 lab1.cpp
+-rw-r--r--   1 dcalmes  user           0 Mar 14 09:29 lab1.log
+-rw-r--r--   1 dcalmes  ics2020     4945 Mar 13 19:26 lab2.cpp
+-rw-rwx---   1 dcalmes  ics2020     7109 Feb 24 18:47 lab4.cpp
+-rw-rwx---   1 dcalmes  ics2020    13304 Feb 24 18:53 lab4.log
+-rw-rwx---   1 dcalmes  ics2020      400 Feb 24 17:56 lab4.txt
+-rw-rwx---   1 dcalmes  ics2020     5645 Mar  2 18:51 lab5.cpp
+-rw-rwx---   1 dcalmes  ics2020    10026 Mar  2 18:54 lab5.log
+-rw-rwx---   1 dcalmes  ics2020      315 Mar  2 14:40 lab5.txt
+lrwxrwxrwx   1 dcalmes  ics2020       24 Feb  5 16:39 lib -> /home/classes/cs2020/Lib
+-rw-rwx---   1 dcalmes  ics2020     6668 Feb 23 20:06 prog3.cpp
+-rw-rwx---   1 dcalmes  ics2020     9502 Feb 19 20:20 prog3.log
+-rw-rwx---   1 dcalmes  ics2020      259 Jan  1  2015 prog3.txt
+-rw-rwx---   1 dcalmes  ics2020     1738 Feb 26 17:25 prog4.cpp
+-rw-rwx---   1 dcalmes  ics2020      649 Mar  6  2015 prog4.txt
+-rw-r--r--   1 dcalmes  ics2020       54 Mar 14 09:10 sample.txt
+sh-4.3$ cat lab1.cpp
+//**************************************************************************
+// Program:     Charge Account Numbers
+//
+// Purpose:     This program checks whether a number entered by the user is a
+//              valid charge account number.
+// 
+// Input:       The user is asked to enter a three-digit number to be checked.
+//
+// Processing:  The main function uses an initialization list to initialize
+//              an array with charge account numbers. Then it calls a function
+//              to display the list. The user is asked to enter a charge
+//              number. The main function calls another function to check the
+//              validity of this number and then it displays a message 
+//              reporting the results. 
+//
+// Output:      The program displays the list of account numbers and a message
+//              indicating whether the number entered by the user is valid 
+//              or not.
+//
+// Author:      Douglas Calmes
+// Class:       CS 2020
+// Semester:    Spring 2015
+//**************************************************************************
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+// Function prototypes
+void displayAcctNos(int[], int);
+int searchList(int[], int, int);
+
+int main()
+{
+    const int ARY_SIZE = 9;
+
+    // Array of account numbers
+    int accounts[ARY_SIZE] = 
+      { 565,  452,  789,
+        877,  845,  130,
+        808,  456,  555 };
+        
+    int accountNumber;        
+    int position;
+   
+    //********************************************************
+    // Display account numbers
+    //********************************************************
+    displayAcctNos(accounts, ARY_SIZE);
+
+    //********************************************************
+    // Get an account number from the user.
+    //********************************************************
+while(accountNumber != -1)
+{
+    cout << endl << "Please enter a 3-digit account number:  ";
+    cin  >> accountNumber;
+    cout << endl << "Type -1 to end!" << endl;
+}
+    //********************************************************
+    // Search the array for the number and indicate whether it
+    // is valid or not.
+    //********************************************************
+    position = searchList(accounts, accountNumber, ARY_SIZE);
+    cout << endl;
+    if (position == -1)
+        cout << accountNumber << " is an invalid charge account number." 
+            << endl; 
+    else
+        cout << accountNumber << " is a valid charge account number."
+            << endl; 
+
+    cout << endl;
+    return 0;
+}
+
+//*********************************************************************
+// Function:    displayAcctNos
+// Description: Displays the list of charge numbers. 
+// Returns:     void
+//*********************************************************************
+void displayAcctNos(int acctNos[], int ARY_SIZE)
+{
+    cout << endl << "Charge Account Numbers" << endl;
+    cout << "Element  Charge Number " << endl;
+    for (int k = 0; k < ARY_SIZE; k++)
+        cout << setw(4) << k << setw(14)  << acctNos[k] << endl;
+}
+
+
+//*********************************************************************
+// Function:    searchList                             
+// Description: This function searches the array of charge numbers for the
+//              number passed into value using the linear search algorithm. 
+//              If the number is found the function returns the position of
+//              the value in the array.
+// Return:      If the number is not found it returns -1.
+//*********************************************************************
+int searchList(int accounts[], int value, int ARY_SIZE)
+{
+    int index = 0;       // Used as subscript to search array
+    int position = -1;   // To record position of search value
+    bool found = false;  // Flag to indicate if value found
+
+    // Step through the array as long as the value is not found
+    while (index < ARY_SIZE && !found)
+    {
+        if (accounts[index] == value)
+        {
+            found = true;           // The value is found
+            position = index;       // Record the value's position
+        }
+        index++;                    // Go to next element
+    }
+   
+    return position;
+}
+sh-4.3$ g++ lab1.cpp
+sh-4.3$ a.out
+
+Charge Account Numbers
+Element  Charge Number 
+   0           565
+   1           452
+   2           789
+   3           877
+   4           845
+   5           130
+   6           808
+   7           456
+   8           555
+
+Please enter a 3-digit account number:  845
+
+Type -1 to end!
+
+Please enter a 3-digit account number:  222
+
+Type -1 to end!
+
+Please enter a 3-digit account number:  555
+
+Type -1 to end!
+
+Please enter a 3-digit account number:  -1
+
+Type -1 to end!
+
+-1 is an invalid charge account number.
+
+sh-4.3$ exit
+
+script done on Mon Mar 14 09:31:07 2016

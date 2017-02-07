@@ -1,0 +1,164 @@
+Script started on Tue Apr 19 16:48:35 2016
+sh-4.3$ pwd
+/home/93/dcalmes/cs217r2
+sh-4.3$ ls -l
+total 48
+-rw-r--r--   1 dcalmes  ics217r2     229 Apr 19 15:44 Proj5a
+-rw-r--r--   1 dcalmes  ics217r2      89 Apr  6 11:33 lab5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.exec
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.obj
+-rw-r--r--   1 dcalmes  ics217r2     642 Apr  6 11:33 lab5a.src
+-rw-r--r--   1 dcalmes  ics217r2      42 Apr  6 11:33 lab5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     131 Apr  6 12:09 lab5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:09 lab5b.exec
+-rw-r--r--   1 dcalmes  user        3644 Apr  6 12:09 lab5b.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:08 lab5b.obj
+-rw-r--r--   1 dcalmes  ics217r2     523 Apr  6 12:07 lab5b.src
+-rw-r--r--   1 dcalmes  ics217r2      69 Apr  6 12:08 lab5b.sym
+lrwxrwxrwx   1 root     ics217r2      25 Apr  6 11:25 lib -> /home/classes/cs217r2/Lib
+-rw-r--r--   1 dcalmes  ics217r2       1 Apr 19 15:17 proj5a
+-rw-r--r--   1 dcalmes  ics217r2     152 Apr 19 16:33 proj5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:33 proj5a.exec
+-rw-r--r--   1 dcalmes  user           0 Apr 19 16:48 proj5a.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:33 proj5a.obj
+-rw-r--r--   1 dcalmes  ics217r2    1140 Apr 19 16:48 proj5a.src
+-rw-------   1 dcalmes  ics217r2     252 Apr 19 15:56 proj5a.src.save
+-rw-r--r--   1 dcalmes  ics217r2      80 Apr 19 16:33 proj5a.sym
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat proj5a.src
+/ Douglas Calmes	proj5a        CS2170-2        11:30-12:20
+/ The purpose of this program is to do the following:
+/       int x = 8, y = 14;
+/       
+/       if(x <= y)
+/           x = x + y;
+/       else
+/           y = y - 1;
+
+                ORG 100         / Origin of the program is location 100
+                ENTRY PROJ5a    / Name of the program
+                LDA     y       / Load x into the AC
+                CMA             / Complement the AC
+                INC             / Increment the AC for 2's complement
+                ADD     x       / Add x and y
+                STA     xy      / Store the value of x + y into variable xy
+                LDA     xy      / Load xy into the AC
+                SPA             / We will skip the next instruction of xy is >= 0
+                BUN     xPy     / Branch to xPy if x is less than y
+                BUN     INCy    / Branch to INCy if x is greater than y
+        INCy,   LDA     y       / Load y into the AC
+                ADD     one     / Add -1 to y (decrement)
+                STA     y       / Store the new value back into y
+                BUN     DONE    / Branch to DONE if x is greater than y
+        xPy,    LDA     x       / Load x into the AC
+                ADD     y       / Add y and x
+                STA     x       / Store the new value back into x
+                BUN     DONE    / Branch to DONE if x is less than or equal to y
+                DONE,   DMP     / Dump the memory
+                HLT             / Hault the computer
+        x,      DEC     8       / Set x to 8
+        y,      DEC     14      / Set y to 14
+        xy,     DEC     0       / Set xy to 0
+        one,    DEC     -1      / Set one to -1 (decrement)
+                END             / End program
+
+
+
+
+
+
+sh-4.3$ csos
+[2J[H
+                    Welcome to the csos operating system!
+                               CS 217
+               To see a list of commands type 'help' or '?'
+
+csos: assem proj5a.src
+     / DOUGLAS CALMES	PROJ5A   CS2170-2        11:30-12:20
+     / THE PURPOSE OF THIS PROGRAM IS TO DO THE FOLLOWING:
+     /  INT X = 8, Y = 14;
+     /  
+     /  IF(X <= Y)
+     /      X = X + Y;
+     /  ELSE
+     /      Y = Y - 1;
+     
+                ORG 100         / ORIGIN OF THE PROGRAM IS LOCATION 100
+                ENTRY PROJ5A    / NAME OF THE PROGRAM
+0100            LDA     Y       / LOAD X INTO THE AC
+0101            CMA             / COMPLEMENT THE AC
+0102            INC             / INCREMENT THE AC FOR 2'S COMPLEMENT
+0103            ADD     X       / ADD X AND Y
+0104            STA     XY      / STORE THE VALUE OF X + Y INTO VARIABLE XY
+0105            LDA     XY      / LOAD XY INTO THE AC
+0106            SPA             / WE WILL SKIP THE NEXT INSTRUCTION OF XY IS >= 0
+0107            BUN     XPY     / BRANCH TO XPY IF X IS LESS THAN Y
+0108            BUN     INCY    / BRANCH TO INCY IF X IS GREATER THAN Y
+0109    INCY,   LDA     Y       / LOAD Y INTO THE AC
+010a            ADD     ONE     / ADD -1 TO Y (DECREMENT)
+010b            STA     Y       / STORE THE NEW VALUE BACK INTO Y
+010c            BUN     DONE    / BRANCH TO DONE IF X IS GREATER THAN Y
+010d    XPY,    LDA     X       / LOAD X INTO THE AC
+010e            ADD     Y       / ADD Y AND X
+010f            STA     X       / STORE THE NEW VALUE BACK INTO X
+0110            BUN     DONE    / BRANCH TO DONE IF X IS LESS THAN OR EQUAL TO Y
+0111            DONE,   DMP     / DUMP THE MEMORY
+0112            HLT             / HAULT THE COMPUTER
+0113    X,      DEC     8       / SET X TO 8
+0114    Y,      DEC     14      / SET Y TO 14
+0115    XY,     DEC     0       / SET XY TO 0
+0116    ONE,    DEC     -1      / SET ONE TO -1 (DECREMENT)
+                END             / END PROGRAM
+     
+     
+     
+     
+     
+     
+
+Symbol Table:
+PROJ5A  0100    1
+INCY    0109    0
+XPY     010d    0
+DONE    0111    0
+X       0113    0
+Y       0114    0
+XY      0115    0
+ONE     0116    0
+
+Object code:
+2114 7200 7020 1113 3115 2115 7010 410d 
+4109 2114 1116 3114 4111 2113 1114 3113 
+4111 f001 7001 0008 000e 0000 ffff 0000 
+
+csos: link proj5a.obj
+File to link proj5a.obj
+obj  file name is proj5a.obj
+exec file name is proj5a.exec
+web simulator file name is proj5a.cos
+csos: run proj5a.exec
+No input file used, proceeding ...
+
+csos registers:
+   AC = 0016
+   PC = 0112
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: 2114 7200 7020 1113 3115 2115 7010 410d 
+0108: 4109 2114 1116 3114 4111 2113 1114 3113 
+0110: 4111 f001 7001 0016 000e fffa ffff 0000 
+0118: ffff ffff ffff ffff ffff ffff ffff ffff 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+0130: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos: quit
+sh-4.3$ exit
+exit
+
+script done on Tue Apr 19 16:49:51 2016

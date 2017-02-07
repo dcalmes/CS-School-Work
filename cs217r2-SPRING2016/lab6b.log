@@ -1,0 +1,148 @@
+Script started on Wed Apr 27 19:18:45 2016
+sh-4.3$ pwd
+/home/93/dcalmes/cs217r2
+sh-4.3$ ls -l
+total 124
+-rw-r--r--   1 dcalmes  ics217r2      89 Apr  6 11:33 lab5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.exec
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.obj
+-rw-r--r--   1 dcalmes  ics217r2     642 Apr  6 11:33 lab5a.src
+-rw-r--r--   1 dcalmes  ics217r2      42 Apr  6 11:33 lab5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     131 Apr  6 12:09 lab5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:09 lab5b.exec
+-rw-r--r--   1 dcalmes  user        3644 Apr  6 12:09 lab5b.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:08 lab5b.obj
+-rw-r--r--   1 dcalmes  ics217r2     523 Apr  6 12:07 lab5b.src
+-rw-r--r--   1 dcalmes  ics217r2      69 Apr  6 12:08 lab5b.sym
+-rw-r--r--   1 dcalmes  ics217r2     139 Apr 27 19:17 lab6.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:17 lab6.exec
+-rw-r--r--   1 dcalmes  user        6726 Apr 27 19:17 lab6.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:17 lab6.obj
+-rw-r--r--   1 dcalmes  ics217r2     931 Apr 27 15:23 lab6.src
+-rw-r--r--   1 dcalmes  ics217r2      51 Apr 27 19:17 lab6.sym
+-rw-r--r--   1 dcalmes  ics217r2     140 Apr 27 15:29 lab6b.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 15:29 lab6b.exec
+-rw-r--r--   1 dcalmes  user           0 Apr 27 19:18 lab6b.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 15:29 lab6b.obj
+-rw-r--r--   1 dcalmes  ics217r2     929 Apr 27 15:36 lab6b.src
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 15:29 lab6b.sym
+lrwxrwxrwx   1 root     ics217r2      25 Apr  6 11:25 lib -> /home/classes/cs217r2/Lib
+-rw-r--r--   1 dcalmes  ics217r2     152 Apr 19 16:49 proj5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:49 proj5a.exec
+-rw-r--r--   1 dcalmes  user        6284 Apr 19 21:58 proj5a.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:49 proj5a.obj
+-rw-------   1 dcalmes  ics217r2     208 Apr 19 17:33 proj5a.save
+-rw-r--r--   1 dcalmes  ics217r2    1140 Apr 19 16:48 proj5a.src
+-rw-------   1 dcalmes  ics217r2     252 Apr 19 15:56 proj5a.src.save
+-rw-r--r--   1 dcalmes  ics217r2      80 Apr 19 16:49 proj5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     101 Apr 19 17:54 proj5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr 19 17:54 proj5b.exec
+-rw-r--r--   1 dcalmes  user        8089 Apr 20 08:10 proj5b.log
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr 19 17:54 proj5b.obj
+-rw-r--r--   1 dcalmes  ics217r2    1163 Apr 19 17:53 proj5b.src
+-rw-r--r--   1 dcalmes  ics217r2      63 Apr 19 17:54 proj5b.sym
+-rw-r--r--   1 dcalmes  ics217r2     175 Apr 25 13:18 proj6a.src
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat lab6b.src
+// Douglas Calmes       CS2170-2 11:30          Lab 6b
+// This program will double the values of an array.
+//      This current Array will have 5 elements
+
+                ORG     100     // Origin is at 100
+                ENTRY   DOUBLE  // Name of lab entry
+        ADD2,   LDA     PTR I   // ADD2 Branch Location. Load PTR
+                CLE             // Clear E
+                CIL             // Double the value in array
+                STA     PTR I   // Store the doubled value
+                LDA     PTR     // Load the address of PTR
+                INC             // Incrementing PTR to get to next value
+                STA     PTR     // Store the new address
+                ISZ     CTR     // Skip next line once CTR is 0
+                BUN     ADD2    // Branch to ADD2 (next double iteration)
+                DMP             // Dump
+                HLT             // Hault lab
+                END             // End lab
+        CTR,    DEC     -5      // Signifies the loop will happen 5x
+        PTR,    HEX     'ARY    // Points PTR at the address of ARY
+        ARY,    DEC     4       // Value of first element in ARY
+                DEC     10      // Value of second element in ARY
+                DEC     7       // Value of third element in ARY
+                DEC     3       // Value of fourth element in ARY
+                DEC     18      // Value of fifth element in ARY
+sh-4.3$ csos
+[2J[H
+                    Welcome to the csos operating system!
+                               CS 217
+               To see a list of commands type 'help' or '?'
+
+csos: assem lab6b.src
+     // DOUGLAS CALMES  CS2170-2 11:30          LAB 6B
+     // THIS PROGRAM WILL DOUBLE THE VALUES OF AN ARRAY.
+     // THIS CURRENT ARRAY WILL HAVE 5 ELEMENTS
+     
+                ORG     100     // ORIGIN IS AT 100
+                ENTRY   DOUBLE  // NAME OF LAB ENTRY
+0100    ADD2,   LDA     PTR I   // ADD2 BRANCH LOCATION. LOAD PTR
+0101            CLE             // CLEAR E
+0102            CIL             // DOUBLE THE VALUE IN ARRAY
+0103            STA     PTR I   // STORE THE DOUBLED VALUE
+0104            LDA     PTR     // LOAD THE ADDRESS OF PTR
+0105            INC             // INCREMENTING PTR TO GET TO NEXT VALUE
+0106            STA     PTR     // STORE THE NEW ADDRESS
+0107            ISZ     CTR     // SKIP NEXT LINE ONCE CTR IS 0
+0108            BUN     ADD2    // BRANCH TO ADD2 (NEXT DOUBLE ITERATION)
+0109            DMP             // DUMP
+010a            HLT             // HAULT LAB
+                END             // END LAB
+010b    CTR,    DEC     -5      // SIGNIFIES THE LOOP WILL HAPPEN 5X
+010c    PTR,    HEX     'ARY    // POINTS PTR AT THE ADDRESS OF ARY
+010d    ARY,    DEC     4       // VALUE OF FIRST ELEMENT IN ARY
+010e            DEC     10      // VALUE OF SECOND ELEMENT IN ARY
+010f            DEC     7       // VALUE OF THIRD ELEMENT IN ARY
+0110            DEC     3       // VALUE OF FOURTH ELEMENT IN ARY
+0111            DEC     18      // VALUE OF FIFTH ELEMENT IN ARY
+
+Symbol Table:
+DOUBLE  0100    1
+ADD2    0100    0
+CTR     010b    0
+PTR     010c    0
+ARY     010d    0
+
+Object code:
+a10c 7400 7040 b10c 210c 7020 310c 610b 
+4100 f001 7001 fffb 010d 0004 000a 0007 
+0003 0012 0000 0000 0000 0000 0000 0000 
+
+csos: link lab6b.obj
+File to link lab6b.obj
+obj  file name is lab6b.obj
+exec file name is lab6b.exec
+web simulator file name is lab6b.cos
+csos: run lab6b.exec
+No input file used, proceeding ...
+
+csos registers:
+   AC = 0112
+   PC = 010a
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: a10c 7400 7040 b10c 210c 7020 310c 610b 
+0108: 4100 f001 7001 0000 0112 0008 0014 000e 
+0110: 0006 0024 0000 0000 0000 0000 0000 0000 
+0118: ffff ffff ffff ffff ffff ffff ffff ffff 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+0130: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos: quit
+sh-4.3$ exit
+exit
+
+script done on Wed Apr 27 19:19:40 2016

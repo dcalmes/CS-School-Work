@@ -1,0 +1,219 @@
+Script started on Fri Feb 19 20:18:38 2016
+sh-4.3$ pwd
+/home/93/dcalmes/cs2020
+sh-4.3$ la s -l
+total 58
+-rwxr-xr-x   1 dcalmes  ics2020    19872 Feb 19 20:16 a.out
+lrwxrwxrwx   1 dcalmes  ics2020       24 Feb  5 16:39 lib -> /home/classes/cs2020/Lib
+-rw-r--r--   1 dcalmes  ics2020     6663 Feb 19 20:10 prog3.cpp
+-rw-r--r--   1 dcalmes  user           0 Feb 19 20:18 prog3.log
+-rw-r--r--   1 dcalmes  ics2020      259 Jan  1  2015 prog3.txt
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ a cat prog3.cpp
+// Program 3
+// Description: Products program
+// Programmer:  Douglas G Calmes
+// Class:               CS 2020, Spring 2016
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+//      Structures
+struct Corp
+{
+        int Q1_Sales = 0;
+        int Q2_Sales = 0;
+        int Q3_Sales = 0;
+        int Q4_Sales = 0;
+        int Number_Divs = 0;
+};
+
+struct Division
+{
+        string Div_Name;
+        int Div_salesQ1;
+        int Div_salesQ2;
+        int Div_salesQ3;
+        int Div_salesQ4;
+};
+
+//      Prototypes
+void getDivision(Division*, ifstream&);
+void printDivision(Division*);
+void addDivision(Corp*, Division*);
+void printCorpSummary(Corp*);
+
+int main()
+{
+        ifstream infile;
+        Corp* pCorp = new Corp;
+        Division* pDiv = new Division;
+
+        infile.open("prog3.txt");
+
+        if (!infile)
+        cout << "ERROR: The file failed to open" << endl;
+
+        //      Header
+        cout << "-------------------------------------------------------------" << endl;
+        cout << right << setw(50) << "Stratus Corporation Sales Report*" << endl;
+        cout << right << setw(40) << "Douglas G Calmes" << endl;
+        cout << "-------------------------------------------------------------" << endl;
+        cout << right << setw(18) << "Division" << setw(10) << "Q1" << setw(10) << "Q2" << setw(10) << "Q3" << setw(10) << "Q4"<< endl;
+
+        //      While loop in order to read in all the sales data for each division from program3.txt
+        //      and create a report
+        while (!infile.eof())
+        {
+                getDivision(pDiv, infile);
+                printDivision(pDiv);
+                addDivision(pCorp, pDiv);
+        }
+
+        cout << "-------------------------------------------------------------" << endl;
+
+        printCorpSummary(pCorp);
+        
+        delete pDiv;
+        delete pCorp;
+
+        pDiv = nullptr;
+        pCorp = nullptr;
+
+        return 0;
+}
+
+// Function:    getDivision
+// Description: The purpose of this function is to read in the data for one division
+//                              and store the data in the Division struct using the pointer variable.
+// Programmer:  Douglas G Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  pDiv    - Pointer to Division structure
+//                              infile  - input file object
+// Returns:             This function is void.
+void getDivision(Division* pDiv, ifstream &infile)
+{
+        getline(infile, pDiv->Div_Name);
+        infile >> pDiv->Div_salesQ1;
+        infile >> pDiv->Div_salesQ2;
+        infile >> pDiv->Div_salesQ3;
+        infile >> pDiv->Div_salesQ4;
+
+        infile.ignore(1, ' ');
+}
+
+// Function:    printDivision
+// Description: The purpose of this function is to write out a line of input to display
+//                              the division name, four quarterly sales amounts and the total sales
+//                              for the year for that division.
+// Programmer:  Douglas G Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  pDiv    - pointer to Division structure
+// Returns:             This function is void.
+void printDivision(Division* pDiv)
+{
+        
+        cout << right << setw(18) << pDiv->Div_Name << setw(10) << pDiv->Div_salesQ1 << setw(10); 
+        cout << pDiv->Div_salesQ2 << setw(10) << pDiv->Div_salesQ3 << setw(10) << pDiv->Div_salesQ4 << endl;
+
+}
+
+// Function:    addDivision
+// Description: The purpose of this function is to add the divisional quarterly sales to
+//                              the corporation quarterly sales.  We also increment Number_Divs to calculate
+//                              the total  number of divisions are in the corporation.
+// Programmer:  Douglas G Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  pCorp   - Pointer to Corp structure
+//                              pDiv    - Pointer to Division structure
+// Returns:             This function is void.
+void addDivision(Corp* pCorp, Division* pDiv)
+{
+        pCorp->Q1_Sales += pDiv->Div_salesQ1;
+        pCorp->Q2_Sales += pDiv->Div_salesQ2;
+        pCorp->Q3_Sales += pDiv->Div_salesQ3;
+        pCorp->Q4_Sales += pDiv->Div_salesQ4;
+
+        pCorp->Number_Divs++;
+}
+
+// Function:    printCorpSummary
+// Description: The purpose of this function is to print the total corporate sales for each quarter,
+//                              the total sales for all quarters for the year, the average quarterly sales for each
+//                              quarter, and the highest and lowest quarters for the corporation.
+// Programmer:  Douglas G Calmes
+// Class:               CS 2020, Spring 2016
+// Parameters:  pCorp   - Pointer to Corp structure
+// Returns:             This function is void.
+void printCorpSummary(Corp* pCorp)
+{
+
+
+        cout << right << setw(18) << "Corp Totals:" << setw(10) << pCorp->Q1_Sales << setw(10) << pCorp->Q2_Sales;
+        cout << setw(10) << pCorp->Q3_Sales << setw(10) << pCorp->Q4_Sales << endl;
+        cout << right << setw(18) << "Avg Qtr Sales:" << setw(10) << pCorp->Q1_Sales / pCorp->Number_Divs << setw(10);
+        cout << pCorp->Q2_Sales / pCorp->Number_Divs << setw(10) << pCorp->Q3_Sales / pCorp->Number_Divs << setw(10);
+        cout << pCorp->Q4_Sales / pCorp->Number_Divs << endl << endl;
+        cout << right << setw(17) << "Total Sales: " << pCorp->Q1_Sales + pCorp->Q2_Sales + pCorp->Q3_Sales + pCorp->Q4_Sales << endl;
+
+        if (pCorp->Q1_Sales > pCorp->Q2_Sales && pCorp->Q1_Sales > pCorp->Q3_Sales && pCorp->Q1_Sales > pCorp->Q4_Sales)
+        {
+                cout << right << setw(17) << "Corp High Qtr: " << pCorp->Q1_Sales << endl;
+        }
+        else if (pCorp->Q2_Sales > pCorp->Q1_Sales && pCorp->Q2_Sales > pCorp->Q3_Sales && pCorp->Q2_Sales > pCorp->Q4_Sales)
+        {
+                cout << right << setw(17) << "Corp High Qtr: " << pCorp->Q2_Sales << endl;
+        }
+        else if (pCorp->Q3_Sales > pCorp->Q1_Sales && pCorp->Q3_Sales > pCorp->Q2_Sales && pCorp->Q3_Sales > pCorp->Q4_Sales)
+        {
+                cout << right << setw(17) << "Corp High Qtr: " << pCorp->Q3_Sales << endl;
+        }
+        else if (pCorp->Q4_Sales > pCorp->Q1_Sales && pCorp->Q4_Sales > pCorp->Q2_Sales && pCorp->Q4_Sales > pCorp->Q3_Sales)
+        {
+                cout << right << setw(17) << "Corp High Qtr: " << pCorp->Q4_Sales << endl;
+        }
+        
+        if (pCorp->Q1_Sales < pCorp->Q2_Sales && pCorp->Q1_Sales < pCorp->Q3_Sales && pCorp->Q1_Sales < pCorp->Q4_Sales)
+        {
+                cout << right << setw(17) << "Corp Low Qtr: " << pCorp->Q1_Sales << setw(33) << "* $ in thousands" << endl;
+        }
+        else if (pCorp->Q2_Sales < pCorp->Q1_Sales && pCorp->Q2_Sales < pCorp->Q3_Sales && pCorp->Q2_Sales < pCorp->Q4_Sales)
+        {
+                cout << right << setw(17) << "Corp Low Qtr: " << pCorp->Q2_Sales << setw(33) << "* $ in thousands" << endl;
+        }
+        else if (pCorp->Q3_Sales < pCorp->Q1_Sales && pCorp->Q3_Sales < pCorp->Q2_Sales && pCorp->Q3_Sales < pCorp->Q4_Sales)
+        {
+                cout << right << setw(17) << "Corp Low Qtr: " << pCorp->Q3_Sales << setw(33) << "* $ in thousands" << endl;
+        }
+        else if (pCorp->Q4_Sales < pCorp->Q1_Sales && pCorp->Q4_Sales < pCorp->Q2_Sales && pCorp->Q4_Sales < pCorp->Q3_Sales)
+        {
+                cout << right << setw(17) << "Corp Low Qtr: " << pCorp->Q4_Sales << setw(33) << "* $ in thousands" << endl;
+        }
+        //cout << right << setw(17) << "Corp Low Qtr: " << pCorp->Q1_Sales << setw(33) << "* $ in thousands" << endl;
+}sh-4.3$ g++ prog3.cpp
+sh-4.3$ a.out
+-------------------------------------------------------------
+                 Stratus Corporation Sales Report*
+                        Douglas G Calmes
+-------------------------------------------------------------
+          Division        Q1        Q2        Q3        Q4
+     Bowling Green     50000     80000    150000    250000
+         Hong Kong   4000000   3500000   4500000   9000000
+       Los Angeles   3000000   2000000   3000000   5000000
+          New York   2000000   1000000   3000000   5000000
+    Rio de Janeiro   5000000   6000000   4000000   7000000
+     San Francisco   2000000   4000000   3000000   3500000
+-------------------------------------------------------------
+      Corp Totals:  16050000  16580000  17650000  29750000
+    Avg Qtr Sales:   2675000   2763333   2941666   4958333
+
+    Total Sales: 80030000
+  Corp High Qtr: 29750000
+   Corp Low Qtr: 16050000                 * $ in thousands
+sh-4.3$ exit
+
+script done on Fri Feb 19 20:20:05 2016

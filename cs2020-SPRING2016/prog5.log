@@ -1,0 +1,347 @@
+Script started on Thu Mar 24 19:01:40 2016
+sh-4.3$ pwd
+/home/93/dcalmes/cs2020
+sh-4.3$ ls -l
+total 400
+-rwxr-xr-x   1 dcalmes  ics2020    11656 Mar 23 21:28 a.out
+-rw-rwx---   1 dcalmes  ics2020     4073 Mar 14 09:29 lab1.cpp
+-rw-rwx---   1 dcalmes  ics2020     6188 Mar 14 09:31 lab1.log
+-rw-rwx---   1 dcalmes  ics2020     4458 Mar 14 10:03 lab2.cpp
+-rw-rwx---   1 dcalmes  ics2020     8365 Mar 14 10:07 lab2.log
+-rw-r--r--   1 dcalmes  ics2020     7472 Mar 19 16:57 lab3.cpp
+-rw-r--r--   1 dcalmes  user       14262 Mar 20 18:54 lab3.log
+-rw-r--r--   1 dcalmes  ics2020      626 Jan 29  2013 lab3.txt
+-rw-rwx---   1 dcalmes  ics2020     7109 Feb 24 18:47 lab4.cpp
+-rw-rwx---   1 dcalmes  ics2020    13304 Feb 24 18:53 lab4.log
+-rw-rwx---   1 dcalmes  ics2020      400 Feb 24 17:56 lab4.txt
+-rw-rwx---   1 dcalmes  ics2020     5645 Mar  2 18:51 lab5.cpp
+-rw-rwx---   1 dcalmes  ics2020    10026 Mar  2 18:54 lab5.log
+-rw-rwx---   1 dcalmes  ics2020      315 Mar  2 14:40 lab5.txt
+-rw-r--r--   1 dcalmes  ics2020    11354 Mar 23 21:27 lab6.cpp
+-rw-r--r--   1 dcalmes  user       20495 Mar 23 21:29 lab6.log
+-rw-r--r--   1 dcalmes  ics2020     1937 Mar 23 21:18 lab6H.h
+-rw-r--r--   1 dcalmes  ics2020     2408 Mar 23 21:27 lab6client.cpp
+lrwxrwxrwx   1 dcalmes  ics2020       24 Feb  5 16:39 lib -> /home/classes/cs2020/Lib
+-rw-r--r--   1 dcalmes  ics2020    12117 Mar 16 02:15 prog1.cpp
+-rw-r--r--   1 dcalmes  user       18769 Mar 16 02:34 prog1.log
+-rw-r--r--   1 dcalmes  ics2020      400 Jan  1  2015 prog1.txt
+-rw-rwx---   1 dcalmes  ics2020     6668 Feb 23 20:06 prog3.cpp
+-rw-rwx---   1 dcalmes  ics2020     9502 Feb 19 20:20 prog3.log
+-rw-rwx---   1 dcalmes  ics2020      259 Jan  1  2015 prog3.txt
+-rw-rwx---   1 dcalmes  ics2020     1738 Feb 26 17:25 prog4.cpp
+-rw-rwx---   1 dcalmes  ics2020      649 Mar  6  2015 prog4.txt
+-rw-r--r--   1 dcalmes  ics2020     4374 Mar 24 18:47 prog5.cpp
+-rw-r--r--   1 dcalmes  ics2020     1089 Mar 24 18:55 prog5.h
+-rw-r--r--   1 dcalmes  user           0 Mar 24 19:01 prog5.log
+-rw-r--r--   1 dcalmes  ics2020     2036 Mar 24 18:47 prog5client.cpp
+-rw-rwx---   1 dcalmes  ics2020       54 Mar 14 09:10 sample.txt
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat prog5.h
+/////////////////////////////////////////////////////////////////////////
+//      Program                 5
+//      Description:    This program will have a user input a temperature.
+//                                      It will take this temperature and print out if
+//                                              certain substances will freeze or boil at
+//                                              the temperature that was input.
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+/////////////////////////////////////////////////////////////////////////
+
+#ifndef TEMPERATURE_H
+#define TEMPERATURE_H
+
+class Temperature
+{
+private:
+        int temperature;
+
+public:
+
+        //      Accessors
+        int getTemp() const 
+        { 
+                return temperature;
+        }                                                                       
+        void oxygenFreezes() const;
+        void oxygenBoils() const;
+        void ethylFreezes() const;
+        void ethylBoils() const;
+        void waterFreezes() const;
+        void waterBoils() const;
+        void nitrogenFreezes() const;
+        void nitrogenBoils() const;
+
+        //      Constructors
+        Temperature() 
+        {
+                temperature = 0; 
+        }
+        Temperature(int temp)
+        {
+                temperature = temp;
+        }
+        
+        //      Mutators
+        void setTemp(int tempSet) 
+        {
+                temperature = tempSet; 
+        }
+};
+
+#endif;sh-4.3$ cat prog5.cpp
+/////////////////////////////////////////////////////////////////////////
+//      Program                 5
+//      Description:    This program will have a user input a temperature.
+//                                      It will take this temperature and print out if
+//                                              certain substances will freeze or boil at
+//                                              the temperature that was input.
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+/////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include "prog5.h"
+
+using namespace std;
+
+//////////////////////////////////////////////////////////////////////////
+//      Function:               oxygenBoils
+//      Description:    This function will print out if the substance
+//                                              will boil at the temperature that was input
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+//      Parameters:             None
+//      Returns:                Nothing
+//////////////////////////////////////////////////////////////////////////
+void Temperature::oxygenBoils() const
+{
+        cout << " Oxygen. ";
+}
+
+//////////////////////////////////////////////////////////////////////////
+//      Function:               oxygenFreezes
+//      Description:    This function will print out if the substance
+//                                              will freeze at the temperature that was input
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+//      Parameters:             None
+//      Returns:                Nothing
+//////////////////////////////////////////////////////////////////////////
+void Temperature::oxygenFreezes() const
+{
+        cout << " Oxygen. ";
+}
+
+//////////////////////////////////////////////////////////////////////////
+//      Function:               ethylBoils
+//      Description:    This function will print out if the substance
+//                                              will boil at the temperature that was input
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+//      Parameters:             None
+//      Returns:                Nothing
+//////////////////////////////////////////////////////////////////////////
+void Temperature::ethylBoils() const
+{
+        cout << " Ethyl Alcohol. ";
+}
+
+//////////////////////////////////////////////////////////////////////////
+//      Function:               ethylFreezes
+//      Description:    This function will print out if the substance
+//                                              will freeze at the temperature that was input
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+//      Parameters:             None
+//      Returns:                Nothing
+//////////////////////////////////////////////////////////////////////////
+void Temperature::ethylFreezes() const
+{
+        cout << " Ethyl Alcohol. ";
+}
+
+//////////////////////////////////////////////////////////////////////////
+//      Function:               waterBoils
+//      Description:    This function will print out if the substance
+//                                              will boil at the temperature that was input
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+//      Parameters:             None
+//      Returns:                Nothing
+//////////////////////////////////////////////////////////////////////////
+void Temperature::waterBoils() const
+{
+        cout << " Water. ";
+}
+
+//////////////////////////////////////////////////////////////////////////
+//      Function:               waterFreezes
+//      Description:    This function will print out if the substance
+//                                              will freeze at the temperature that was input
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+//      Parameters:             None
+//      Returns:                Nothing
+//////////////////////////////////////////////////////////////////////////
+void Temperature::waterFreezes() const
+{
+        cout << " Water. ";
+}
+
+//////////////////////////////////////////////////////////////////////////
+//      Function:               nitrogenBoils
+//      Description:    This function will print out if the substance
+//                                              will boil at the temperature that was input
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+//      Parameters:             None
+//      Returns:                Nothing
+//////////////////////////////////////////////////////////////////////////
+void Temperature::nitrogenBoils() const
+{
+        cout << " Nitrogen. ";
+}
+
+//////////////////////////////////////////////////////////////////////////
+//      Function:               nitrogenFreezes
+//      Description:    This function will print out if the substance
+//                                              will freeze at the temperature that was input
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+//      Parameters:             None
+//      Returns:                Nothing
+//////////////////////////////////////////////////////////////////////////
+void Temperature::nitrogenFreezes() const
+{
+        cout << " Nitrogen. ";
+}
+
+sh-4.3$ cat prog5client.cpp
+/////////////////////////////////////////////////////////////////////////
+//      Program                 5
+//      Description:    This program will have a user input a temperature.
+//                                      It will take this temperature and print out if
+//                                              certain substances will freeze or boil at
+//                                              the temperature that was input.
+//      Programmer:             Douglas G Calmes
+//      Class:                  CS 2020, Spring 2016
+/////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include "prog5.h"
+
+using namespace std;
+
+int main()
+{
+        Temperature Temp;
+        int userTemperature = 0;
+
+        //      Header for the entire program
+        cout << "This program will tell you what substances freeze" << endl;
+        cout << "or boil at a particular temperature." << endl << endl;
+
+        //      User inputs the temperature
+        cout << "Please enter a temperature: ";
+        cin >> userTemperature;
+
+        //      Call the setTemp function in order to set the userTemperature
+        Temp.setTemp(userTemperature);
+        cout << "=======================================================================" << endl;
+
+        //      Header for the freezing substances.  Also, call the functions for each
+        //              substance to see if it will freeze.  If so, add it to the list.
+        cout << "Substances that freeze at\t" << Temp.getTemp() << ":\t";
+
+        if (Temp.getTemp() <= -362)
+        {
+                Temp.oxygenFreezes();
+        }
+        if (Temp.getTemp() <= -173)
+        {
+                Temp.ethylFreezes();
+        }
+        if (Temp.getTemp() <= 32)
+        {
+                Temp.waterFreezes();
+        }
+        if (Temp.getTemp() <= -346)
+        {
+                Temp.nitrogenFreezes();
+        }
+
+        //      Header for the boiling substances.  Also, call the functions for each
+        //              substance to see if it will boil.  If so, add it to the list.
+        cout << endl << "Substances that boil at\t \t" << Temp.getTemp() << ":\t";
+
+        if (Temp.getTemp() >= -300)
+        {
+                Temp.oxygenBoils();
+        }
+        if (Temp.getTemp() >= 173)
+        {
+                Temp.ethylBoils();
+        }
+        if (Temp.getTemp() >= 212)
+        {
+                Temp.waterBoils();
+        }
+        if (Temp.getTemp() >= -320)
+        {
+                Temp.nitrogenBoils();
+        }
+        cout << endl;
+
+        system("Pause");
+        return 0;
+}sh-4.3$ g++ prog5.cpp prog5client.cpp
+In file included from [01m[Kprog5.cpp:12:0[m[K:
+[01m[Kprog5.h:52:7:[m[K [01;35m[Kwarning: [m[Kextra tokens at end of #endif directive [-Wendif-labels]
+ #endif;
+[01;32m[K       ^[m[K
+In file included from [01m[Kprog5client.cpp:12:0[m[K:
+[01m[Kprog5.h:52:7:[m[K [01;35m[Kwarning: [m[Kextra tokens at end of #endif directive [-Wendif-labels]
+ #endif;
+[01;32m[K       ^[m[K
+sh-4.3$ a.out
+This program will tell you what substances freeze
+or boil at a particular temperature.
+
+Please enter a temperature: -300
+=======================================================================
+Substances that freeze at       -300:    Ethyl Alcohol.  Water. 
+Substances that boil at         -300:    Oxygen.  Nitrogen. 
+sh: Pause: not found
+sh-4.3$ a.out
+This program will tell you what substances freeze
+or boil at a particular temperature.
+
+Please enter a temperature: -20
+=======================================================================
+Substances that freeze at       -20:     Water. 
+Substances that boil at         -20:     Oxygen.  Nitrogen. 
+sh: Pause: not found
+sh-4.3$ a.out
+This program will tell you what substances freeze
+or boil at a particular temperature.
+
+Please enter a temperature: 250
+=======================================================================
+Substances that freeze at       250:    
+Substances that boil at         250:     Oxygen.  Ethyl Alcohol.  Water.  Nitrogen. 
+sh: Pause: not found
+sh-4.3$ a.out
+This program will tell you what substances freeze
+or boil at a particular temperature.
+
+Please enter a temperature: -350
+=======================================================================
+Substances that freeze at       -350:    Ethyl Alcohol.  Water.  Nitrogen. 
+Substances that boil at         -350:   
+sh: Pause: not found
+sh-4.3$ exit
+exit
+
+script done on Thu Mar 24 19:03:51 2016

@@ -1,0 +1,216 @@
+Script started on Fri Mar 25 16:20:03 2016
+sh-4.3$ ls -l
+total 472
+-rwxr-xr-x   1 dcalmes  ics2020    10480 Mar 25 16:18 a.out
+-rw-rwx---   1 dcalmes  ics2020     4073 Mar 14 09:29 lab1.cpp
+-rw-rwx---   1 dcalmes  ics2020     6188 Mar 14 09:31 lab1.log
+-rw-r--r--   1 dcalmes  ics2020     4784 Mar 25 13:33 lab2.cpp
+-rw-r--r--   1 dcalmes  user           0 Mar 25 16:20 lab2.log
+-rw-r--r--   1 dcalmes  ics2020     7472 Mar 19 16:57 lab3.cpp
+-rw-r--r--   1 dcalmes  user       14262 Mar 20 18:54 lab3.log
+-rw-r--r--   1 dcalmes  ics2020      626 Jan 29  2013 lab3.txt
+-rw-rwx---   1 dcalmes  ics2020     7109 Feb 24 18:47 lab4.cpp
+-rw-rwx---   1 dcalmes  ics2020    13304 Feb 24 18:53 lab4.log
+-rw-rwx---   1 dcalmes  ics2020      400 Feb 24 17:56 lab4.txt
+-rw-rwx---   1 dcalmes  ics2020     5645 Mar  2 18:51 lab5.cpp
+-rw-rwx---   1 dcalmes  ics2020    10026 Mar  2 18:54 lab5.log
+-rw-rwx---   1 dcalmes  ics2020      315 Mar  2 14:40 lab5.txt
+-rw-r--r--   1 dcalmes  ics2020    11354 Mar 23 21:27 lab6.cpp
+-rw-r--r--   1 dcalmes  user       20495 Mar 23 21:29 lab6.log
+-rw-r--r--   1 dcalmes  ics2020     1937 Mar 23 21:18 lab6H.h
+-rw-r--r--   1 dcalmes  ics2020     2408 Mar 23 21:27 lab6client.cpp
+lrwxrwxrwx   1 dcalmes  ics2020       24 Feb  5 16:39 lib -> /home/classes/cs2020/Lib
+-rw-r--r--   1 dcalmes  ics2020    12117 Mar 16 02:15 prog1.cpp
+-rw-r--r--   1 dcalmes  user       18769 Mar 16 02:34 prog1.log
+-rw-r--r--   1 dcalmes  ics2020      400 Jan  1  2015 prog1.txt
+-rw-r--r--   1 dcalmes  ics2020    11371 Mar 25 16:10 prog2.cpp
+-rw-r--r--   1 dcalmes  user       17551 Mar 25 16:14 prog2.log
+-rw-r--r--   1 dcalmes  ics2020      937 Mar 16 18:31 prog2.txt
+-rw-rwx---   1 dcalmes  ics2020     6668 Feb 23 20:06 prog3.cpp
+-rw-rwx---   1 dcalmes  ics2020     9502 Feb 19 20:20 prog3.log
+-rw-rwx---   1 dcalmes  ics2020      259 Jan  1  2015 prog3.txt
+-rw-rwx---   1 dcalmes  ics2020     1738 Feb 26 17:25 prog4.cpp
+-rw-rwx---   1 dcalmes  ics2020      649 Mar  6  2015 prog4.txt
+-rw-r--r--   1 dcalmes  ics2020     4374 Mar 24 18:47 prog5.cpp
+-rw-r--r--   1 dcalmes  ics2020     1089 Mar 24 18:55 prog5.h
+-rw-r--r--   1 dcalmes  user       14447 Mar 24 19:03 prog5.log
+-rw-r--r--   1 dcalmes  ics2020     2036 Mar 24 18:47 prog5client.cpp
+-rw-rwx---   1 dcalmes  ics2020       54 Mar 14 09:10 sample.txt
+sh-4.3$ 
+sh-4.3$ cat lab2.cpp
+//**************************************************************************
+// Program: Charge Account Numbers
+//
+// Purpose: This program checks whether a number entered by the user is a
+//              valid charge account number.
+// 
+// Input:       The user is asked to enter a three-digit number to be checked.
+//
+// Processing:  
+//          The main function uses an initialization list to initialize
+//              an array with charge account numbers. Then it calls a function
+//                  to display the list. The user is asked to enter a charge
+//                  number. The main function calls another function to check the
+//                  validity of this number and then it displays a message 
+//                  reporting the results. 
+//
+// Output:      The program displays the list of account numbers and a message
+//              indicating whether the number entered by the user is valid 
+//                  or not.
+//
+// Author:      Douglas Calmes
+// Class:       CS 2020
+// Semester:Spring/Fall 2015
+//**************************************************************************
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+// Function prototypes
+void displayAcctNos(int[], int);
+int searchList(int[], int, int);
+void BSort(int[], int);
+
+int main()
+{
+        const int ARY_SIZE = 9;
+
+        // Array of account numbers
+        int accounts[ARY_SIZE] =
+        { 565,  452,  789,
+                877,  845,  130,
+                808,  456,  555 };
+
+        int accountNumber;
+        int position;
+        //********************************************************
+        // Bubble sort into ascending order
+        //********************************************************
+        BSort(accounts, ARY_SIZE);
+        //********************************************************
+        // Display account numbers
+        //********************************************************
+        displayAcctNos(accounts, ARY_SIZE);
+
+        //********************************************************
+        // Get an account number from the user.
+        //********************************************************
+        cout << endl << "Please enter a 3-digit account number:  ";
+        cin >> accountNumber;
+
+        while (accountNumber != -1)
+        {
+                //********************************************************
+                // Search the array for the number and indicate whether it
+                // is valid or not.
+                //********************************************************
+                position = searchList(accounts, accountNumber, ARY_SIZE);
+                cout << endl;
+                if (position == -1)
+                        cout << accountNumber << " is an invalid charge account number."
+                        << endl;
+                else
+                        cout << accountNumber << " is a valid charge account number."
+                        << endl;
+
+                // Give user a chance to enter -1 and end the lookup
+                //
+                cout << endl << "Please enter a 3-digit account number:  ";
+                cin >> accountNumber;
+        }
+
+        cout << endl;
+        return 0;
+}
+
+//*********************************************************************
+// Function:    displayAcctNos
+// Description: Displays the list of charge numbers. 
+// Returns:     void
+//*********************************************************************
+void displayAcctNos(int acctNos[], int ARY_SIZE)
+{
+        cout << endl << "Charge Account Numbers" << endl;
+        cout << "Element  Charge Number " << endl;
+        for (int k = 0; k < ARY_SIZE; k++)
+                cout << setw(4) << k << setw(14) << acctNos[k] << endl;
+}
+
+
+//*********************************************************************
+// Function:    searchList                             
+// Description: This function searches the array of charge numbers for the
+//              number passed into value using the linear search algorithm. 
+//              If the number is found the function returns the position of
+//              the value in the array.
+// Return:      If the number is not found it returns -1.
+//*********************************************************************
+int searchList(int accounts[], int value, int ARY_SIZE)
+{
+        int first = 0;       // Used as subscript to search array
+        int position = -1;   // To record position of search value
+        bool found = false;  // Flag to indicate if value found
+        int last = ARY_SIZE - 1;
+        int  middle;
+
+        // Step through the array as long as the value is not found
+        while (first <= last && !found)
+        {
+                middle = (first + last) / 2;
+        if (accounts[middle] == value)
+                {
+                        found = true;           // The value is found
+                        position = middle;       // Record the value's position
+                }
+                else if (accounts[middle] > value)
+                        last = middle - 1;
+                else
+                        first = middle + 1;
+        }
+        return position;
+}
+
+////////////////////////////////////////////////
+//Bubble sort:
+////////////////////////////////////////////////
+
+void BSort(int accounts[], int ARY_SIZE)
+{
+        bool sorted = false;
+        int num = ARY_SIZE - 1;
+        int tempValue;
+        do
+        {
+                sorted = true;
+                for (int i = 0; i < num; i++)
+                {
+                        if (accounts[i] > accounts[i + 1])
+                        {
+                                tempValue = accounts[i];
+                                accounts[i] = accounts[i + 1];
+                                accounts[i + 1] = tempValue;
+                                sorted = false;
+                        }
+                }
+        } while (sorted == false);
+}
+sh-4.3$ g++ lab2.cpp
+sh-4.3$ a.out
+
+Charge Account Numbers
+Element  Charge Number 
+   0           130
+   1           452
+   2           456
+   3           555
+   4           565
+   5           789
+   6           808
+   7           845
+   8           877
+
+Please enter a 3-digit account number:  -1
+
+sh-4.3$ exit
+
+script done on Fri Mar 25 16:20:41 2016

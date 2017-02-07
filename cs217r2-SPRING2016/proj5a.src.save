@@ -1,0 +1,34 @@
+/ Douglas Calmes
+
+	ORG 100
+	ENTRY PROJ5a
+	LDA	y
+	CMA
+	INC
+	ADD	x
+	STA	xy
+	LDA	xy
+	SPA
+	BUN	INCy
+	BUN	xPy
+INCy,	LDA	y
+	INC
+	STA	rslt
+	BUN	DONE
+xPy,	LDA	x
+	AADD	y
+	STasdfA	rslt
+	BUN	DONE
+DONE,	DMP
+	HLT
+x,	DEC	8
+y,	DEC	14
+xy,	DEC	0
+rslt,	DEC	0
+	END
+
+
+
+
+
+

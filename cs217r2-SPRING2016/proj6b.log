@@ -1,0 +1,197 @@
+Script started on Thu Apr 28 15:26:38 2016
+sh-4.3$ pwd
+/home/93/dcalmes/cs217r2
+sh-4.3$ ls -l
+total 178
+-rw-r--r--   1 dcalmes  ics217r2      89 Apr  6 11:33 lab5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.exec
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.obj
+-rw-r--r--   1 dcalmes  ics217r2     642 Apr  6 11:33 lab5a.src
+-rw-r--r--   1 dcalmes  ics217r2      42 Apr  6 11:33 lab5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     131 Apr  6 12:09 lab5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:09 lab5b.exec
+-rw-r--r--   1 dcalmes  user        3644 Apr  6 12:09 lab5b.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:08 lab5b.obj
+-rw-r--r--   1 dcalmes  ics217r2     523 Apr  6 12:07 lab5b.src
+-rw-r--r--   1 dcalmes  ics217r2      69 Apr  6 12:08 lab5b.sym
+-rw-r--r--   1 dcalmes  ics217r2     139 Apr 27 19:17 lab6.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:17 lab6.exec
+-rw-r--r--   1 dcalmes  user        6726 Apr 27 19:17 lab6.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:17 lab6.obj
+-rw-r--r--   1 dcalmes  ics217r2     931 Apr 27 15:23 lab6.src
+-rw-r--r--   1 dcalmes  ics217r2      51 Apr 27 19:17 lab6.sym
+-rw-r--r--   1 dcalmes  ics217r2     140 Apr 27 19:19 lab6b.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:19 lab6b.exec
+-rw-r--r--   1 dcalmes  user        6781 Apr 27 19:19 lab6b.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:19 lab6b.obj
+-rw-r--r--   1 dcalmes  ics217r2     929 Apr 27 15:36 lab6b.src
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:19 lab6b.sym
+lrwxrwxrwx   1 root     ics217r2      25 Apr  6 11:25 lib -> /home/classes/cs217r2/Lib
+-rw-r--r--   1 dcalmes  ics217r2     152 Apr 19 16:49 proj5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:49 proj5a.exec
+-rw-r--r--   1 dcalmes  user        6284 Apr 19 21:58 proj5a.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:49 proj5a.obj
+-rw-------   1 dcalmes  ics217r2     208 Apr 19 17:33 proj5a.save
+-rw-r--r--   1 dcalmes  ics217r2    1140 Apr 19 16:48 proj5a.src
+-rw-------   1 dcalmes  ics217r2     252 Apr 19 15:56 proj5a.src.save
+-rw-r--r--   1 dcalmes  ics217r2      80 Apr 19 16:49 proj5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     101 Apr 19 17:54 proj5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr 19 17:54 proj5b.exec
+-rw-r--r--   1 dcalmes  user        8089 Apr 20 08:10 proj5b.log
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr 19 17:54 proj5b.obj
+-rw-r--r--   1 dcalmes  ics217r2    1163 Apr 19 17:53 proj5b.src
+-rw-r--r--   1 dcalmes  ics217r2      63 Apr 19 17:54 proj5b.sym
+-rw-r--r--   1 dcalmes  ics217r2     182 Apr 28 15:26 proj6a.cos
+-rw-r--r--   1 dcalmes  ics217r2      70 Apr 28 15:26 proj6a.exec
+-rw-r--r--   1 dcalmes  user        9043 Apr 28 15:26 proj6a.log
+-rw-r--r--   1 dcalmes  ics217r2      70 Apr 28 15:25 proj6a.obj
+-rw-r--r--   1 dcalmes  ics217r2    1410 Apr 28 15:25 proj6a.src
+-rw-r--r--   1 dcalmes  ics217r2      78 Apr 28 15:25 proj6a.sym
+-rw-r--r--   1 dcalmes  ics217r2     187 Apr 28 14:21 proj6b.cos
+-rw-r--r--   1 dcalmes  ics217r2      70 Apr 28 14:21 proj6b.exec
+-rw-r--r--   1 dcalmes  user           0 Apr 28 15:26 proj6b.log
+-rw-r--r--   1 dcalmes  ics217r2      70 Apr 28 14:21 proj6b.obj
+-rw-r--r--   1 dcalmes  ics217r2    1374 Apr 28 14:29 proj6b.src
+-rw-r--r--   1 dcalmes  ics217r2      96 Apr 28 14:21 proj6b.sym
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat proj6b.src
+// Douglas G Calmes     CS2170-2 11:30    proj6b
+// The purpose of this program is that it will call
+// a subroutine to compute the exclusive OR of
+// two values.  It will do this by using the
+// formula of (A'B)'  (AB')'
+
+                ORG     100     // Origin at 100
+                ENTRY   XOR     // Name of project
+                BSA     FLIP    // Branch to FLIP (save address)
+                STA     RSLT    // Store final result
+                DMP             // Dump
+                HLT             // HALT computer
+                END             // End the project
+                
+        FLIP,   HEX     0       // Start FLIP subroutine
+                LDA     OP1     // Load OP1 into the AC
+                CMA             // Compliment the AC
+                STA     OP1P    // Store the result in OP1P
+                LDA     OP2     // Load OP2 into the AC
+                AND     OP1P    // And OP2 with OP1P
+                CMA             // Compliment these two for (A'B)'
+                STA     XOR1    // Store these results in XOR1
+                LDA     OP2     // Load OP2 inot the AC
+                CMA             // Compliment the AC
+                STA     OP2P    // Store the result in OP2P
+                LDA     OP1     // Load OP1 into the AC
+                AND     OP2P    // And OP1 with OP2P
+                CMA             // Compliment these two for (AB')'
+                STA     XOR2    // Store these results in XOR2
+                LDA     XOR1    // Load XOR2 into the AC
+                AND     XOR2    // And XOR2 with XOR1
+                CMA             // Compliment these results for A XOR B
+                BUN     FLIP I  // Branch back to FLIP I address
+        
+        OP1,    HEX     A9B4    // Value of "A"
+        OP2,    HEX     38CF    // Value of "B"
+        OP1P,   HEX     0000    // Compliment of "A"
+        OP2P,   HEX     0000    // Compliment of "B"
+        XOR1,   HEX     0000    // Value of (A'B)'
+        XOR2,   HEX     0000    // Value of (AB')'
+        RSLT,   HEX     0000    // Final Result of A XOR B
+sh-4.3$ csos
+[2J[H
+                    Welcome to the csos operating system!
+                               CS 217
+               To see a list of commands type 'help' or '?'
+
+csos: assem proj6b.src
+     // DOUGLAS G CALMES        CS2170-2 11:30    PROJ6B
+     // THE PURPOSE OF THIS PROGRAM IS THAT IT WILL CALL
+     // A SUBROUTINE TO COMPUTE THE EXCLUSIVE OR OF
+     // TWO VALUES.  IT WILL DO THIS BY USING THE
+     // FORMULA OF (A'B)'  (AB')'
+     
+                ORG     100     // ORIGIN AT 100
+                ENTRY   XOR     // NAME OF PROJECT
+0100            BSA     FLIP    // BRANCH TO FLIP (SAVE ADDRESS)
+0101            STA     RSLT    // STORE FINAL RESULT
+0102            DMP             // DUMP
+0103            HLT             // HALT COMPUTER
+                END             // END THE PROJECT
+                
+0104    FLIP,   HEX     0       // START FLIP SUBROUTINE
+0105            LDA     OP1     // LOAD OP1 INTO THE AC
+0106            CMA             // COMPLIMENT THE AC
+0107            STA     OP1P    // STORE THE RESULT IN OP1P
+0108            LDA     OP2     // LOAD OP2 INTO THE AC
+0109            AND     OP1P    // AND OP2 WITH OP1P
+010a            CMA             // COMPLIMENT THESE TWO FOR (A'B)'
+010b            STA     XOR1    // STORE THESE RESULTS IN XOR1
+010c            LDA     OP2     // LOAD OP2 INOT THE AC
+010d            CMA             // COMPLIMENT THE AC
+010e            STA     OP2P    // STORE THE RESULT IN OP2P
+010f            LDA     OP1     // LOAD OP1 INTO THE AC
+0110            AND     OP2P    // AND OP1 WITH OP2P
+0111            CMA             // COMPLIMENT THESE TWO FOR (AB')'
+0112            STA     XOR2    // STORE THESE RESULTS IN XOR2
+0113            LDA     XOR1    // LOAD XOR2 INTO THE AC
+0114            AND     XOR2    // AND XOR2 WITH XOR1
+0115            CMA             // COMPLIMENT THESE RESULTS FOR A XOR B
+0116            BUN     FLIP I  // BRANCH BACK TO FLIP I ADDRESS
+        
+0117    OP1,    HEX     A9B4    // VALUE OF "A"
+0118    OP2,    HEX     38CF    // VALUE OF "B"
+0119    OP1P,   HEX     0000    // COMPLIMENT OF "A"
+011a    OP2P,   HEX     0000    // COMPLIMENT OF "B"
+011b    XOR1,   HEX     0000    // VALUE OF (A'B)'
+011c    XOR2,   HEX     0000    // VALUE OF (AB')'
+011d    RSLT,   HEX     0000    // FINAL RESULT OF A XOR B
+
+Symbol Table:
+XOR     0100    1
+FLIP    0104    0
+OP1     0117    0
+OP2     0118    0
+OP1P    0119    0
+OP2P    011a    0
+XOR1    011b    0
+XOR2    011c    0
+RSLT    011d    0
+
+Object code:
+5104 311d f001 7001 0000 2117 7200 3119 
+2118 0119 7200 311b 2118 7200 311a 2117 
+011a 7200 311c 211b 011c 7200 c104 a9b4 
+38cf 0000 0000 0000 0000 0000 0000 0000 
+
+csos: link proj6b.obj
+File to link proj6b.obj
+obj  file name is proj6b.obj
+exec file name is proj6b.exec
+web simulator file name is proj6b.cos
+csos: run proj6b.exec
+No input file used, proceeding ...
+
+csos registers:
+   AC = 917b
+   PC = 0103
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: 5104 311d f001 7001 0101 2117 7200 3119 
+0108: 2118 0119 7200 311b 2118 7200 311a 2117 
+0110: 011a 7200 311c 211b 011c 7200 c104 a9b4 
+0118: 38cf 564b c730 efb4 7ecf 917b 0000 0000 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+0130: ffff ffff ffff ffff ffff ffff ffff ffff 
+0138: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos: quit
+sh-4.3$ exit
+exit
+
+script done on Thu Apr 28 15:27:40 2016

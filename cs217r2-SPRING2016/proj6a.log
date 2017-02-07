@@ -1,0 +1,193 @@
+Script started on Thu Apr 28 15:25:35 2016
+sh-4.3$ pwd
+/home/93/dcalmes/cs217r2
+sh-4.3$ ls -l
+total 160
+-rw-r--r--   1 dcalmes  ics217r2      89 Apr  6 11:33 lab5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.exec
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.obj
+-rw-r--r--   1 dcalmes  ics217r2     642 Apr  6 11:33 lab5a.src
+-rw-r--r--   1 dcalmes  ics217r2      42 Apr  6 11:33 lab5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     131 Apr  6 12:09 lab5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:09 lab5b.exec
+-rw-r--r--   1 dcalmes  user        3644 Apr  6 12:09 lab5b.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:08 lab5b.obj
+-rw-r--r--   1 dcalmes  ics217r2     523 Apr  6 12:07 lab5b.src
+-rw-r--r--   1 dcalmes  ics217r2      69 Apr  6 12:08 lab5b.sym
+-rw-r--r--   1 dcalmes  ics217r2     139 Apr 27 19:17 lab6.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:17 lab6.exec
+-rw-r--r--   1 dcalmes  user        6726 Apr 27 19:17 lab6.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:17 lab6.obj
+-rw-r--r--   1 dcalmes  ics217r2     931 Apr 27 15:23 lab6.src
+-rw-r--r--   1 dcalmes  ics217r2      51 Apr 27 19:17 lab6.sym
+-rw-r--r--   1 dcalmes  ics217r2     140 Apr 27 19:19 lab6b.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:19 lab6b.exec
+-rw-r--r--   1 dcalmes  user        6781 Apr 27 19:19 lab6b.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:19 lab6b.obj
+-rw-r--r--   1 dcalmes  ics217r2     929 Apr 27 15:36 lab6b.src
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 27 19:19 lab6b.sym
+lrwxrwxrwx   1 root     ics217r2      25 Apr  6 11:25 lib -> /home/classes/cs217r2/Lib
+-rw-r--r--   1 dcalmes  ics217r2     152 Apr 19 16:49 proj5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:49 proj5a.exec
+-rw-r--r--   1 dcalmes  user        6284 Apr 19 21:58 proj5a.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr 19 16:49 proj5a.obj
+-rw-------   1 dcalmes  ics217r2     208 Apr 19 17:33 proj5a.save
+-rw-r--r--   1 dcalmes  ics217r2    1140 Apr 19 16:48 proj5a.src
+-rw-------   1 dcalmes  ics217r2     252 Apr 19 15:56 proj5a.src.save
+-rw-r--r--   1 dcalmes  ics217r2      80 Apr 19 16:49 proj5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     101 Apr 19 17:54 proj5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr 19 17:54 proj5b.exec
+-rw-r--r--   1 dcalmes  user        8089 Apr 20 08:10 proj5b.log
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr 19 17:54 proj5b.obj
+-rw-r--r--   1 dcalmes  ics217r2    1163 Apr 19 17:53 proj5b.src
+-rw-r--r--   1 dcalmes  ics217r2      63 Apr 19 17:54 proj5b.sym
+-rw-r--r--   1 dcalmes  ics217r2     182 Apr 28 15:15 proj6a.cos
+-rw-r--r--   1 dcalmes  ics217r2      70 Apr 28 15:15 proj6a.exec
+-rw-r--r--   1 dcalmes  user           0 Apr 28 15:25 proj6a.log
+-rw-r--r--   1 dcalmes  ics217r2      70 Apr 28 15:15 proj6a.obj
+-rw-r--r--   1 dcalmes  ics217r2    1410 Apr 28 15:25 proj6a.src
+-rw-r--r--   1 dcalmes  ics217r2      78 Apr 28 15:15 proj6a.sym
+-rw-r--r--   1 dcalmes  ics217r2     187 Apr 28 14:21 proj6b.cos
+-rw-r--r--   1 dcalmes  ics217r2      70 Apr 28 14:21 proj6b.exec
+-rw-r--r--   1 dcalmes  ics217r2      70 Apr 28 14:21 proj6b.obj
+-rw-r--r--   1 dcalmes  ics217r2    1374 Apr 28 14:29 proj6b.src
+-rw-r--r--   1 dcalmes  ics217r2      96 Apr 28 14:21 proj6b.sym
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat proj6a.src
+// Douglas G Calmes     CS2170-2 11:30    Proj6a
+// The purpose of this program is to copy the
+// contents of one array into another array.
+//      This program will work with any 
+//      array size
+
+                ORG     100
+                ENTRY   ARYFLIP
+
+        FLOP,   LDA     PTR1 I  // Load PTR1 I. (FLOP Branch Location)
+                STA     PTR2 I  // Store PTR1 I into PTR2 I
+                LDA     CTR     // Load CTR into AC
+                INC             // Increment CTR
+                STA     CTR     // Store incremented CTR
+                LDA     PTR2    // Load address of PTR2
+                INC             // Move to next PTR2 address
+                STA     PTR2    // Save new PTR2 address location
+                LDA     PTR1    // Load address of PTR1
+                INC             // Move to next PTR1 address
+                STA     PTR1    // Save new PTR1 address location
+                LDA     PTR1 I  // Load the value of PTR1 I into AC
+                SZA             // Skip next instruction if AC is 0
+                BUN     FLOP    // Branch to FLIP (Next copy iteration)
+                DMP             // Dump
+                HLT             // Hult computer
+                END             // End project
+                        
+        PTR1,   HEX     'ARY1   // Pointer to address of ARY1
+        PTR2,   HEX     'ARY2   // Pointer to address of ARY2
+        CTR,    HEX     0000    // Will show amount of times looped
+        ARY1,   HEX     0015    // Value of first element in ARY1
+                HEX     0003    // Value of second element in ARY1
+                HEX     002C    // Value of third element in ARY1
+                HEX     0008    // Value of fourth element in ARY1
+                HEX     000E    // Value of fifth element in ARY1
+                HEX     0000    // Value of sixty element in ARY1 (sentinal)
+        ARY2,   HEX     0000    // Value of first element in ARY2
+
+                                // This program will add more elements
+                                // to ARY2 each time the loop iterates
+sh-4.3$ csos
+[2J[H
+                    Welcome to the csos operating system!
+                               CS 217
+               To see a list of commands type 'help' or '?'
+
+csos: assem proj6a.src
+     // DOUGLAS G CALMES        CS2170-2 11:30    PROJ6A
+     // THE PURPOSE OF THIS PROGRAM IS TO COPY THE
+     // CONTENTS OF ONE ARRAY INTO ANOTHER ARRAY.
+     // THIS PROGRAM WILL WORK WITH ANY 
+     // ARRAY SIZE
+     
+                ORG     100
+?Field in next source line too long
+                ENTRY   ARYFLIP
+     
+0100    FLOP,   LDA     PTR1 I  // LOAD PTR1 I. (FLOP BRANCH LOCATION)
+0101            STA     PTR2 I  // STORE PTR1 I INTO PTR2 I
+0102            LDA     CTR     // LOAD CTR INTO AC
+0103            INC             // INCREMENT CTR
+0104            STA     CTR     // STORE INCREMENTED CTR
+0105            LDA     PTR2    // LOAD ADDRESS OF PTR2
+0106            INC             // MOVE TO NEXT PTR2 ADDRESS
+0107            STA     PTR2    // SAVE NEW PTR2 ADDRESS LOCATION
+0108            LDA     PTR1    // LOAD ADDRESS OF PTR1
+0109            INC             // MOVE TO NEXT PTR1 ADDRESS
+010a            STA     PTR1    // SAVE NEW PTR1 ADDRESS LOCATION
+010b            LDA     PTR1 I  // LOAD THE VALUE OF PTR1 I INTO AC
+010c            SZA             // SKIP NEXT INSTRUCTION IF AC IS 0
+010d            BUN     FLOP    // BRANCH TO FLIP (NEXT COPY ITERATION)
+010e            DMP             // DUMP
+010f            HLT             // HULT COMPUTER
+                END             // END PROJECT
+                        
+0110    PTR1,   HEX     'ARY1   // POINTER TO ADDRESS OF ARY1
+0111    PTR2,   HEX     'ARY2   // POINTER TO ADDRESS OF ARY2
+0112    CTR,    HEX     0000    // WILL SHOW AMOUNT OF TIMES LOOPED
+0113    ARY1,   HEX     0015    // VALUE OF FIRST ELEMENT IN ARY1
+0114            HEX     0003    // VALUE OF SECOND ELEMENT IN ARY1
+0115            HEX     002C    // VALUE OF THIRD ELEMENT IN ARY1
+0116            HEX     0008    // VALUE OF FOURTH ELEMENT IN ARY1
+0117            HEX     000E    // VALUE OF FIFTH ELEMENT IN ARY1
+0118            HEX     0000    // VALUE OF SIXTY ELEMENT IN ARY1 (SENTINAL)
+0119    ARY2,   HEX     0000    // VALUE OF FIRST ELEMENT IN ARY2
+     
+                                // THIS PROGRAM WILL ADD MORE ELEMENTS
+                                // TO ARY2 EACH TIME THE LOOP ITERATES
+
+Symbol Table:
+ARYFLI  0100    1
+FLOP    0100    0
+PTR1    0110    0
+PTR2    0111    0
+CTR     0112    0
+ARY1    0113    0
+ARY2    0119    0
+
+Object code:
+a110 b111 2112 7020 3112 2111 7020 3111 
+2110 7020 3110 a110 7004 4100 f001 7001 
+0113 0119 0000 0015 0003 002c 0008 000e 
+0000 0000 0000 0000 0000 0000 0000 0000 
+
+csos: link proj6a.obj
+File to link proj6a.obj
+obj  file name is proj6a.obj
+exec file name is proj6a.exec
+web simulator file name is proj6a.cos
+csos: run proj6a.exec
+No input file used, proceeding ...
+
+csos registers:
+   AC = 0000
+   PC = 010f
+
+   E flip-flop: 0
+
+csos memory:
+
+0100: a110 b111 2112 7020 3112 2111 7020 3111 
+0108: 2110 7020 3110 a110 7004 4100 f001 7001 
+0110: 0118 011e 0005 0015 0003 002c 0008 000e 
+0118: 0000 0015 0003 002c 0008 000e 0000 0000 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+0130: ffff ffff ffff ffff ffff ffff ffff ffff 
+0138: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos: quit
+sh-4.3$ exit
+exit
+
+script done on Thu Apr 28 15:26:27 2016

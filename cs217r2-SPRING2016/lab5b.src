@@ -1,0 +1,28 @@
+/ Douglas Calmes CS 2170-2 11:30-12:20
+/ The purpose of this program is to find the
+/	result of x+y+3-z.  We will do this by
+/	writing it in assembly language to evaluate
+/	that function.
+/	int x=5, y=9, z=6, rslt=0;
+
+	ORG 100	     / Origin of the program is location 100
+	ENTRY LAB5b
+	LDA	x    / Load x into the accumulator
+	ADD	y    / Add x and y
+	ADD	const    / Add 3 to the sum of x and y
+	STA	sum
+	LDA	z
+	CMA
+	INC
+	ADD	sum
+	STA	rslt
+	DMP
+	HLT
+x,	DEC 5
+y,	DEC 9
+z,	DEC 6
+rslt,	HEX 0
+const,	DEC 3
+sum,	HEX 0
+	END LAB5b
+

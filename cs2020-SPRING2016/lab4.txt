@@ -1,0 +1,40 @@
+Lord of the Rings-Two Towers
+Peter Jackson
+PG13
+3
+Lord of the Rings-Return of the King
+Peter Jackson
+PG13
+4
+Lord of the Rings-The Fellowship of the Ring
+Peter Jackson
+PG13
+1
+The Hobbit-An Unexpected Journey
+Peter Jackson
+PG13
+3
+Wall-E
+Andrew Stanton
+PG
+10
+Brink
+Greg Beeman
+PG
+6
+Deadpool
+Tim Miller
+R
+3
+The Avengers
+Joss Whedon
+PG13
+6
+Jurassic World
+Colin Trevorrow
+PG13
+12
+Ironman
+Jon Favreau
+PG13
+8

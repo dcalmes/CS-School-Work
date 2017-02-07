@@ -1,0 +1,15 @@
+/ Lab 5a: This program subtracts two numbers.
+/ Table 6-8, Mano p. 181
+       ORG 100     / Origin of program is location 100
+       ENTRY LAB5a
+       LDA SUB     / Load subtrahend (bottom #) into AC
+       CMA         / Complement subtrahend (1s complement now in AC)
+       INC         / Increment subtrahend (2s complement now in AC)
+       ADD MIN     / Add minuend to subtrahend (MIN - SUB now in AC)
+       STA DIF     / Store difference
+       DMP
+       HLT
+MIN,   DEC 10       / Minuend     (top #)
+SUB,   DEC 2       / Subtrahend  (bottom #)
+DIF,   HEX 0       / Difference stored here
+       END LAB5a   / End of symbolic program

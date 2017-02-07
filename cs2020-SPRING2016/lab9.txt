@@ -1,0 +1,11 @@
+1John Burke 25.00
+2Jan Kovacs 1200.00 1
+2Tom Banks 75.00 0
+1Steven Brown 29.50
+1Edward Brigham 35.30
+1Jack Duckworth 19.75
+1Craig Alwan 32.50
+2Matt Brewning 1150.00 1
+1Gale Stevens 15.89
+2Janet Thompson 1324.00 1
+2Beth Lucky 28.90 0

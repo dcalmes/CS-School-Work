@@ -1,0 +1,12 @@
+/ Douglas Calmes  CS 2170-2 11:30-12:20
+/ The purpose of this program is to find the following
+/ 	int x=8, y=14;
+/		if(x<=y)
+/	            x = x + y;
+/		else
+/		    y = y - 1
+
+	ORG 100
+	ENTRY PROJ5a
+	LDA	y
+	

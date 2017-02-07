@@ -1,0 +1,27 @@
+/ Douglas Calmes	CS2170-2	11:30-12:20
+/ The purpose of this program is to multiply two positive
+/ 	numbers using the repeated addition method.  For
+/	example, to multiply 5 by 6, the program will
+/	calculate the product by adding 5 six times.
+/		(5 + 5 + 5 + 5 + 5 + 5)
+/	The progam will loop until y = 0.
+
+
+		ORG	100	/ Origin of the program is location 100
+		ENTRY	PROJ5b	/ Name of the program
+		LDA	y	/ Load y into the AC
+	again,	ADD	neg1	/ Decrement y by one
+		STA	y	/ Store the new value of y
+		LDA	PROD	/ Load the product into the AC
+		ADD	x	/ Add x into product (until y = 0)
+		STA	PROD	/ Store the updated product (final product when y = 0)
+		LDA	y	/ Load y into the AC
+		DMP		/ Show the result of product each time x is added to it
+		SZA		/ Skip next instruction if y = 0 (end of loop)
+		BUN	again	/ Branch to again.  This will result in another addition of x into the product.
+		HLT		/ Hault the computer
+	x,	DEC	5	/ The number you are multiplying
+	y,	DEC	6	/ The number you are multiplying by (number of loop iterations)
+	PROD,	DEC	0	/ The final product (shown during each completion of the loop)
+	neg1,	DEC	-1	/ Decrement variable
+		END		/ End program

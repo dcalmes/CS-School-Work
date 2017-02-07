@@ -1,0 +1,265 @@
+Script started on Mon Apr 11 19:37:28 2016
+sh-4.3$ ls -l
+total 500
+-rwxrwx---   1 dcalmes  ics2020    10480 Mar 25 16:20 a.out
+-rw-rwx---   1 dcalmes  ics2020     4073 Mar 14 09:29 lab1.cpp
+-rw-rwx---   1 dcalmes  ics2020     6188 Mar 14 09:31 lab1.log
+-rw-rwx---   1 dcalmes  ics2020     4784 Mar 25 13:33 lab2.cpp
+-rw-rwx---   1 dcalmes  ics2020     8842 Mar 25 16:20 lab2.log
+-rw-rwx---   1 dcalmes  ics2020     7472 Mar 19 16:57 lab3.cpp
+-rw-rwx---   1 dcalmes  ics2020    14262 Mar 20 18:54 lab3.log
+-rw-rwx---   1 dcalmes  ics2020      626 Jan 29  2013 lab3.txt
+-rw-rwx---   1 dcalmes  ics2020     7109 Feb 24 18:47 lab4.cpp
+-rw-rwx---   1 dcalmes  ics2020    13304 Feb 24 18:53 lab4.log
+-rw-rwx---   1 dcalmes  ics2020      400 Feb 24 17:56 lab4.txt
+-rw-rwx---   1 dcalmes  ics2020     5645 Mar  2 18:51 lab5.cpp
+-rw-rwx---   1 dcalmes  ics2020    10026 Mar  2 18:54 lab5.log
+-rw-rwx---   1 dcalmes  ics2020      315 Mar  2 14:40 lab5.txt
+-rw-rwx---   1 dcalmes  ics2020    11354 Mar 23 21:27 lab6.cpp
+-rw-rwx---   1 dcalmes  ics2020    20495 Mar 23 21:29 lab6.log
+-rw-rwx---   1 dcalmes  ics2020     1937 Mar 23 21:18 lab6H.h
+-rw-rwx---   1 dcalmes  ics2020     2408 Mar 23 21:27 lab6client.cpp
+lrwxrwxrwx   1 dcalmes  ics2020       24 Feb  5 16:39 lib -> /home/classes/cs2020/Lib
+-rw-rwx---   1 dcalmes  ics2020    12117 Mar 16 02:15 prog1.cpp
+-rw-rwx---   1 dcalmes  ics2020    18769 Mar 16 02:34 prog1.log
+-rw-rwx---   1 dcalmes  ics2020      400 Jan  1  2015 prog1.txt
+-rw-rwx---   1 dcalmes  ics2020    11371 Mar 25 16:10 prog2.cpp
+-rw-rwx---   1 dcalmes  ics2020    17551 Mar 25 16:14 prog2.log
+-rw-rwx---   1 dcalmes  ics2020      937 Mar 16 18:31 prog2.txt
+-rw-rwx---   1 dcalmes  ics2020     6668 Feb 23 20:06 prog3.cpp
+-rw-rwx---   1 dcalmes  ics2020     9502 Feb 19 20:20 prog3.log
+-rw-rwx---   1 dcalmes  ics2020      259 Jan  1  2015 prog3.txt
+-rw-rwx---   1 dcalmes  ics2020     4374 Mar 24 18:47 prog5.cpp
+-rw-rwx---   1 dcalmes  ics2020     1089 Mar 24 18:55 prog5.h
+-rw-rwx---   1 dcalmes  ics2020    14447 Mar 24 19:03 prog5.log
+-rw-rwx---   1 dcalmes  ics2020     2036 Mar 24 18:47 prog5client.cpp
+-rw-r--r--   1 dcalmes  ics2020     3729 Apr 11 19:33 prog6.cpp
+-rw-r--r--   1 dcalmes  ics2020     1413 Apr 11 19:33 prog6.h
+-rw-r--r--   1 dcalmes  user           0 Apr 11 19:37 prog6.log
+-rw-r--r--   1 dcalmes  ics2020     1435 Apr 11 19:33 prog6client.cpp
+-rw-rwx---   1 dcalmes  ics2020       54 Mar 14 09:10 sample.txt
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat prog6.h
+//////////////////////////////////////////////////////////////////////////////
+// Program                      6
+// Description:         This program will define and demonstrate a Money
+//                                              class.  Dollars and cents will be stored separately
+//                                              so that more money amounts can be represented as
+//                                              precisely as possible
+// Programmer:           Douglas G Calmes
+// Class:                        CS 2020, Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef MONEY_H
+#define MONEY_H
+using namespace std;
+
+class Money
+{       
+private:
+        int dollars;            //      Dollars value
+        int cents;                      //      Cents value
+        void simplify();        //      checks for values in cents that are 100 or greater 
+                                                //      or less than 0, adjusts dollars and cents as needed so
+                                                //      that cents amount is never greater than 99
+
+public:
+        //      Constructors
+        Money() {dollars = 0 ; cents = 0; }
+        Money(int dollars, int cents) { this->dollars = dollars; this->cents = cents; }
+
+        //      Accessors
+        int getDollars() const { return dollars; }
+        int getCents() const { return cents; }
+
+        //      Mutators
+        void setDollars(int dollars) { this->dollars = dollars; }
+        void setCents(int cents) {this->cents = cents; }
+
+        //      Overloaded functions
+        Money operator+(const Money &) const;
+        Money operator-(const Money &) const;
+        friend ostream & operator<<(ostream &, const Money &);
+        friend istream & operator>>(istream &, Money &);
+};
+
+#endif sh-4.3$ cat po rog6.cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program                      6
+// Description:         This program will define and demonstrate a Money
+//                                              class.  Dollars and cents will be stored separately
+//                                              so that more money amounts can be represented as
+//                                              precisely as possible
+// Programmer:           Douglas G Calmes
+// Class:                        CS 2020, Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include "prog6.h"
+using namespace std;
+
+//////////////////////////////////////////////////////////////////////////
+// Function:        simplify
+// Description:     This function checks for values in cents that are 
+//                                              100 or greater or less than 0, adjusts dollars and 
+//                                              cents as needed so that cents amount is never greater
+//                                              than 99
+// Programmer:      Douglas G Calmes
+// Class:           CS 2020, Spring 2016
+// Parameters:          None
+// Returns:                     Nothing
+//////////////////////////////////////////////////////////////////////////
+
+void Money::simplify()
+{
+        while (cents > 99)
+        {
+                        dollars++;
+                        cents = cents - 100;
+        }
+
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Function:        operator+
+// Description:     Adds two Money objects together
+// Programmer:      Douglas G Calmes
+// Class:           CS 2020, Spring 2016
+// Parameters:          addMoney-       The money you woulld like to add
+// Returns:                     temp-           The sum of addMoney
+//////////////////////////////////////////////////////////////////////////
+
+Money Money::operator+(const Money &addMoney) const
+{
+        Money temp;
+        temp.dollars = this->dollars + addMoney.dollars;
+        temp.cents = this->cents + addMoney.cents;
+
+        temp.simplify();
+        
+        return temp;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Function:        operator-
+// Description:     Subtracts two Money objects
+// Programmer:      Douglas G Calmes
+// Class:           CS 2020, Spring 2016
+// Parameters:          subMoney-       The money you woulld like to subtract
+// Returns:                     temp-           The sum of addMoney
+//////////////////////////////////////////////////////////////////////////
+
+Money Money::operator-(const Money &subMoney) const
+{
+        Money temp;
+        temp.dollars = this->dollars - subMoney.dollars;
+        temp.cents = this->cents - subMoney.cents;
+
+        temp.simplify();
+
+        return temp;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Function:        operator<<
+// Description:     Displays a Money object in the form $dd.cc
+// Programmer:      Douglas G Calmes
+// Class:           CS 2020, Spring 2016
+// Parameters:          osObject-       ostream variable
+//                                      outMoney-       Money object you chose to output
+// Returns:                     osObject-       ostream variable
+//////////////////////////////////////////////////////////////////////////
+
+ostream &operator<<(ostream &osObject, const Money &outMoney)
+{
+        if (outMoney.cents < 10)
+        {
+                osObject << "$" << outMoney.dollars << ".0" << outMoney.cents;
+        }
+        else
+        osObject << "$" << outMoney.dollars << "." << outMoney.cents;
+
+        return osObject;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Function:        operator>>
+// Description:     Input a new dollars and cents
+// Programmer:      Douglas G Calmes
+// Class:           CS 2020, Spring 2016
+// Parameters:          inObject-       istream variable
+//                                      inMoney-        Money object you chose to output
+// Returns:                     inObject-       istream variable
+//////////////////////////////////////////////////////////////////////////
+
+istream & operator>>(istream &isObject, Money &inMoney)
+{
+        isObject >> inMoney.dollars >> inMoney.cents;
+
+        return isObject;
+}sh-4.3$ cat l prog6client.cpp
+//////////////////////////////////////////////////////////////////////////////
+// Program                      6
+// Description:         This program will define and demonstrate a Money
+//                                              class.  Dollars and cents will be stored separately
+//                                              so that more money amounts can be represented as
+//                                              precisely as possible
+// Programmer:           Douglas G Calmes
+// Class:                        CS 2020, Spring 2016
+//////////////////////////////////////////////////////////////////////////////
+
+#include <iostream>
+#include "prog6.h"
+using namespace std;
+
+int main()
+{
+        Money money1(7, 95);    //      Set money1 to $7.95
+        Money money2(4, 90);    //      Set money2 to $4.90
+        Money money3;
+        Money money4;
+
+        //      Output all the different money values using operator<<
+        cout << "Money 1: " << money1 << endl;
+        cout << "Money 2: " << money2 << endl;
+        cout << "Money 3: " << money3 << endl;
+        cout << "Money 4: " << money4 << endl << endl;
+
+        //      money1 ($7.95) plus money2 ($4.90) = money3 ($12.85)
+        money3 = money1 + money2;
+        //      money1 ($7.95) minus money2 ($4.90) = money4 ($3.05)
+        money4 = money1 - money2;
+
+        //      Output the new values for money3 and money4
+        cout << "Money 1 + Money 2: " << money3 << endl;
+        cout << "Money 1 - Money 2: " << money4 << endl << endl;
+
+        //      Output the user entered money3
+        cout << "Input New Money 3: ";
+        operator>>(cin, money3);
+        cout << endl;
+
+        cout << "New Money 3: " << money3 << endl;
+
+        system("Pause");
+        return 0;
+}
+sh-4.3$ g++ prog6.cpp prog6client.cpp
+sh-4.3$ a.out
+Money 1: $7.95
+Money 2: $4.90
+Money 3: $0.00
+Money 4: $0.00
+
+Money 1 + Money 2: $12.85
+Money 1 - Money 2: $3.05
+
+Input New Money 3: 5 25
+
+New Money 3: $5.25
+sh: Pause: not found
+sh-4.3$ exit
+exit
+
+script done on Mon Apr 11 19:38:40 2016

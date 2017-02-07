@@ -1,0 +1,128 @@
+Script started on Wed Apr 06 12:08:13 2016
+sh-4.3$ pwd
+/home/93/dcalmes/cs217r2
+sh-4.3$ ls -l
+total 22
+-rw-r--r--   1 dcalmes  ics217r2      89 Apr  6 11:33 lab5a.cos
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.exec
+-rw-r--r--   1 dcalmes  ics217r2      38 Apr  6 11:33 lab5a.obj
+-rw-r--r--   1 dcalmes  ics217r2     642 Apr  6 11:33 lab5a.src
+-rw-r--r--   1 dcalmes  ics217r2      42 Apr  6 11:33 lab5a.sym
+-rw-r--r--   1 dcalmes  ics217r2     131 Apr  6 12:07 lab5b.cos
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:07 lab5b.exec
+-rw-r--r--   1 dcalmes  user           0 Apr  6 12:08 lab5b.log
+-rw-r--r--   1 dcalmes  ics217r2      54 Apr  6 12:07 lab5b.obj
+-rw-r--r--   1 dcalmes  ics217r2     523 Apr  6 12:07 lab5b.src
+-rw-r--r--   1 dcalmes  ics217r2      69 Apr  6 12:07 lab5b.sym
+lrwxrwxrwx   1 root     ics217r2      25 Apr  6 11:25 lib -> /home/classes/cs217r2/Lib
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat lab5b.src
+/ Douglas Calmes CS 2170-2 11:30-12:20
+/ The purpose of this program is to find the
+/       result of x+y+3-z.  We will do this by
+/       writing it in assembly language to evaluate
+/       that function.
+/       int x=5, y=9, z=6, rslt=0;
+
+        ORG 100      / Origin of the program is location 100
+        ENTRY LAB5b
+        LDA     x    / Load x into the accumulator
+        ADD     y    / Add x and y
+        ADD     const    / Add 3 to the sum of x and y
+        STA     sum
+        LDA     z
+        CMA
+        INC
+        ADD     sum
+        STA     rslt
+        DMP
+        HLT
+x,      DEC 5
+y,      DEC 9
+z,      DEC 6
+rslt,   HEX 0
+const,  DEC 3
+sum,    HEX 0
+        END LAB5b
+
+sh-4.3$ csos
+[2J[H
+                    Welcome to the csos operating system!
+                               CS 217
+               To see a list of commands type 'help' or '?'
+
+csos: assem lab5b.src
+     / DOUGLAS CALMES CS 2170-2 11:30-12:20
+     / THE PURPOSE OF THIS PROGRAM IS TO FIND THE
+     /  RESULT OF X+Y+3-Z.  WE WILL DO THIS BY
+     /  WRITING IT IN ASSEMBLY LANGUAGE TO EVALUATE
+     /  THAT FUNCTION.
+     /  INT X=5, Y=9, Z=6, RSLT=0;
+     
+        ORG 100      / ORIGIN OF THE PROGRAM IS LOCATION 100
+        ENTRY LAB5B
+0100    LDA     X    / LOAD X INTO THE ACCUMULATOR
+0101    ADD     Y    / ADD X AND Y
+0102    ADD     CONST    / ADD 3 TO THE SUM OF X AND Y
+0103    STA     SUM
+0104    LDA     Z
+0105    CMA
+0106    INC
+0107    ADD     SUM
+0108    STA     RSLT
+0109    DMP
+010a    HLT
+010b X, DEC 5
+010c Y, DEC 9
+010d Z, DEC 6
+010e RSLT,      HEX 0
+010f CONST,     DEC 3
+0110 SUM,       HEX 0
+        END LAB5B
+     
+
+Symbol Table:
+LAB5B   0100    2
+X       010b    0
+Y       010c    0
+Z       010d    0
+RSLT    010e    0
+CONST   010f    0
+SUM     0110    0
+
+Object code:
+210b 110c 110f 3110 210d 7200 7020 1110 
+310e f001 7001 0005 0009 0006 0000 0003 
+0000 0000 0000 0000 0000 0000 0000 0000 
+
+csos: link lab5b.obj
+File to link lab5b.obj
+obj  file name is lab5b.obj
+exec file name is lab5b.exec
+web simulator file name is lab5b.cos
+csos: run lab5b.exec
+No input file used, proceeding ...
+
+csos registers:
+   AC = 000b
+   PC = 010a
+
+   E flip-flop: 1
+
+csos memory:
+
+0100: 210b 110c 110f 3110 210d 7200 7020 1110 
+0108: 310e f001 7001 0005 0009 0006 000b 0003 
+0110: 0011 0000 0000 0000 0000 0000 0000 0000 
+0118: ffff ffff ffff ffff ffff ffff ffff ffff 
+0120: ffff ffff ffff ffff ffff ffff ffff ffff 
+0128: ffff ffff ffff ffff ffff ffff ffff ffff 
+0130: ffff ffff ffff ffff ffff ffff ffff ffff 
+
+
+csos: quit
+sh-4.3$ exit
+exit
+
+script done on Wed Apr 06 12:09:22 2016

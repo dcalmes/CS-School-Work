@@ -1,0 +1,41 @@
+/ Douglas Calmes	CS2170-2	11:30-12:20
+/ The purpose of this program is to do the following:
+/	int x = 8, y = 14;
+/	
+/	if(x <= y)
+/	    x = x + y;
+/	else
+/	    y = y - 1;
+
+		ORG 100		/ Origini of the program is location 100
+		ENTRY PROJ5a	/ Name of the program
+		LDA	y	/ Load x into the AC
+		CMA		/ Complement the AC
+		INC		/ Increment the AC for 2's complement
+		ADD	x	/ Add x and y
+		STA	xy	/ Store the value of x + y into variable xy
+		LDA	xy	/ Load xy into the AC
+		SPA		/ We will skip the next instruction of xy is >= 0
+		BUN	xPy	/ Branch to xPy if x is less than y
+		BUN	INCy	/ Branch to INCy if x is greater than y
+	INCy,	LDA	y	/ Load y into the AC
+		ADD	one	/ Add -1 to y (decrement)
+		STA	y	/ Store the new value back into y
+		BUN	DONE	/ Branch to DONE if x is greater than y
+	xPy,	LDA	x	/ Load x into the AC
+		ADD	y	/ Add y and x
+		STA	x	/ Store the new value back into x
+		BUN	DONE	/ Branch to DONE if x is less than or equal to y
+		DONE,	DMP	/ Dump the memory
+		HLT		/ Hault the computer
+	x,	DEC	8	/ Set x to 8
+	y,	DEC	14	/ Set y to 14
+	xy,	DEC	0	/ Set xy to 0
+	one,	DEC	-1	/ Set one to -1 (decrement)
+		END		/ End program
+
+
+
+
+
+
