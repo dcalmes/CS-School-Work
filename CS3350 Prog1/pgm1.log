@@ -1,0 +1,275 @@
+Script started on Wed Jan 18 17:18:11 2017
+sh-4.3$ ls -l
+total 20
+lrwxrwxrwx   1 root     ics3350r      25 Jan 18 07:19 lib -> /home/classes/cs3350r/Lib
+-rw-r--r--   1 dcalmes  user           0 Jan 18 17:18 pgm1.log
+-rw-r--r--   1 dcalmes  ics3350r     724 Jan 18 17:17 pgm1BasicShape.h
+-rw-r--r--   1 dcalmes  ics3350r    1182 Jan 18 17:17 pgm1Circle.h
+-rw-r--r--   1 dcalmes  ics3350r    1103 Jan 18 17:17 pgm1Rectangle.h
+-rw-r--r--   1 dcalmes  ics3350r    3661 Jan 18 17:17 pgm1main.cpp
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat pgm1BasicShape.h
+//      Program:                CS3350 Program 1
+//      Due Date:               Wednesday, Jan. 18
+//      Programmer:             Douglas G Calmes
+//      Purpose:                The purpose of this program is to use classes and inheritence to
+//                                      find the area of a circle and rectangle.  It uses virtual functions.
+
+#ifndef BASICSHAPE_H
+#define BASICSHAPE_H
+
+template<class ItemType>
+//      This is the BasicShape class I created
+class BasicShape
+{
+private:
+        double  area;
+public:
+        //      Set area to area using this pointer
+        void            setArea(double area) {
+                this->area = area;
+        };
+        //      This function returns the area
+        double  getArea() const {
+                return area;
+        };
+        //      Virtual function to calculate the area
+        virtual double calcArea() const = 0;
+
+};
+#endif // !BASICSHAPE_H
+sh-4.3$ cat pgm1Circle.h
+//      Program:                CS3350 Program 1
+//      Due Date:               Wednesday, Jan. 18
+//      Programmer:             Douglas G Calmes
+//      Purpose:                The purpose of this program is to use classes and inheritence to
+//                                      find the area of a circle and rectangle.  It uses virtual functions.
+
+#ifndef CIRCLE_H
+#define CIRCLE_H
+#include "pgm1BasicShape.h"
+using namespace std;
+
+template<class ItemType>
+//      This is the Circle class I created.  It uses base class, BasicShape.
+class Circle : public BasicShape<ItemType>
+{
+private:
+        ItemType        centerX;
+        ItemType        centerY;
+        double          radius;
+public:
+        //      Sets centerX, centerY, and radius using pointers.
+        //      Calculates and returns the area of circle.
+        Circle(ItemType centerX, ItemType centerY, double radius, double area) {
+                this->centerX = centerX;
+                this->centerY = centerY;
+                this->radius = radius;
+
+                area = calcArea();
+                this->setArea(area);
+        };
+        //      Returns centerX
+        ItemType        getCenterX() const {
+                return centerX;
+        };
+        //      Returns centerY
+        ItemType        getCenterY() const {
+                return centerY;
+        };
+        //      Calculates and returns area of rectangle
+         double         calcArea() const {
+                return 3.14159 * radius * radius;
+         };
+};
+#endif // !CIRCLE_H
+
+sh-4.3$ cat pgm1Rectangle.c h
+//      Program:                CS3350 Program 1
+//      Due Date:               Wednesday, Jan. 18
+//      Programmer:             Douglas G Calmes
+//      Purpose:                The purpose of this program is to use classes and inheritence to
+//                                      find the area of a circle and rectangle.  It uses virtual functions.
+
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
+#include "pgm1BasicShape.h"
+
+template<class ItemType>
+//      This is the Rectangle class I created.  Uses base class, BasicShape.
+class Rectangle : public BasicShape<ItemType>
+{
+private:
+        ItemType        width;
+        ItemType        length;
+public:
+        //      Sets the width and length using this pointers.
+        //      Calculates and returns the area of rectangle.
+        Rectangle(ItemType width, ItemType length, double area) {
+                this->width = width;
+                this->length = length;
+
+                area = calcArea();
+                this->setArea(area);
+        };
+        //      Returns length of rectangle
+        ItemType        getLength() const {
+                return length;
+        };
+        //      Returns width of rectangle
+        ItemType        getWidth() const {
+                return width;
+        };
+        //      Calculates the area of rectangle
+         double         calcArea() const {
+                return length*width;
+         };
+};
+
+
+#endif // !RECTANGE_H
+
+sh-4.3$ cat pgm1main.cpp
+//      Program:                CS3350 Program 1
+//      Due Date:               Wednesday, Jan. 18
+//      Programmer:             Douglas G Calmes
+//      Purpose:                The purpose of this program is to use classes and inheritence to
+//                                      find the area of a circle and rectangle.  It uses virtual functions.
+
+#include "pgm1Rectangle.h"
+#include "pgm1Circle.h"
+#include "pgm1BasicShape.h"
+#include <iostream>
+using namespace std;
+
+int main()
+{
+        //      These are the variables used to pass into the respective class functions
+        double  circleX, circleX2;
+        double  circleY, circleY2;
+        double  rectangleW, rectangleW2;
+        double  rectangleL, rectangleL2;
+        double  inputRadius, inputRadius2;
+        double  inputArea = 0, inputArea2 = 0;
+
+        //      Have the user input the x coordinate of the circle
+        cout << "Please enter the x coordinate of the circle's center (int): ";
+        cin >> circleX;
+        cout << endl;
+
+        //      Have the user input the y coordinatte of the circle
+        cout << "Please enter the y coordinate of the cirlce's center (int): ";
+        cin >> circleY;
+        cout << endl;
+
+        //      Have the user input the radius of the circle
+        cout << "Please enter the radius of the circle (double): ";
+        cin >> inputRadius;
+        cout << endl;
+
+        //      Call in Circle to set the x coordinate, y coordinate, and radius
+        Circle <int>Circle1(circleX, circleY, inputRadius, inputArea);
+
+        //      Print out the information of the circle
+        cout << "The x and y coordinates of the circle are " << Circle1.getCenterX() << " and " << Circle1.getCenterY() << endl << endl;
+        cout << "The area of the circle is " << Circle1.getArea() << endl << endl << endl;
+
+        //      Have user input the length of the rectangle
+        cout << "Please enter the length of the Rectangle (int): ";
+        cin >> rectangleL;
+        cout << endl;
+
+        //      Have the user input the width of the rectangle
+        cout << "Please enter the width of the Rectangle (int) :";
+        cin >> rectangleW;
+        cout << endl;
+
+        //      Call in Rectangle to set the length and width
+        Rectangle <int>Rectangle1(rectangleW, rectangleL, inputArea);
+        //      Print out the information of the Rectangle
+        cout << "The area of the rectangle is " << Rectangle1.getArea() << endl << endl << endl;
+
+        //      Have the user input the x coordinate of the circle 2
+        cout << "Please enter the x coordinate of the circle's center (double): ";
+        cin >> circleX2;
+        cout << endl;
+
+        //      Have the user input the y coordinatte of the circle 2
+        cout << "Please enter the y coordinate of the cirlce's center (double): ";
+        cin >> circleY2;
+        cout << endl;
+
+        //      Have the user input the radius of the circle 2
+        cout << "Please enter the radius of the circle (double): ";
+        cin >> inputRadius2;
+        cout << endl;
+
+        //      Call in Circle to set the x coordinate, y coordinate, and radius of Circle2
+        Circle <double>Circle2(circleX2, circleY2, inputRadius2, inputArea2);
+
+        //      Print out the information of the circle 2
+        cout << "The x and y coordinates of the circle are " << Circle2.getCenterX() << " and " << Circle2.getCenterY() << endl << endl;
+        cout << "The area of the circle is " << Circle2.getArea() << endl << endl << endl;
+
+        //      Have user input the length of the rectangle 2
+        cout << "Please enter the length of the Rectangle (double): ";
+        cin >> rectangleL2;
+        cout << endl;
+
+        //      Have the user input the width of the rectangle 2
+        cout << "Please enter the width of the Rectangle (double) :";
+        cin >> rectangleW2;
+        cout << endl;
+
+        //      Call in Rectangle to set the length and width of Rectangle2
+        Rectangle <double>Rectangle2(rectangleW2, rectangleL2, inputArea2);
+
+        //      Print out the information of the Rectangle2
+        cout << "The area of the rectangle is " << Rectangle2.getArea() << endl << endl;
+
+
+        system("Pause");
+        return 0;
+}sh-4.3$ g++ pgm1main.cpp
+sh-4.3$ a.out
+Please enter the x coordinate of the circle's center (int): 3
+
+Please enter the y coordinate of the cirlce's center (int): 5
+
+Please enter the radius of the circle (double): 7.2
+
+The x and y coordinates of the circle are 3 and 5
+
+The area of the circle is 162.86
+
+
+Please enter the length of the Rectangle (int): 5
+
+Please enter the width of the Rectangle (int) :5
+
+The area of the rectangle is 25
+
+
+Please enter the x coordinate of the circle's center (double): 4.7
+
+Please enter the y coordinate of the cirlce's center (double): 2.8
+
+Please enter the radius of the circle (double): 6.34
+
+The x and y coordinates of the circle are 4.7 and 2.8
+
+The area of the circle is 126.278
+
+
+Please enter the length of the Rectangle (double): 5.5
+
+Please enter the width of the Rectangle (double) :7.2
+
+The area of the rectangle is 39.6
+
+sh: Pause: not found
+sh-4.3$ exit
+exit
+
+script done on Wed Jan 18 17:20:16 2017
