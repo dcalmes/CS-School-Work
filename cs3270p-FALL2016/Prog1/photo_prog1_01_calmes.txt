@@ -1,0 +1,11 @@
+Script started on Sun Sep 18 21:04:46 2016
+sh-4.3$ exitg++ -o prog1_01 prog1_01_calmes.cpp
+sh-4.3$ g++ -o prog1_01 prog1_01_calmes.cppsh-4.3$ exit[Kg++ -o prog1_01 prog1_01_calmes.cppsh-4.3$ exit[Kg++ -o prog1_01 prog1_01_calmes.cppsh-4.3$ [12Pcat prog1_02_calmes.cpp[7P.cpp[K[Kg++ -o prog1_02 prog1_02_calmes.cppsh-4.3$ cd cs3270p[Ksh-4.3$ ./prog1_02 Calmes 6 10 13[1P[1@1
+Last name is Calmes
+6th prime number is 13
+10th prime number is 29
+13th prime number is 41
+sh-4.3$ exit
+exit
+
+script done on Sun Sep 18 21:05:27 2016

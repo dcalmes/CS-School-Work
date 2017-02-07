@@ -1,0 +1,22 @@
+Script started on Sun Sep 18 21:08:07 2016
+sh-4.3$ exitg++ -o prog1_02 prog1_02_calmes.cpp
+sh-4.3$ g++ -o prog1_02 prog1_02_calmes.cppsh-4.3$ exit[Kg++ -o prog1_02 prog1_02_calmes.cppsh-4.3$ exit[K./prog1_01 Calmes 6 10 13[1P[1@2
+Last name is Calmes
+6th prime number is 13
+10th prime number is 29
+13th prime number is 41
+
+In Parent process,
+I am the parent; my ID = 19397
+I am the parent; my child ID = 19398
+I am the parent; Prime numbers = 13, 29, 41, 
+I am the parent; Sum = 83
+
+In Child process,
+I am the child; my ID = 19398
+I am the child; my Numbers = 19, 39, 54, 
+I am the child; Sum = 112
+sh-4.3$ clear     exit
+exit
+
+script done on Sun Sep 18 21:08:28 2016
