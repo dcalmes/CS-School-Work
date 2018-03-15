@@ -1,0 +1,10 @@
+// Filename: bugs.txt
+//
+// Description: Reported bugs for bigint file
+//
+// Author : Douglas G Calmes      dcalmes@bgsu.edu
+
+- the int constructor has a bounds of 9 digits instead of 50
+- the string constructor only goes up 49 digits instead of 50
+- the writing stream can not handle overflow
+		- it cuts off the left hand side to make room for the extra digits added to the rirght hand side of the number

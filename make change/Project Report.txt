@@ -1,0 +1,145 @@
+Project Report
+
+A) Output
+	Greedy Algorithm
+		~/Make Change$ ./greedy 11 4 1 5 10 25
+		The number of coins used (greedy): 1x10, 1x1, 2 total. Time: 233800
+	
+		~/Make Change$ ./greedy 21 4 1 5 10 25
+		The number of coins used (greedy): 2x10, 1x1, 3 total. Time: 232000
+
+		~/Make Change$ ./greedy 31 4 1 5 10 25
+		The number of coins used (greedy): 1x25, 1x5, 1x1, 3 total. Time: 223600
+
+		~/Make Change$ ./greedy 51 4 1 5 10 25
+		The number of coins used (greedy): 2x25, 1x1, 3 total. Time: 230700
+
+		~/Make Change$ ./greedy 73 4 1 5 10 25
+		The number of coins used (greedy): 2x25, 2x10, 3x1, 7 total. Time: 237100
+
+		~/Make Change$ ./greedy 83 4 1 5 10 25
+		The number of coins used (greedy): 3x25, 1x5, 3x1, 7 total. Time: 231500
+
+		~/Make Change$ ./greedy 91 4 1 5 10 25
+		The number of coins used (greedy): 3x25, 1x10, 1x5, 1x1, 6 total. Time: 230200
+
+		~/Make Change$ ./greedy 99 4 1 5 10 25
+		The number of coins used (greedy): 3x25, 2x10, 4x1, 9 total. Time: 233100
+
+		~/Make Change$ ./greedy 63 5 1 5 10 21 25
+		The number of coins used (greedy): 2x25, 1x10, 3x1, 6 total. Time: 236700
+
+	Recursive Algorithm
+		~/Make Change$ ./recursive 11 4 1 5 10 25
+		The number of coins used (recursive): 2  Time: 190900
+		
+		~/Make Change$ ./recursive 21 4 1 5 10 25
+		The number of coins used (recursive): 3  Time: 325300
+
+		~/Make Change$ ./recursive 31 4 1 5 10 25
+		The number of coins used (recursive): 3  Time: 2226900
+
+		~/Make Change$ ./recursive 51 4 1 5 10 25
+		The number of coins used (recursive): 3  Time: 928906400
+
+		~/Make Change$ ./recursive 73 4 1 5 10 25
+		The number of coins used (recursive): 7  Time: 782753267500
+
+		The Recursive calls on anything above 73 became extremely slow and would not output the results in a timely manner at all.
+
+		~/Make Change$ ./recursive 63 5 1 5 10 21 25
+		The number of coins used (recursive): 3  Time: 40725506400
+
+	Dynamic Algorithm
+		./dynamic 11 4 1 5 10 25
+		The number of coins used (dynamic): (2 total)  1 10
+		Time Elapsed: 3400
+
+		./dynamic 21 4 1 5 10 25
+		The number of coins used (dynamic): (3 total)  1 10 10
+		Time Elapsed: 4800
+
+		./dynamic 31 4 1 5 10 25
+		The number of coins used (dynamic): (3 total)  1 5 25
+		Time Elapsed: 6500
+
+		./dynamic 51 4 1 5 10 25
+		The number of coins used (dynamic): (3 total)  1 25 25
+		Time Elapsed: 9700
+
+		./dynamic 73 4 1 5 10 25
+		The number of coins used (dynamic): (7 total)  1 1 1 10 10 25 25
+		Time Elapsed: 13000
+
+		./dynamic 83 4 1 5 10 25
+		The number of coins used (dynamic): (7 total)  1 1 1 5 25 25 25
+		Time Elapsed: 14400
+
+		./dynamic 91 4 1 5 10 25
+		The number of coins used (dynamic): (6 total)  1 5 10 25 25 25
+		Time Elapsed: 16200
+
+		./dynamic 99 4 1 5 10 25
+		The number of coins used (dynamic): (9 total)  1 1 1 1 10 10 25 25 25
+		Time Elapsed: 17100
+
+		./dynamic 63 5 1 5 10 21 25
+		The number of coins used (dynamic): (3 total)  21 21 21
+		Time Elapsed: 13600
+
+
+
+C) Pseudocode and Performance
+	greedyCoins(coins[], change, numCoins)
+	temp set to 0
+
+	for i is numCoins - 1 to 0
+		if coins[i] <= change
+			temp = change / coins[i]
+			change -= temp * coins[i]
+			coinsUsed += temp
+
+	return coinsUsed
+------------------------------------------------------------------------------------
+	recursiveCoins(coins[], change, numCoins)
+	if change == 0
+		return 0
+	coinsUses set to infinite number
+
+	for i to numCoins
+		if coins[i] <= change
+			temp_coinsUsed = recursiveCoins(coins, change - coins[i], numCoins)
+			if temp_coinsUsed != infinite and temp_coinsUsed + 1 < coinsUsed
+				coinsUsed = temp_coinsUsed + 1
+
+	return coinsUsed
+
+	0(2^n) is its time complexity
+------------------------------------------------------------------------------------
+	dynamicChange(change, coins[], numCoins, totalCoins[], amount[]){  
+
+    totalCoins[0] = 0
+
+    for i..change
+		totalCoins[i] = infinite number
+		for j..number of coins
+	   		if totalCoins[i-coins[j]] + 1 < totalCoins[i] and i >= coins[j]
+			totalCoins[i] = totalCoins[i-coins[j]] + 1
+			amount[i] = j
+    return totalCoins[change]
+}
+	O(k.n) is its time complexity
+
+D) Correctness of coin system with 21 as option
+	While the recursive algorithm gives the least amount of coins in return (3x31), the greedy algorithm does not.  The recursive call notices that you do not need to see how many 25's you need, because it realizes that using 3 21's is the better solution.  This is because it returns the least amount of coins needed to fulfill the change requirement.  The greedy algorithm performs a little differently because it sees how many of the biggest denomination need to be used.  It will then deduct that from the total change and work its way down the list of currencies that are made available.  That is why it grabs 2 25's, leaving 13 left in change.  Then it grabs a 10, noticing that it cannot take a 21 with just 13 left.  It then skips the 5's and goes to the 1's.  It takes the remaining change with 3 1's for a total of 6 coins as change.
+	It is not surprising that the dynamic bottom-up algorithm for coin change provides the proper result for a coin system with 21 as an option.  It is an algorithm that find the lowest amount of coins needed for each change amount.  This means that when it realizes that at 21, the best coin is 21 and will use that as a valid option to choose from before 25 at certain change amounts.  This is the benefit behind storing in bottom-up dynamic programming.
+
+E) Comparisons of the Algorithms
+	When there is a perfect coin system like the US Coin system, both programs will give you the correct results as change.  That being said, the recursive algorithm starts to go extremely slow when you get above the 53 change from our testing change values.  This is due to the fact that so many recursive calls are being called and the effective performance is becomes very low.  The Greedy algorithm is very fast because it only takes 0(k) time to perform no matter what.  This is due to the fact that it just selects the best coin possible with how much change is left.  If it is able to take mutliple of the same coin, it will do so at once, shortening the time needed to calculate.  The problem with the greedy algorithm is when it comes to a weird coin system that is not perfect.  It is evident in the case described in part D of this report.
+	The dynamic algorithm is the best of both worlds, not only is it as fast as the greedy algorithm, but it also provides the accuracy of the recursive algorithm at the same time.  The reasoning behind this is detailed in the last part of answer 'D'.
+
+F) Theoretical vs Actual performance
+	To me, the theoretical and actual performace of these algorithms are very consistant.  It is to no surprise that the greedy algorithm performs extremely quick because of the little number of comparisons it needs to perform.  Also, it was clear that with an imperfect coin system it would not select the actual best case possible.  It was also very clear that when the change went up, that the recursive algorithm would begin to be extremely inefficient.  It will continue to need to do more comparisons and become extremely slow.  That being said, the results were consistent with my theoretical results, always choosing the best case in our test cases.  Based on the knowledge we have found out during the totality of this course, it is no surprise that the bottom-up dynamic algorithm is the best algorithm to use for the coin change.  The fact that it stores the best results for each change amount allows for the program to act very fast and provide the proper change amounts.
+
+G) Results vs Expectations
+	There is not much to go over much more that what was described in F in this project report.  The only thing that caught me off guard was how slow the recursive algorithm actually was when the change got higher and higher as input.  I expected it to slow down at a noticable pace, but not at the pace that it actually did.  When I tested the recursive algorithm at 83 change, I did not expect to sit down and wait for it to the point where I needed to cancel the execution because of the length of time it took.  Other that that, I was not surprised by anything else in the actual execution of the two algorithms.
