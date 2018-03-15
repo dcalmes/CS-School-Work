@@ -1,0 +1,161 @@
+Script started on Mon Mar 20 15:16:44 2017
+sh-4.3$ pwd
+/home/93/dcalmes/cs3350r
+sh-4.3$ ls -l
+total 144
+-rw-r--r--   1 dcalmes  ics3350r    1631 Feb 13 19:28 ArrayStack.cpp
+-rw-r--r--   1 dcalmes  ics3350r     867 Feb 13 19:28 ArrayStack.h
+-rw-rwx---   1 dcalmes  ics3350r    2317 Feb  8 22:21 BagInterface.h
+-rwxr-xr-x   1 dcalmes  ics3350r   17104 Mar 20 15:13 a.out
+lrwxrwxrwx   1 dcalmes  ics3350r      25 Jan 18 07:19 lib -> /home/classes/cs3350r/Lib
+-rw-rwx---   1 dcalmes  ics3350r   13511 Feb  9 00:22 pgm.log
+-rw-rwx---   1 dcalmes  ics3350r   10186 Jan 18 17:20 pgm1.log
+-rw-rwx---   1 dcalmes  ics3350r     724 Jan 18 17:17 pgm1BasicShape.h
+-rw-rwx---   1 dcalmes  ics3350r    1182 Jan 18 17:17 pgm1Circle.h
+-rw-rwx---   1 dcalmes  ics3350r    1103 Jan 18 17:17 pgm1Rectangle.h
+-rw-rwx---   1 dcalmes  ics3350r    3661 Jan 18 17:17 pgm1main.cpp
+-rw-rwx---   1 dcalmes  ics3350r    4149 Feb  9 00:16 pgm2bag.cpp
+-rw-rwx---   1 dcalmes  ics3350r    1460 Feb  9 00:15 pgm2bag.h
+-rw-rwx---   1 dcalmes  ics3350r    4180 Feb  9 00:19 pgm2main.cpp
+-rw-r--r--   1 dcalmes  ics3350r    2712 Mar 20 15:16 pgm4.cpp
+-rw-r--r--   1 dcalmes  user           0 Mar 20 15:16 pgm4.log
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat pgm4.cpp
+//      Douglas G Calmes        CS3350  6 - 7:20 PM
+//      Program 4
+//      Purpose:        The purpose of this program is to show and learn the process of using a stack and using its operations (push, pop, peek)
+
+#include <iostream>
+#include <string>
+#include <cctype>
+#include "lib/ArrayStack.h"
+using namespace std;
+
+// Prototype Functions
+double getResult(string postFix);
+double evaluateExpression(char operation, double firstOperand, double secondOperand);
+bool checkOperand(char C);
+bool checkDigit(char C);
+
+int main(){
+        string postFix;
+
+        cout << "Please Enter a Post Fix Expression" << endl;
+        
+        while (postFix[0] != 'q') {
+                cout << "Please Enter a Post Fix Expression" << endl;
+                getline(cin, postFix);
+                double result = getResult(postFix);
+                cout << "Output : " << result << endl;
+        }
+}
+
+//      This function will generate the expression result
+double getResult(string postFix) {
+        ArrayStack <double> Stack;
+        
+        for (int i = 0; i < postFix.length(); i++) {
+                if (postFix[i] == ' ' || postFix[i] == ',') continue;
+
+                else if (checkOperand(postFix[i])){
+                        double secondOperand = Stack.peek(); Stack.pop();
+                        double firstOperand = Stack.peek(); Stack.pop();
+                        double result = evaluateExpression(postFix[i], firstOperand, secondOperand);
+                        Stack.push(result);
+                }
+
+                else if (checkDigit(postFix[i])) {
+                        double operand = 0;
+                        while (i < postFix.length() && checkDigit(postFix[i])) {
+                                operand = (operand * 10) + (postFix[i] - '0');
+                                i++;
+                                Stack.push(operand);
+                        }
+                }
+                if (postFix.length() == 1 || postFix.length() == 2) {
+                        cout << "This expression is too short of an expression. INVALID ENTRY!" << endl;
+                }
+                else if (checkDigit(postFix[i]) == false && checkOperand(postFix[i] == false)) {
+                        cout << postFix[i] << "isn't a valid symbol." << endl;
+                        return 0;
+                }
+        }
+        return Stack.peek();
+}
+
+//      This function will do all the work to prepare the expression for its results
+double evaluateExpression(char operation, double firstOperand, double secondOperand) {
+        if (operation == '+') {
+                return firstOperand + secondOperand;
+        }
+        else if (operation == '-') {
+                return firstOperand - secondOperand;
+        }
+        else if (operation == '*') {
+                return firstOperand * secondOperand;
+        }
+        else if (operation == '/') {
+                return firstOperand / secondOperand;
+        }
+        else cout << "ERROR!" << endl;
+        return -1;
+}
+
+//      This function will check to see if C is a valid operator
+bool checkOperand(char C) {
+        if (C == '+' || C == '-' || C == '*' || C == '/') {
+                return true;
+        }
+        return false;
+}
+
+//      This function will check to see if C is a valid digit
+bool checkDigit(char C) {
+        if (C >= '0' && C <= '9') {
+                return true;
+        }
+        return false;
+}
+
+
+
+
+
+sh-4.3$ 
+sh-4.3$ g++ pgm4.cpp
+[01m[Kpgm4.cpp:[m[K In function '[01m[Kdouble getResult(std::__cxx11::string)[m[K':
+[01m[Kpgm4.cpp:34:20:[m[K [01;35m[Kwarning: [m[Kcomparison between signed and unsigned integer expressions [-Wsign-compare]
+  for (int i = 0; i < postFix.length(); i++) {
+[01;32m[K                    ^[m[K
+[01m[Kpgm4.cpp:46:13:[m[K [01;35m[Kwarning: [m[Kcomparison between signed and unsigned integer expressions [-Wsign-compare]
+    while (i < postFix.length() && checkDigit(postFix[i])) {
+[01;32m[K             ^[m[K
+sh-4.3$ a.out < lib/pgm4.tc xt
+Please Enter a Post Fix Expression
+Please Enter a Post Fix Expression
+Output : 15
+Please Enter a Post Fix Expression
+Output : 22.5
+Please Enter a Post Fix Expression
+Output : 31
+Please Enter a Post Fix Expression
+Output : 32
+Please Enter a Post Fix Expression
+Output : 0
+Please Enter a Post Fix Expression
+This expression is too short of an expression. INVALID ENTRY!
+Output : 7
+Please Enter a Post Fix Expression
+Output : 5
+Please Enter a Post Fix Expression
+Output : 6
+Please Enter a Post Fix Expression
+Output : 11
+Please Enter a Post Fix Expression
+Assertion failed: !isEmpty(), file lib/ArrayStack.cpp, line 63, function peek
+Abort
+sh-4.3$ exit
+exit
+
+script done on Mon Mar 20 15:17:18 2017

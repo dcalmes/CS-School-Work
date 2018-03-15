@@ -1,0 +1,504 @@
+Script started on Tue Apr 25 09:11:49 2017
+sh-4.3$ ls -    pwd
+/home/93/dcalmes/cs3350r
+sh-4.3$ ls -l
+total 418
+-rw-r--r--   1 dcalmes  ics3350r    1344 Mar 25 17:24 ArrayQueue.cpp
+-rw-r--r--   1 dcalmes  ics3350r    1038 Mar 25 17:24 ArrayQueue.h
+-rw-rwx---   1 dcalmes  ics3350r    1631 Feb 13 19:28 ArrayStack.cpp
+-rw-rwx---   1 dcalmes  ics3350r     867 Feb 13 19:28 ArrayStack.h
+-rw-rwx---   1 dcalmes  ics3350r    2317 Feb  8 22:21 BagInterface.h
+-rw-r--r--   1 dcalmes  ics3350r    1347 Mar 25 17:25 QueueInterface.h
+-rw-r--r--   1 dcalmes  ics3350r    1828 Feb 13 19:29 StackInterface.h
+-rwxr-xr-x   1 dcalmes  ics3350r   57700 Apr 25 09:09 a.out
+lrwxrwxrwx   1 dcalmes  ics3350r      25 Jan 18 07:19 lib -> /home/classes/cs3350r/Lib
+-rw-rwx---   1 dcalmes  ics3350r   13511 Feb  9 00:22 pgm.log
+-rw-rwx---   1 dcalmes  ics3350r   10186 Jan 18 17:20 pgm1.log
+-rw-rwx---   1 dcalmes  ics3350r     724 Jan 18 17:17 pgm1BasicShape.h
+-rw-rwx---   1 dcalmes  ics3350r    1182 Jan 18 17:17 pgm1Circle.h
+-rw-rwx---   1 dcalmes  ics3350r    1103 Jan 18 17:17 pgm1Rectangle.h
+-rw-rwx---   1 dcalmes  ics3350r    3661 Jan 18 17:17 pgm1main.cpp
+-rw-rwx---   1 dcalmes  ics3350r    4149 Feb  9 00:16 pgm2bag.cpp
+-rw-rwx---   1 dcalmes  ics3350r    1460 Feb  9 00:15 pgm2bag.h
+-rw-rwx---   1 dcalmes  ics3350r    4180 Feb  9 00:19 pgm2main.cpp
+-rw-r--r--   1 dcalmes  user           0 Apr 25 09:11 pgm3.log
+-rw-r--r--   1 dcalmes  ics3350r    8226 Apr 25 08:46 pgm3bag.cpp
+-rw-r--r--   1 dcalmes  ics3350r    1300 Apr 25 08:46 pgm3bag.h
+-rw-r--r--   1 dcalmes  ics3350r    1710 Apr 25 09:08 pgm3main.cpp
+-rw-rwx---   1 dcalmes  ics3350r    2712 Mar 20 15:16 pgm4.cpp
+-rw-rwx---   1 dcalmes  ics3350r    6176 Mar 20 15:17 pgm4.log
+-rw-r--r--   1 dcalmes  ics3350r    6417 Apr 25 08:37 pgm5.cpp
+-rw-r--r--   1 dcalmes  user       12329 Apr 25 08:41 pgm5.log
+-rw-rwx---   1 dcalmes  ics3350r   20270 Mar 22 17:47 pgm6.log
+-rw-rwx---   1 dcalmes  ics3350r    6493 Mar 22 17:46 pgm6first.cpp
+-rw-rwx---   1 dcalmes  ics3350r    6579 Mar 22 17:45 pgm6mo3.cpp
+-rw-r--r--   1 dcalmes  ics3350r    2827 Apr  3 17:51 pgm7.cpp
+-rw-r--r--   1 dcalmes  user       10358 Apr  3 17:53 pgm7.log
+drwxr-sr-x   2 dcalmes  ics3350r    1024 Apr 14 22:41 pgm8
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat pgm3bag.h
+// Created by Frank M. Carrano and Timothy M. Henry.
+// Copyright (c) 2017 Pearson Education, Hoboken, New Jersey.
+
+/** ADT bag: Link-based implementation.
+    @file LinkedBag.h 
+    Listing 4-3 */
+#ifndef LINKED_BAG_
+#define LINKED_BAG_
+
+#include "lib/BagInterface.h"
+#include "lib/Node.h"
+
+template<class ItemType>
+class LinkedBag : public BagInterface<ItemType>
+{
+  private:
+     Node<ItemType>* headPtr; // Pointer to first node
+     int itemCount;           // Current count of bag items
+   
+     // Returns either a pointer to the node containing a given entry
+     // or the null pointer if the entry is not in the bag.
+     Node<ItemType>* getPointerTo(const ItemType& target) const;
+   
+  public:
+     LinkedBag();
+     LinkedBag(const LinkedBag<ItemType>& aBag); // Copy constructor
+     virtual ~LinkedBag();                       // Virtual destructor
+     int getCurrentSize() const;
+     bool isEmpty() const;
+     bool add(const ItemType& newEntry);
+     bool remove(const ItemType& anEntry);
+     void clear();
+     bool contains(const ItemType& anEntry) const;
+     int getFrequencyOf(const ItemType& anEntry) const;
+     std::vector<ItemType> toVector() const;
+         void spellCheck(LinkedBag<ItemType>& checkWords, LinkedBag<ItemType>& incorrectBag);
+};
+
+#include "pgm3bag.cpp"
+#endif
+sh-4.3$ cat pgm3bag.cpp
+// Created by Frank M. Carrano and Timothy M. Henry.
+// Copyright (c) 2017 Pearson Education, Hoboken, New Jersey.
+
+/** ADT bag: Link-based implementation.
+    @file LinkedBag.cpp */
+
+#include "pgm3bag.h"
+#include <cstddef>
+
+// --------------------------------------------------
+//                Default Constructor
+// --------------------------------------------------
+template<class ItemType>
+LinkedBag<ItemType>::LinkedBag() : headPtr(nullptr), itemCount(0)
+{
+}
+
+// --------------------------------------------------
+//                   Copy  Constructor
+// --------------------------------------------------
+template<class ItemType>
+LinkedBag<ItemType>::LinkedBag(const LinkedBag<ItemType>& aBag)
+{
+   itemCount = aBag.itemCount;
+   Node<ItemType>* origChainPtr = aBag.headPtr;  // Points to nodes in original chain
+   
+   if (origChainPtr == NULL)
+      headPtr = NULL;  // Original bag is empty
+   else
+   {
+      // Copy first node
+      headPtr = new Node<ItemType>();
+      headPtr->setItem(origChainPtr->getItem());
+      
+      // Copy remaining nodes
+      Node<ItemType>* newChainPtr = headPtr;      // Points to last node in new chain
+      origChainPtr = origChainPtr->getNext();     // Advance original-chain pointer
+      
+      while (origChainPtr != NULL)
+      {
+         // Get next item from original chain
+         ItemType nextItem = origChainPtr->getItem();
+              
+         // Create a new node containing the next item
+         Node<ItemType>* newNodePtr = new Node<ItemType>(nextItem);
+         
+         // Link new node to end of new chain
+         newChainPtr->setNext(newNodePtr);
+         
+         // Advance pointer to new last node
+         newChainPtr = newChainPtr->getNext();
+
+         // Advance original-chain pointer
+         origChainPtr = origChainPtr->getNext();
+      }  // end while
+      
+      newChainPtr->setNext(NULL);              // Flag end of chain
+   }  // end if
+}
+
+// --------------------------------------------------
+//                 Destructor
+// --------------------------------------------------
+template<class ItemType>
+LinkedBag<ItemType>::~LinkedBag()
+{
+   clear();
+}
+
+// --------------------------------------------------
+//                    isEmpty
+// --------------------------------------------------
+template<class ItemType>
+bool LinkedBag<ItemType>::isEmpty() const
+{
+   return itemCount == 0;
+}  
+
+// --------------------------------------------------
+//                 getCurrentSize
+// --------------------------------------------------
+template<class ItemType>
+int LinkedBag<ItemType>::getCurrentSize() const
+{
+   return itemCount;
+}  
+
+// --------------------------------------------------
+//                      add
+// --------------------------------------------------
+template<class ItemType>
+bool LinkedBag<ItemType>::add(const ItemType& newEntry)
+{
+   // Add to beginning of chain: new node references rest of chain;
+   // (headPtr is null if chain is empty)        
+   Node<ItemType>* nextNodePtr = new Node<ItemType>();
+   nextNodePtr->setItem(newEntry);
+   nextNodePtr->setNext(headPtr);  // New node points to chain
+
+   headPtr = nextNodePtr;          // New node is now first node
+   itemCount++;
+   
+   return true;
+}
+
+// --------------------------------------------------
+//                    toVector
+// --------------------------------------------------
+template<class ItemType>
+std::vector<ItemType> LinkedBag<ItemType>::toVector() const
+{
+   std::vector<ItemType> bagContents;
+   Node<ItemType>* curPtr = headPtr;
+   int counter = 0;
+   while ((curPtr != nullptr) && (counter < itemCount))
+   {
+      bagContents.push_back(curPtr->getItem());
+      curPtr = curPtr->getNext();
+      counter++;
+   }  
+   
+   return bagContents;
+}
+
+// --------------------------------------------------
+//                    remove
+// --------------------------------------------------
+template<class ItemType>
+bool LinkedBag<ItemType>::remove(const ItemType& anEntry)
+{
+   Node<ItemType>* entryNodePtr = getPointerTo(anEntry);
+   bool canRemoveItem = !isEmpty() && (entryNodePtr != nullptr);
+   if (canRemoveItem)
+   {
+      // Copy data from first node to located node
+      entryNodePtr->setItem(headPtr->getItem());
+      
+      // Delete first node
+      Node<ItemType>* nodeToDeletePtr = headPtr;
+      headPtr = headPtr->getNext();
+      
+      // Return node to the system
+      nodeToDeletePtr->setNext(NULL);
+      delete nodeToDeletePtr;
+      nodeToDeletePtr = NULL;
+      
+      itemCount--;
+   }
+   
+        return canRemoveItem;
+}  
+
+// --------------------------------------------------
+//                    clear
+// --------------------------------------------------
+template<class ItemType>
+void LinkedBag<ItemType>::clear()
+{
+   Node<ItemType>* nodeToDeletePtr = headPtr;
+   while (headPtr != nullptr)
+   {
+      headPtr = headPtr->getNext();
+
+      // Return node to the system
+      nodeToDeletePtr->setNext(nullptr);
+      delete nodeToDeletePtr;
+      
+      nodeToDeletePtr = headPtr;
+   }                       // headPtr, nodeToDeletePtr now nullptr
+   
+   itemCount = 0;
+}  
+
+// --------------------------------------------------
+//                  getFrequencyOf
+// --------------------------------------------------
+template<class ItemType>
+int LinkedBag<ItemType>::getFrequencyOf(const ItemType& anEntry) const
+{
+        int frequency = 0;
+   int counter = 0;
+   Node<ItemType>* curPtr = headPtr;
+   while ((curPtr != nullptr) && (counter < itemCount))
+   {
+      if (anEntry == curPtr->getItem())
+      {
+         frequency++;
+      } // end if
+      
+      counter++;
+      curPtr = curPtr->getNext();
+   } // end while
+   
+   return frequency;
+}  
+
+// --------------------------------------------------
+//                    contains
+// --------------------------------------------------
+template<class ItemType>
+bool LinkedBag<ItemType>::contains(const ItemType& anEntry) const
+{
+   return (getPointerTo(anEntry) != nullptr);
+}  
+
+
+// --------------------------------------------------
+//                    getPointerTo
+// --------------------------------------------------
+// private
+// Returns either a pointer to the node containing a given entry 
+// or the null pointer if the entry is not in the bag.
+template<class ItemType>
+Node<ItemType>* LinkedBag<ItemType>::getPointerTo(const ItemType& anEntry) 
+const
+{
+   bool found = false;
+   Node<ItemType>* curPtr = headPtr;
+   
+   while (!found && (curPtr != nullptr))
+   {
+      if (anEntry == curPtr->getItem())
+         found = true;
+      else
+         curPtr = curPtr->getNext();
+   }
+   
+   return curPtr;
+} 
+
+template<class ItemType>
+void LinkedBag<ItemType>::spellCheck(LinkedBag<ItemType>& checkWords, LinkedBag<ItemType>& incorrectBag)
+{
+        std::vector<std::string> word = checkWords.toVector();
+        std::string storeWord;
+        std::string Temp;
+
+        for (unsigned int i = 0; i < checkWords.getCurrentSize(); i++)
+        {
+                if (!contains(word[i]))
+                {
+                        storeWord = word[i];
+                        incorrectBag.add(storeWord);
+                }
+        }
+}
+
+// --------------------------------------------------
+//                      add
+//            ALTERNATE for 1st 3 lines
+// --------------------------------------------------
+//   Node<ItemType>* nextNodePtr = new Node<ItemType>(newEntry, headPtr); 
+
+// --------------------------------------------------
+//                    contains
+//            ALTERNATE 1 implementation
+// --------------------------------------------------
+/*
+template<class ItemType>
+bool LinkedBag<ItemType>::contains(const ItemType& anEntry) const
+{
+   return getFrequencyOf(anEntry) > 0;
+} 
+*/
+
+// --------------------------------------------------
+//                    contains
+//            ALTERNATE 2 implementation
+// --------------------------------------------------
+// ALTERNATE 2 
+/*
+template<class ItemType>
+bool LinkedBag<ItemType>::contains(const ItemType& anEntry) const
+{
+   bool found = false;
+   Node<ItemType>* curPtr = headPtr;
+   int i = 0;
+   while (!found && (curPtr != nullptr) && (i < itemCount))
+   {
+      if (anEntry == curPtr-<getItem())
+      {
+         found = true;
+      }
+      else
+      {
+         i++;
+         curPtr = curPtr->getNext();
+      }  // end if
+   }  // end while
+
+   return found;
+}  // end contains
+*/
+
+
+sh-4.3$ cat pgm3main.cpp
+// Programmer:  Douglas G Calmes                CS3350          MW 6:00 - 7:20
+// Program:             Program 3
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdio.h>
+#include <string.h>
+#include "pgm3bag.h"
+using namespace std;
+
+// Prototype functions
+void displaySize(const LinkedBag<string>&);
+void readinputFile(const string&, LinkedBag<string>&);
+
+int main()
+{
+        LinkedBag<string> dictionary;
+        LinkedBag<string> checkWords;
+        LinkedBag<string> wrongBag;
+
+        // Read in files
+        readinputFile("lib/dictionary.txt", dictionary);
+        readinputFile("lib/checkWords.txt", checkWords);
+
+        // Checking words in dictionary
+        cout << "Number of words in dictionary" << endl;
+        displaySize(dictionary);
+        cout << "Number of words in check" << endl;
+        displaySize(checkWords);
+
+        // Checking words spelled wrong
+        dictionary.spellCheck(checkWords, wrongBag);
+        cout << "Words that are spelled incorrectly" << endl;
+        displaySize(wrongBag);
+        system("pause");
+        return 0;
+}
+void readinputFile(const string& fileName, LinkedBag<string>& linkedBag){
+        ifstream inputFile;
+        string input;
+        inputFile.open(fileName);
+
+        // Error message if file can not open
+        if (!inputFile.is_open()){
+                cout << "ERROR: File can not open!" << endl;
+        }
+        else{
+                // Load in info from input file
+                while (!inputFile.eof()){
+                        getline(inputFile, input);
+                        linkedBag.add(input);
+                }
+        }
+}
+
+void displaySize(const LinkedBag<string>& passedBag){
+        // Initialize size to the size of bag
+        int size = passedBag.getCurrentSize();
+        vector<string> items = passedBag.toVector();
+
+        cout << "Bag Size: " << size << endl;
+        cout << "Bag Contents: " << endl;
+        for (int i = 0; i < size; i++){
+                cout << items[i] << endl;
+        }
+}sh-4.3$ 
+sh-4.3$ g++ pgm3main.cpp 
+In file included from [01m[Kpgm3bag.h:39:0[m[K,
+                 from [01m[Kpgm3main.cpp:9[m[K:
+pgm3bag.cpp: In instantiation of '[01m[Kvoid LinkedBag<ItemType>::spellCheck(LinkedBag<ItemType>&, LinkedBag<ItemType>&) [with ItemType = std::__cxx11::basic_string<char>][m[K':
+[01m[Kpgm3main.cpp:33:44:[m[K   required from here
+[01m[Kpgm3bag.cpp:238:29:[m[K [01;35m[Kwarning: [m[Kcomparison between signed and unsigned integer expressions [-Wsign-compare]
+  for (unsigned int i = 0; i < checkWords.getCurrentSize(); i++)
+[01;32m[K                             ^[m[K
+sh-4.3$ a.out
+Number of words in dictionary
+Bag Size: 24
+Bag Contents: 
+
+rhyme
+restaurant
+referred
+professor
+precede
+perceive
+omission
+niece
+library
+liaison
+inoculate
+independent
+height
+grateful
+friend
+exhilarate
+disastrous
+deceive
+colleague
+arctic
+awful
+acreage
+absence
+Number of words in check
+Bag Size: 9
+Bag Contents: 
+
+neice
+omission
+artic
+restaurant
+height
+decieve
+professer
+independent
+Words that are spelled incorrectly
+Bag Size: 4
+Bag Contents: 
+professer
+decieve
+artic
+neice
+sh: pause: not found
+sh-4.3$ exit
+exit
+
+script done on Tue Apr 25 09:12:40 2017

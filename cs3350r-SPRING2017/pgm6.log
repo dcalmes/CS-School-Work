@@ -1,0 +1,524 @@
+Script started on Wed Mar 22 17:46:26 2017
+sh-4.3$ lp  pwd
+/home/93/dcalmes/cs3350r
+sh-4.3$ ls -l
+total 186
+-rw-r--r--   1 dcalmes  ics3350r    1631 Feb 13 19:28 ArrayStack.cpp
+-rw-r--r--   1 dcalmes  ics3350r     867 Feb 13 19:28 ArrayStack.h
+-rw-rwx---   1 dcalmes  ics3350r    2317 Feb  8 22:21 BagInterface.h
+-rwxr-xr-x   1 dcalmes  ics3350r   17140 Mar 20 15:17 a.out
+lrwxrwxrwx   1 dcalmes  ics3350r      25 Jan 18 07:19 lib -> /home/classes/cs3350r/Lib
+-rw-rwx---   1 dcalmes  ics3350r   13511 Feb  9 00:22 pgm.log
+-rw-rwx---   1 dcalmes  ics3350r   10186 Jan 18 17:20 pgm1.log
+-rw-rwx---   1 dcalmes  ics3350r     724 Jan 18 17:17 pgm1BasicShape.h
+-rw-rwx---   1 dcalmes  ics3350r    1182 Jan 18 17:17 pgm1Circle.h
+-rw-rwx---   1 dcalmes  ics3350r    1103 Jan 18 17:17 pgm1Rectangle.h
+-rw-rwx---   1 dcalmes  ics3350r    3661 Jan 18 17:17 pgm1main.cpp
+-rw-rwx---   1 dcalmes  ics3350r    4149 Feb  9 00:16 pgm2bag.cpp
+-rw-rwx---   1 dcalmes  ics3350r    1460 Feb  9 00:15 pgm2bag.h
+-rw-rwx---   1 dcalmes  ics3350r    4180 Feb  9 00:19 pgm2main.cpp
+-rw-r--r--   1 dcalmes  ics3350r    2712 Mar 20 15:16 pgm4.cpp
+-rw-r--r--   1 dcalmes  user        6176 Mar 20 15:17 pgm4.log
+-rw-r--r--   1 dcalmes  user           0 Mar 22 17:46 pgm6.log
+-rw-r--r--   1 dcalmes  ics3350r    6493 Mar 22 17:46 pgm6first.cpp
+-rw-r--r--   1 dcalmes  ics3350r    6579 Mar 22 17:45 pgm6mo3.cpp
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ ls -l[2Ppwdexitg++ pgm6mo3.cppsh-4.3$ cat pgm6mo3.cpp
+//      Programmer:     Douglas G Calmes                Program 6               CS 3350         6PM
+//      Purpose:        This program shows the difference between pivot positions for quicksort
+//      Due:            Wednesday, March 22, 2017 at 6PM
+
+#include <iostream>
+#include <string>
+#include <cstdlib>
+using namespace std;
+
+//*********************  prototypes  *********************
+template<class 
+ItemType>
+void quickSort(ItemType ary[], int first, int last, int &count);
+
+template<class ItemType>
+int partition(ItemType ary[], int first, int last, int &count);
+
+template<class ItemType>
+int sortFirstMiddleLast(ItemType ary[], int first, int last);
+
+template<class ItemType>
+void order(ItemType ary[], int i, int j);
+
+template<class ItemType>
+void insertionSort(ItemType ary[], int first, int last);
+
+void arrayFill(int ary[], int arySize);
+
+void arrayDisplay(int ary[], int arySize, int &count);
+
+// Smallest size array quicksort will sort 
+static const int MIN_SIZE  = 10;
+
+//************************ main *************************
+int main()
+{
+        int arySize;    //      Initialize Array
+        int count = 0;
+
+        //      Ask user to input an array size
+        cout << "What would you like the size of the array to be?" << endl;
+        cin >> arySize;
+        if (arySize < MIN_SIZE) {
+                cout << "The size that you wanted the array to be is too small, please try again!" << endl;
+                cin >> arySize;
+        }
+
+        int ary[arySize];
+
+        arrayFill(ary, arySize);
+
+        int firstPos = 0;
+        int lastPos = arySize;
+
+        //      Display array before sorting
+        cout << "Array before sorting: " << endl;
+        arrayDisplay(ary, arySize, count);
+
+        quickSort(ary, firstPos, lastPos, count);
+        
+        //      Display array after sorting
+        cout << "Array after sorting: " << endl;
+        arrayDisplay(ary, arySize, count);
+
+   return 0;
+}
+
+//**********************  quickSort *************************
+// Sorts an array into ascending order. Uses quick sort with
+// median-of-three pivot selection for arrays of at least
+// MIN_SIZE entries, uses insertion sort for other arrays.
+//***********************************************************
+template<class ItemType>
+void quickSort(ItemType ary[], int first, int last, int &count)
+{
+   if (last - first + 1 < MIN_SIZE)
+   {
+      insertionSort(ary, first, last);
+   }
+   else
+   {
+      // Create the partition: S1 | Pivot | S2
+      int pivotIndex = partition(ary, first, last, count);
+ 
+     
+      // Sort subarrays S1 and S2
+      quickSort(ary, first, pivotIndex - 1, count);
+      quickSort(ary, pivotIndex + 1, last, count);
+   } 
+}
+
+//**********************  partition *************************
+// Partitions entries in an array about a pivot entry
+//***********************************************************
+template<class ItemType>
+int partition(ItemType ary[], int first, int last, int &count)
+{
+   // Choose pivot using median-of-three selection
+   int pivotIndex = sortFirstMiddleLast(ary, first, last);
+   
+   // Reposition pivot so it is last in the array
+   swap(ary[pivotIndex], ary[last - 1]);
+   pivotIndex = last - 1;
+   ItemType pivot = ary[pivotIndex];
+   
+   // Determine the regions S1 and S2
+   int indexFromLeft = first + 1;
+   int indexFromRight = last - 2;
+   
+   bool done = false;
+   while (!done)
+   {
+      // Locate first entry on left that is >= pivot
+           while (ary[indexFromLeft] < pivot) {
+                   indexFromLeft = indexFromLeft + 1;
+                   count++;
+          }
+
+      // Locate first entry on right that is <= pivot
+           while (ary[indexFromRight] > pivot) {
+                   indexFromRight = indexFromRight - 1;
+                   count++;
+          }
+      
+      if (indexFromLeft < indexFromRight)
+      {
+         std::swap(ary[indexFromLeft], ary[indexFromRight]);
+         indexFromLeft = indexFromLeft + 1;
+         indexFromRight = indexFromRight - 1;
+      }
+      else
+         done = true;
+   }
+   
+   // Place pivot in proper position between S1 and S2, and 
+   // mark its new location
+   swap(ary[pivotIndex], ary[indexFromLeft]);
+   pivotIndex = indexFromLeft;
+   
+   return pivotIndex;
+} 
+//****************  sortFirstMiddleLast ********************
+// Arranges first, middle, last entry in sorted order.
+//***********************************************************
+template<class ItemType>
+int sortFirstMiddleLast(ItemType ary[], int first, int last)
+{
+   int mid = first + (last - first) / 2;
+   order(ary, first, mid); // Make ary[first] <= ary[mid]
+   order(ary, mid, last);  // Make ary[mid] <= ary[last]
+   order(ary, first, mid); // Make ary[first] <= ary[mid]
+   
+   return mid;
+}
+
+//************************  order  **************************
+// Arranges two specified array entries into sorted order by
+// exchanging them, if necessary.
+//***********************************************************
+template<class ItemType>
+void order(ItemType ary[], int i, int j)
+{
+   if (ary[i] > ary[j])
+      swap(ary[i], ary[j]); // Exchange entries
+}
+
+//********************** insertionSort **********************
+// Sorts the items in an array into ascending order.
+// Initially, sorted region is ary[0], unsorted region is 
+// ary[1..n-1]. In general, sorted region is 
+// ary[0..unsorted-1], unsorted region ary[unsorted..n-1]
+//***********************************************************
+template<class ItemType>
+void insertionSort(ItemType ary[], int first, int last)
+{
+   int unsorted;      // first index of the unsorted region,
+   int loc;           // index of insertion in sorted region
+   ItemType nextItem; // next item in the unsorted region
+
+   for (unsorted = first + 1; unsorted <= last; unsorted++)
+   {
+      // ary[0..unsorted-1] sorted. Find right position
+      // (loc) in ary[0..unsorted] for ary[unsorted],
+      // first entry in unsorted region;
+      // shift, if necessary, to make room
+      nextItem = ary[unsorted];
+      loc = unsorted;
+      while ((loc > first) && (ary[loc - 1] > nextItem))
+      {
+         // Shift ary[loc - 1] to the right
+         ary[loc] = ary[loc - 1];
+         loc--;
+      } 
+      
+      // Insert nextItem in sorted region at ary[loc]
+      ary[loc] = nextItem; 
+   } 
+} 
+
+//**********************  arrayFill  ************************
+// Fill in the array
+//***********************************************************
+void arrayFill(int ary[], int arySize) {
+        for (int i = 0; i < arySize; i++) {
+                ary[i] = rand() % 1000 + 1;
+        }
+ }
+
+//********************  arrayDisplay  ***********************
+// Display the array
+//***********************************************************
+void arrayDisplay(int ary[], int arySize, int &count) {
+        cout << "Current state of your array: " << endl;
+        for (int j = 0; j < arySize; j++) {
+                cout << ary[j] << " ";
+        }
+        cout << "The total number of comparisons: " << count << endl;
+}
+sh-4.3$ cat pgm6mo3.cppsh-4.3$ [10Pls -l[2Ppwdexitg++ pgm6mo3.cpp
+sh-4.3$ a.out
+What would you like the size of the array to be?
+10
+Array before sorting: 
+Current state of your array: 
+839 759 114 516 52 628 11 420 213 87 The total number of comparisons: 0
+Array after sorting: 
+Current state of your array: 
+11 52 87 114 213 420 516 628 759 839 The total number of comparisons: 8
+sh-4.3$ a.out
+What would you like the size of the array to be?
+7 50
+Array before sorting: 
+Current state of your array: 
+839 759 114 516 52 628 11 420 213 87 750 768 85 61 226 544 90 184 138 567 967 979 496 312 368 55 32 146 883 737 525 506 395 103 852 68 755 654 562 97 629 189 86 144 968 407 166 404 563 835 The total number of comparisons: 0
+Array after sorting: 
+Current state of your array: 
+11 32 52 55 61 68 85 86 87 90 97 103 114 138 144 146 166 184 189 213 226 312 368 395 404 407 420 496 506 516 525 544 562 563 567 628 629 654 737 750 755 759 768 835 839 852 883 967 968 979 The total number of comparisons: 116
+sh-4.3$ a.out
+What would you like the size of the array to be?
+100
+Array before sorting: 
+Current state of your array: 
+839 759 114 516 52 628 11 420 213 87 750 768 85 61 226 544 90 184 138 567 967 979 496 312 368 55 32 146 883 737 525 506 395 103 852 68 755 654 562 97 629 189 86 144 968 407 166 404 563 835 354 921 445 804 963 319 423 328 458 946 480 984 752 895 671 260 249 758 630 307 607 991 739 517 415 263 117 826 182 135 344 23 234 537 761 980 72 202 337 62 161 6 730 645 476 694 515 140 89 522 The total number of comparisons: 0
+Array after sorting: 
+Current state of your array: 
+6 11 23 32 52 55 61 62 68 72 85 86 87 89 90 97 103 114 117 135 138 140 144 146 161 166 182 184 189 202 213 226 234 249 260 263 307 312 319 328 337 344 354 368 395 404 407 415 420 423 445 458 476 480 496 506 515 516 517 522 525 537 544 562 563 567 607 628 629 630 645 654 671 694 730 737 739 750 752 755 758 759 761 768 804 826 835 839 852 883 895 921 946 963 967 968 979 980 984 991 The total number of comparisons: 313
+sh-4.3$ a.outg++ pgm6mo3.cppsh-4.3$ cat pgm6mo3.cpp.cpp               
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ a.outg++ pgm6mo3.cppsh-4.3$ cat pgm6mo3.cpp[1P[1P[1P[1@f[1@i[1@r[1@s[1@t
+//      Programmer:     Douglas G Calmes                Program 6               CS 3350         6PM
+//      Purpose:        This program shows the difference between pivot positions for quicksort
+//      Due:            Wednesday, March 22, 2017 at 6PM
+
+#include <iostream>
+#include <string>
+#include <cstdlib>
+using namespace std;
+
+//*********************  prototypes  *********************
+template<class 
+ItemType>
+void quickSort(ItemType ary[], int first, int last, int &count);
+
+template<class ItemType>
+int partition(ItemType ary[], int first, int last, int &count);
+
+template<class ItemType>
+int sortFirstMiddleLast(ItemType ary[], int first, int last);
+
+template<class ItemType>
+void order(ItemType ary[], int i, int j);
+
+template<class ItemType>
+void insertionSort(ItemType ary[], int first, int last);
+
+void arrayFill(int ary[], int arySize);
+
+void arrayDisplay(int ary[], int arySize, int &count);
+
+// Smallest size array quicksort will sort 
+static const int MIN_SIZE  = 10;
+
+//************************ main *************************
+int main()
+{
+        int arySize;
+        int count = 0;
+
+        cout << "What would you like the size of the array to be?" << endl;
+        cin >> arySize;
+        if (arySize < MIN_SIZE) {
+                cout << "The size that you wanted the array to be is too small, please try again!" << endl;
+                cin >> arySize;
+        }
+
+        int ary[arySize];
+
+        arrayFill(ary, arySize);
+
+        int firstPos = 0;
+        int lastPos = arySize;
+
+        cout << "Array before sorting: " << endl;
+        arrayDisplay(ary, arySize, count);
+
+        quickSort(ary, firstPos, lastPos, count);
+
+        cout << "Array after sorting: " << endl;
+        arrayDisplay(ary, arySize, count);
+
+   return 0;
+}
+
+//**********************  quickSort *************************
+// Sorts an array into ascending order. Uses quick sort with
+// median-of-three pivot selection for arrays of at least
+// MIN_SIZE entries, uses insertion sort for other arrays.
+//***********************************************************
+template<class ItemType>
+void quickSort(ItemType ary[], int first, int last, int &count)
+{
+   if (last - first + 1 < MIN_SIZE)
+   {
+      insertionSort(ary, first, last);
+   }
+   else
+   {
+      // Create the partition: S1 | Pivot | S2
+      int pivotIndex = partition(ary, first, last, count);
+ 
+     
+      // Sort subarrays S1 and S2
+      quickSort(ary, first, pivotIndex - 1, count);
+      quickSort(ary, pivotIndex + 1, last, count);
+   } 
+}
+
+//**********************  partition *************************
+// Partitions entries in an array about a pivot entry
+//***********************************************************
+template<class ItemType>
+int partition(ItemType ary[], int first, int last, int &count)
+{
+   // Choose pivot using median-of-three selection
+   int pivotIndex = sortFirstMiddleLast(ary, first, last);
+   
+   // Reposition pivot so it is last in the array
+   swap(ary[pivotIndex], ary[last - 1]);
+   pivotIndex = first;  // Switched to first position in array
+   ItemType pivot = ary[pivotIndex];
+   
+   // Determine the regions S1 and S2
+   int indexFromLeft = first + 1;
+   int indexFromRight = last - 2;
+   
+   bool done = false;
+   while (!done)
+   {
+      // Locate first entry on left that is >= pivot
+           while (ary[indexFromLeft] < pivot) {
+                   indexFromLeft = indexFromLeft + 1;
+                   count++;
+          }
+
+      // Locate first entry on right that is <= pivot
+           while (ary[indexFromRight] > pivot) {
+                   indexFromRight = indexFromRight - 1;
+                   count++;
+          }
+      
+      if (indexFromLeft < indexFromRight)
+      {
+         std::swap(ary[indexFromLeft], ary[indexFromRight]);
+         indexFromLeft = indexFromLeft + 1;
+         indexFromRight = indexFromRight - 1;
+      }
+      else
+         done = true;
+   }
+   
+   // Place pivot in proper position between S1 and S2, and 
+   // mark its new location
+   swap(ary[pivotIndex], ary[indexFromLeft]);
+   pivotIndex = indexFromLeft;
+   
+   return pivotIndex;
+} 
+//****************  sortFirstMiddleLast ********************
+// Arranges first, middle, last entry in sorted order.
+//***********************************************************
+template<class ItemType>
+int sortFirstMiddleLast(ItemType ary[], int first, int last)
+{
+   int mid = first + (last - first) / 2;
+   order(ary, first, mid); // Make ary[first] <= ary[mid]
+   order(ary, mid, last);  // Make ary[mid] <= ary[last]
+   order(ary, first, mid); // Make ary[first] <= ary[mid]
+   
+   return mid;
+}
+
+//************************  order  **************************
+// Arranges two specified array entries into sorted order by
+// exchanging them, if necessary.
+//***********************************************************
+template<class ItemType>
+void order(ItemType ary[], int i, int j)
+{
+   if (ary[i] > ary[j])
+      swap(ary[i], ary[j]); // Exchange entries
+}
+
+//********************** insertionSort **********************
+// Sorts the items in an array into ascending order.
+// Initially, sorted region is ary[0], unsorted region is 
+// ary[1..n-1]. In general, sorted region is 
+// ary[0..unsorted-1], unsorted region ary[unsorted..n-1]
+//***********************************************************
+template<class ItemType>
+void insertionSort(ItemType ary[], int first, int last)
+{
+   int unsorted;      // first index of the unsorted region,
+   int loc;           // index of insertion in sorted region
+   ItemType nextItem; // next item in the unsorted region
+
+   for (unsorted = first + 1; unsorted <= last; unsorted++)
+   {
+      // ary[0..unsorted-1] sorted. Find right position
+      // (loc) in ary[0..unsorted] for ary[unsorted],
+      // first entry in unsorted region;
+      // shift, if necessary, to make room
+      nextItem = ary[unsorted];
+      loc = unsorted;
+      while ((loc > first) && (ary[loc - 1] > nextItem))
+      {
+         // Shift ary[loc - 1] to the right
+         ary[loc] = ary[loc - 1];
+         loc--;
+      } 
+      
+      // Insert nextItem in sorted region at ary[loc]
+      ary[loc] = nextItem; 
+   } 
+} 
+
+//**********************  arrayFill  ************************
+// Fill in the array
+//***********************************************************
+void arrayFill(int ary[], int arySize) {
+        for (int i = 0; i < arySize; i++) {
+                ary[i] = rand() % 1000 + 1;
+        }
+ }
+
+//********************  arrayDisplay  ***********************
+// Display the array
+//***********************************************************
+void arrayDisplay(int ary[], int arySize, int &count) {
+        cout << "Current state of your array: " << endl;
+        for (int j = 0; j < arySize; j++) {
+                cout << ary[j] << " ";
+        }
+        cout << "The total number of comparisons: " << count << endl;
+}
+sh-4.3$ cat pgm6first.cppsh-4.3$ a.out[Kg++ pgm6mo3.cpp[1P[1P[1P[1P[1@6[1@f[1@i[1@r[1@s[1@t
+sh-4.3$ a.out
+What would you like the size of the array to be?
+10
+Array before sorting: 
+Current state of your array: 
+839 759 114 516 52 628 11 420 213 87 The total number of comparisons: 0
+Array after sorting: 
+Current state of your array: 
+11 52 87 114 213 420 516 759 628 839 The total number of comparisons: 6
+sh-4.3$ a.outg++ pgm6first.cppsh-4.3$ a.out[K
+What would you like the size of the array to be?
+50
+Array before sorting: 
+Current state of your array: 
+839 759 114 516 52 628 11 420 213 87 750 768 85 61 226 544 90 184 138 567 967 979 496 312 368 55 32 146 883 737 525 506 395 103 852 68 755 654 562 97 629 189 86 144 968 407 166 404 563 835 The total number of comparisons: 0
+Array after sorting: 
+Current state of your array: 
+11 32 52 516 55 61 68 85 86 87 138 90 97 103 114 144 184 146 166 189 213 226 312 525 368 395 404 407 420 496 506 737 544 628 562 563 567 629 654 835 750 755 759 768 979 839 852 883 967 968 The total number of comparisons: 118
+sh-4.3$ a.out
+What would you like the size of the array to be?
+100
+Array before sorting: 
+Current state of your array: 
+839 759 114 516 52 628 11 420 213 87 750 768 85 61 226 544 90 184 138 567 967 979 496 312 368 55 32 146 883 737 525 506 395 103 852 68 755 654 562 97 629 189 86 144 968 407 166 404 563 835 354 921 445 804 963 319 423 328 458 946 480 984 752 895 671 260 249 758 630 307 607 991 739 517 415 263 117 826 182 135 344 23 234 537 761 980 72 202 337 62 161 6 730 645 476 694 515 140 89 522 The total number of comparisons: 0
+Array after sorting: 
+Current state of your array: 
+6 11 140 23 32 89 52 55 87 61 68 62 72 85 86 90 97 103 114 117 189 135 138 144 234 146 161 166 182 184 202 213 226 260 249 263 307 312 319 328 337 344 629 354 368 415 395 404 407 420 423 445 458 476 654 480 496 506 515 525 516 517 522 537 544 562 563 567 607 730 628 630 645 671 694 737 826 739 839 750 979 752 755 758 759 761 895 768 804 835 852 883 921 946 963 991 967 968 980 984 The total number of comparisons: 307
+sh-4.3$ exit
+exit
+
+script done on Wed Mar 22 17:47:52 2017

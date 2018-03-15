@@ -1,0 +1,208 @@
+Script started on Mon Apr 03 17:53:29 2017
+sh-4.3$ pwd
+/home/93/dcalmes/cs3350r
+sh-4.3$ ls -l
+total 260
+-rw-r--r--   1 dcalmes  ics3350r    1344 Mar 25 17:24 ArrayQueue.cpp
+-rw-r--r--   1 dcalmes  ics3350r    1038 Mar 25 17:24 ArrayQueue.h
+-rw-rwx---   1 dcalmes  ics3350r    1631 Feb 13 19:28 ArrayStack.cpp
+-rw-rwx---   1 dcalmes  ics3350r     867 Feb 13 19:28 ArrayStack.h
+-rw-rwx---   1 dcalmes  ics3350r    2317 Feb  8 22:21 BagInterface.h
+-rw-r--r--   1 dcalmes  ics3350r     412 Mar 25 17:24 PrecondViolatedExcep.cpp
+-rw-r--r--   1 dcalmes  ics3350r     436 Mar 25 17:24 PrecondViolatedExcep.h
+-rw-r--r--   1 dcalmes  ics3350r    1347 Mar 25 17:25 QueueInterface.h
+-rw-r--r--   1 dcalmes  ics3350r    1828 Feb 13 19:29 StackInterface.h
+-rwxr-xr-x   1 dcalmes  ics3350r   20916 Apr  3 17:51 a.out
+lrwxrwxrwx   1 dcalmes  ics3350r      25 Jan 18 07:19 lib -> /home/classes/cs3350r/Lib
+-rw-rwx---   1 dcalmes  ics3350r   13511 Feb  9 00:22 pgm.log
+-rw-rwx---   1 dcalmes  ics3350r   10186 Jan 18 17:20 pgm1.log
+-rw-rwx---   1 dcalmes  ics3350r     724 Jan 18 17:17 pgm1BasicShape.h
+-rw-rwx---   1 dcalmes  ics3350r    1182 Jan 18 17:17 pgm1Circle.h
+-rw-rwx---   1 dcalmes  ics3350r    1103 Jan 18 17:17 pgm1Rectangle.h
+-rw-rwx---   1 dcalmes  ics3350r    3661 Jan 18 17:17 pgm1main.cpp
+-rw-rwx---   1 dcalmes  ics3350r    4149 Feb  9 00:16 pgm2bag.cpp
+-rw-rwx---   1 dcalmes  ics3350r    1460 Feb  9 00:15 pgm2bag.h
+-rw-rwx---   1 dcalmes  ics3350r    4180 Feb  9 00:19 pgm2main.cpp
+-rw-rwx---   1 dcalmes  ics3350r    2712 Mar 20 15:16 pgm4.cpp
+-rw-rwx---   1 dcalmes  ics3350r    6176 Mar 20 15:17 pgm4.log
+-rw-rwx---   1 dcalmes  ics3350r   20270 Mar 22 17:47 pgm6.log
+-rw-rwx---   1 dcalmes  ics3350r    6493 Mar 22 17:46 pgm6first.cpp
+-rw-rwx---   1 dcalmes  ics3350r    6579 Mar 22 17:45 pgm6mo3.cpp
+-rw-r--r--   1 dcalmes  ics3350r    2827 Apr  3 17:51 pgm7.cpp
+-rw-r--r--   1 dcalmes  user           0 Apr  3 17:53 pgm7.log
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat   cat pgm7.cpp
+// Programmer:  Douglas G Calmes
+// Class:       CS 3350         6PM
+// Program:     Program 7
+// Purpose:     The purpose of this is to understand queue operations
+        
+#include <iostream>
+#include <iomanip>
+#include "ArrayQueue.h"
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+const int MAX_WAIT = 30;
+
+struct Customer{
+        int customerNumber;
+        int timeQueued;
+        int queueTime;
+};
+
+int main(){
+        // Creating customer queue
+        ArrayQueue<Customer> myQueue;
+
+        // Random seeding
+        srand (time(NULL));
+
+        //Variables
+        int numberCount = 1;
+        int customerCount = 0;          // Total number of customers
+        int totalWaitTime = 0;          // Total wait time
+        int longestWaitTime = 0;        // Variable used to store longest wait time
+        int numCustomersLeft = 0;       // Variable used to store number of customers left
+
+        // Queue looping
+        for (int i = 0; i < MAX_WAIT; i++){
+                int caseNum = rand() % 3 + 1;   // 1/3 chance of customer getting added
+                int waitTime = rand() % 5 + 1;  // Wait time of queued customer
+
+                // If statement adding up customers who were added to queue after max wait is reached
+                if (i + waitTime > MAX_WAIT && caseNum == 1){
+                        numCustomersLeft += 1;
+                }
+
+                if (longestWaitTime < waitTime){
+                        longestWaitTime = waitTime;
+                }
+
+                // Calculate total wait time
+                        totalWaitTime += waitTime;
+                // Calculate total number of customers
+                        if (caseNum == 1){
+                        customerCount = customerCount + 1;
+                }
+
+                cout << "--------------------------------------------------------------" << endl;
+                cout << "Minute " << i << ": ";
+
+                switch(caseNum){
+                        case 1:
+                        // Create new Customer
+                                Customer case1Customer;
+                                case1Customer.customerNumber = customerCount;
+                                case1Customer.timeQueued = i;
+                                case1Customer.queueTime = waitTime;
+                                // Add new customer to the queue
+                                myQueue.enqueue(case1Customer);
+                                cout << "Customer " << case1Customer.customerNumber << " was added at minute " << case1Customer.timeQueued << endl;
+                                break;
+                        // No customer added to queue for this case
+                        case 2:
+                                cout << "There is no new customer to add to the queue!" << endl;
+                                break;
+                        // No customer added to queue for this case
+                        case 3:
+                                cout << "There is no new customer to add to the queue!" << endl;
+                                break;
+                }
+        }
+                // Function to calculate the average waiting time
+                int averageWaitingTime = totalWaitTime / customerCount;
+
+                // Print out statistic Display
+                cout << "--------------------------------------------------------------" << endl;
+                cout << "Simulated Time : " << MAX_WAIT << "Minutes" << endl;
+                cout << "Total Customers Served: " << customerCount << endl;
+                cout << "Customers Still Waiting: " << numCustomersLeft << endl;
+                cout << "Average Waiting Time: " << averageWaitingTime << endl;
+                cout << "Longest Waiting Time: " << longestWaitTime << endl;
+                cout << "--------------------------------------------------------------" << endl;
+
+
+                return 0;
+}
+sh-4.3$ cat pgm7.cppsh-4.3$ [7Pls -l[2Ppwdexit[1@a.outg++ pgm7.cpp lib/PrecondViolatedExcep.cpp
+[01m[Kpgm7.cpp:[m[K In function '[01m[Kint main()[m[K':
+[01m[Kpgm7.cpp:30:6:[m[K [01;35m[Kwarning: [m[Kunused variable '[01m[KnumberCount[m[K' [-Wunused-variable]
+  int numberCount = 1;
+[01;32m[K      ^[m[K
+^[[A^[[Ash-4.3$ g++ pgm7.cpp lib/PrecondViolatedExcep.cppsh-4.3$ cat pgm7.cpp[Ksh-4.3$ [7Pls -l[2Ppwdexit[1@a.out
+--------------------------------------------------------------
+Minute 0: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 1: Customer 1 was added at minute 1
+--------------------------------------------------------------
+Minute 2: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 3: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 4: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 5: Customer 2 was added at minute 5
+--------------------------------------------------------------
+Minute 6: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 7: Customer 3 was added at minute 7
+--------------------------------------------------------------
+Minute 8: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 9: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 10: Customer 4 was added at minute 10
+--------------------------------------------------------------
+Minute 11: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 12: Customer 5 was added at minute 12
+--------------------------------------------------------------
+Minute 13: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 14: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 15: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 16: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 17: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 18: Customer 6 was added at minute 18
+--------------------------------------------------------------
+Minute 19: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 20: Customer 7 was added at minute 20
+--------------------------------------------------------------
+Minute 21: Customer 8 was added at minute 21
+--------------------------------------------------------------
+Minute 22: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 23: Customer 9 was added at minute 23
+--------------------------------------------------------------
+Minute 24: Customer 10 was added at minute 24
+--------------------------------------------------------------
+Minute 25: Customer 11 was added at minute 25
+--------------------------------------------------------------
+Minute 26: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 27: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 28: There is no new customer to add to the queue!
+--------------------------------------------------------------
+Minute 29: Customer 12 was added at minute 29
+--------------------------------------------------------------
+Simulated Time : 30Minutes
+Total Customers Served: 12
+Customers Still Waiting: 1
+Average Waiting Time: 8
+Longest Waiting Time: 5
+--------------------------------------------------------------
+sh-4.3$ 
+sh-4.3$ exit
+exit
+
+script done on Mon Apr 03 17:53:56 2017

@@ -1,0 +1,418 @@
+Script started on Wed Apr 26 20:19:19 2017
+sh-4.3$ pwd
+/home/93/dcalmes/cs3350r
+sh-4.3$ ls 0l  -l
+total 410
+-rw-r--r--   1 dcalmes  ics3350r    1344 Mar 25 17:24 ArrayQueue.cpp
+-rw-r--r--   1 dcalmes  ics3350r    1038 Mar 25 17:24 ArrayQueue.h
+-rw-rwx---   1 dcalmes  ics3350r    1631 Feb 13 19:28 ArrayStack.cpp
+-rw-rwx---   1 dcalmes  ics3350r     867 Feb 13 19:28 ArrayStack.h
+-rw-rwx---   1 dcalmes  ics3350r    2317 Feb  8 22:21 BagInterface.h
+-rw-r--r--   1 dcalmes  ics3350r    1347 Mar 25 17:25 QueueInterface.h
+-rw-r--r--   1 dcalmes  ics3350r    1828 Feb 13 19:29 StackInterface.h
+-rwxr-xr-x   1 dcalmes  ics3350r   27580 Apr 26 20:17 a.out
+-rw-r--r--   1 dcalmes  ics3350r    6227 Apr 26 20:18 hashTable.cpp
+-rw-r--r--   1 dcalmes  ics3350r     980 Apr 26 20:18 hashTable.h
+lrwxrwxrwx   1 dcalmes  ics3350r      25 Jan 18 07:19 lib -> /home/classes/cs3350r/Lib
+-rw-rwx---   1 dcalmes  ics3350r   13511 Feb  9 00:22 pgm.log
+-rw-rwx---   1 dcalmes  ics3350r   10186 Jan 18 17:20 pgm1.log
+-rw-rwx---   1 dcalmes  ics3350r     724 Jan 18 17:17 pgm1BasicShape.h
+-rw-rwx---   1 dcalmes  ics3350r    1182 Jan 18 17:17 pgm1Circle.h
+-rw-rwx---   1 dcalmes  ics3350r    1103 Jan 18 17:17 pgm1Rectangle.h
+-rw-rwx---   1 dcalmes  ics3350r    3661 Jan 18 17:17 pgm1main.cpp
+-rw-rwx---   1 dcalmes  ics3350r    4149 Feb  9 00:16 pgm2bag.cpp
+-rw-rwx---   1 dcalmes  ics3350r    1460 Feb  9 00:15 pgm2bag.h
+-rw-rwx---   1 dcalmes  ics3350r    4180 Feb  9 00:19 pgm2main.cpp
+-rw-r--r--   1 dcalmes  user       15777 Apr 25 09:12 pgm3.log
+-rw-r--r--   1 dcalmes  ics3350r    8226 Apr 25 08:46 pgm3bag.cpp
+-rw-r--r--   1 dcalmes  ics3350r    1300 Apr 25 08:46 pgm3bag.h
+-rw-r--r--   1 dcalmes  ics3350r    1710 Apr 25 09:08 pgm3main.cpp
+-rw-rwx---   1 dcalmes  ics3350r    2712 Mar 20 15:16 pgm4.cpp
+-rw-rwx---   1 dcalmes  ics3350r    6176 Mar 20 15:17 pgm4.log
+-rw-r--r--   1 dcalmes  ics3350r    6417 Apr 25 08:37 pgm5.cpp
+-rw-r--r--   1 dcalmes  user       12329 Apr 25 08:41 pgm5.log
+-rw-rwx---   1 dcalmes  ics3350r   20270 Mar 22 17:47 pgm6.log
+-rw-rwx---   1 dcalmes  ics3350r    6493 Mar 22 17:46 pgm6first.cpp
+-rw-rwx---   1 dcalmes  ics3350r    6579 Mar 22 17:45 pgm6mo3.cpp
+-rw-r--r--   1 dcalmes  ics3350r    2827 Apr  3 17:51 pgm7.cpp
+-rw-r--r--   1 dcalmes  user       10358 Apr  3 17:53 pgm7.log
+drwxr-sr-x   2 dcalmes  ics3350r    1024 Apr 14 22:41 pgm8
+-rw-r--r--   1 dcalmes  ics3350r    2005 Apr 26 20:18 pgm9.cpp
+-rw-r--r--   1 dcalmes  user           0 Apr 26 20:19 pgm9.log
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat hashTable.h
+#ifndef HASH_TABLE_H
+#define HASH_TABLE_H
+
+template <class ItemType>
+class hashTable
+{
+    private:
+        static const int NEVER_USED = -1;
+        static const int PREVIOUSLY_USED = -2;
+        static const int DEFAULT_CAPACITY = 53;
+       
+        ItemType items[DEFAULT_CAPACITY];
+        int itemCount;
+
+        int hash(int key) const;
+                int new_hash(int key) const;
+        int next_index(int index, int key) const;
+        void find_index(int key, bool& found, int& index) const;
+        bool never_used(int index) const;
+        bool is_vacant(int index) const;
+
+   public:
+        hashTable();  // Constructor
+        
+        int add(const ItemType& entry);
+        void remove(int key);
+        
+        bool is_present(int key) const;
+        void getItem(int key, bool& found, ItemType& result) const;
+        int size( ) const { return itemCount; }
+        void displayTable(int loops);
+        
+};
+#include "hashTable.cpp"        // Include the implementation.
+#endif
+
+sh-4.3$ cat hashTable.cpp
+// INVARIANT for the table ADT:
+// 1. The number of records in the table is in the member variable 
+//    itemCount.
+// 2. The actual records of the table are stored in the array items, with
+//    a maximum of DEFAULT_CAPACITY entries. Each used spot in the array 
+//    has a non-negative key. Any unused record in the array has a key 
+//    field of NEVER_USED (if it has never been used) or PREVIOUSLY_USED
+//    (if it once was used, but is  now vacant).
+
+    #include <cassert>  // Provides assert
+        #include<iostream>
+        #include<string>
+    #include "hashTable.h"
+using namespace std;
+    // --------------------------------------------------
+    //                constructor
+    // --------------------------------------------------
+    template <class ItemType>
+    hashTable<ItemType>::hashTable( )
+    {
+        int i;
+
+        itemCount= 0;
+        for (i = 0; i < DEFAULT_CAPACITY; ++i)
+            items[i].key = NEVER_USED;  // Indicates a spot never used.
+    }
+
+    // --------------------------------------------------
+    //                   add
+    // --------------------------------------------------
+    template <class ItemType>
+    int hashTable<ItemType>::add(const ItemType& entry)
+    {
+        bool already_present;   // True if entry.key is already in the table
+        int index;              // items[index] is location for the new entry
+            int collisions = 0;
+        assert(entry.key >= 0);
+
+        // Set index so that items[index] is the spot to place the new entry.
+        find_index(entry.key, already_present, index);
+
+        // If key wasn't already there, find location for the new entry.
+        if (!already_present)
+        {
+            assert(size( ) < DEFAULT_CAPACITY);
+            index = new_hash(entry.key);
+                        while (!is_vacant(index)) {
+                                index = next_index(index, entry.key);
+                                collisions += 1;
+                        }
+            ++itemCount;
+        }
+
+        items[index] = entry;
+                return collisions;
+    }
+
+    // --------------------------------------------------
+    //                  remove
+    // --------------------------------------------------
+    template <class ItemType>
+    void hashTable<ItemType>::remove(int key)
+    {
+        bool found;        // True if key occurs somewhere in the table
+        int index;   // Spot where items[index].key == key
+
+        assert(key >= 0);
+
+        find_index(key, found, index);
+        if (found)
+        {   // Key found, so remove this record and decrement itemCount
+            items[index].key = PREVIOUSLY_USED; // Spot no longer in use.
+            --itemCount;
+        }
+    }
+
+    // --------------------------------------------------
+    //                is_present
+    // --------------------------------------------------
+    template <class ItemType>
+    bool hashTable<ItemType>::is_present(int key) const
+    {
+        bool found;
+        int index;
+
+        assert(key >= 0);
+
+        find_index(key, found, index);
+        return found;
+    }
+
+    // --------------------------------------------------
+    //                   getItem
+    // --------------------------------------------------
+    template <class ItemType>
+    void hashTable<ItemType>::getItem(int key, bool& found, ItemType& result) 
+        const
+    {
+        int index;
+
+        assert(key >= 0);
+
+        find_index(key, found, index);
+        if (found)
+            result = items[index];
+    }
+
+    // --------------------------------------------------
+    //                    find_index
+    // --------------------------------------------------
+    template <class ItemType>
+    void hashTable<ItemType>::find_index(int key, bool& found, int& i) const
+    {
+        int count; // Number of entries that have been examined
+
+        count = 0;
+        i = hash(key);
+        while((count < DEFAULT_CAPACITY) && (items[i].key != NEVER_USED) 
+               && (items[i].key != key))
+        {
+            ++count;
+            i = next_index(i, items[i].key);
+        }
+        found = (items[i].key == key);
+    }
+
+    // --------------------------------------------------
+    //                      hash
+    // --------------------------------------------------
+    template <class ItemType>
+    inline int hashTable<ItemType>::hash(int key) const
+    {
+        return (key % DEFAULT_CAPACITY);
+    }
+
+        // --------------------------------------------------
+        //                     new_hash
+        // --------------------------------------------------
+        template <class ItemType>
+        inline int hashTable<ItemType>::new_hash(int key) const
+        {
+                return (key * 2654435761) % (2 ^ 32);
+        }
+
+    // --------------------------------------------------
+    //                   next_index
+    // --------------------------------------------------
+    template <class ItemType>
+    inline int hashTable<ItemType>::next_index(int index, int key) const
+    // Library facilities used: cstdlib
+    {
+                int doubleHash = 7 - (key % 7);
+                return ((index + doubleHash) % DEFAULT_CAPACITY);
+        //return ((index+1) % DEFAULT_CAPACITY);
+    }
+
+    // --------------------------------------------------
+    //                never_used
+    // --------------------------------------------------
+    template <class ItemType>
+    inline bool hashTable<ItemType>::never_used(int index) const
+    {
+        return (items[index].key == NEVER_USED);
+    }
+        
+    // --------------------------------------------------
+    //                is_vacant
+    // --------------------------------------------------
+    template <class ItemType>
+    inline bool hashTable<ItemType>::is_vacant(int index) const
+    {
+        return (items[index].key == NEVER_USED) || 
+               (items[index].key == PREVIOUSLY_USED);
+    }
+
+        // --------------------------------------------------
+        //                displayTable
+        // --------------------------------------------------
+        template <class ItemType>
+        void hashTable<ItemType>::displayTable(int loops) {
+
+                cout << "Original Hash Report" << endl;
+                cout << "Student Records" << endl;
+                cout << "Index      Key      Discription" << endl;
+
+                // Loop to print out hash table
+                for (int i = 0; i < DEFAULT_CAPACITY; i++) {
+                        cout << i << "        " << items[i].key << "        " << items[i].description << endl;
+                }
+
+        }
+sh-4.3$ cat pgm9.cpp
+// Programmer: Douglas G Calmes
+// Program: Program 9
+// Purpose:  Show the difference between different hash functions and linear probing vs double hashing
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <cmath>
+#include <iomanip>
+#include "hashTable.h"
+using namespace std;
+
+struct Inventory{
+        int key;
+        string description;
+};
+
+const int MAX_VALUE = 53;
+int main() {
+        hashTable<Inventory> hashInventory;
+        Inventory newCostomer;
+        int loops = 0, findHash = 0, collisions, totalCollisions, mostCollisions, findKey;
+        bool found = false;
+
+        cout << "How many records would you like to add to the hash table? ";
+        cin >> loops;
+
+        // Add new records to hash table
+        for (int i = 0; i < loops; i++) {
+                int randomKey = rand() % 9000 + 1000;
+                newCostomer.key = randomKey;
+                newCostomer.description = "Inv " + to_string(i);
+                collisions = hashInventory.add(newCostomer);
+                if (collisions > mostCollisions) {
+                        mostCollisions = collisions;
+                }
+                totalCollisions += collisions;
+        }
+
+        hashInventory.displayTable(loops);
+
+        // Calculate the average number of collisions
+        double averageCollisions = 0.0;
+        averageCollisions = static_cast<double>(totalCollisions / loops);
+
+        // Print out statistics
+        cout << endl << "New Hash With Double Hashing" << endl;
+        cout << "Hash Table Length: " << MAX_VALUE << endl;
+        cout << "Numbe of Records Added: " << loops << endl;
+        cout << "Most Collisions for Record: " << mostCollisions << endl;
+        cout << "Average Collisions per Record: " << setprecision(3) << averageCollisions << endl;
+        cout << "Total Number of Collisions: " << totalCollisions << endl;
+
+        cout << "What item would you like to find? ";
+        cin >> findKey;
+
+        // Check to see if the key is found, then report proper information
+        if (hashInventory.is_present(findKey) == true) {
+                found = true;
+                hashInventory.getItem(findKey, found, newCostomer);
+                cout << newCostomer.key << "     " << newCostomer.description << endl;
+        }
+        else {
+                cout << "Item does not exist" << endl;
+        }
+
+
+        system("Pause");
+        return 0;
+}sh-4.3$ g++ pgm0 9.cpp
+[01m[Kpgm9.cpp:[m[K In function '[01m[Kint main()[m[K':
+[01m[Kpgm9.cpp:21:17:[m[K [01;35m[Kwarning: [m[Kunused variable '[01m[KfindHash[m[K' [-Wunused-variable]
+  int loops = 0, findHash = 0, collisions, totalCollisions, mostCollisions, findKey;
+[01;32m[K                 ^[m[K
+sh-4.3$ a.out
+How many records would you like to add to the hash table? 42
+Original Hash Report
+Student Records
+Index      Key      Discription
+0        5628        Inv 40
+1        4183        Inv 17
+2        4524        Inv 30
+3        6225        Inv 14
+4        9966        Inv 20
+5        2113        Inv 2
+6        5102        Inv 33
+7        4767        Inv 11
+8        3367        Inv 24
+9        3749        Inv 10
+10        -1        
+11        8137        Inv 18
+12        -1        
+13        7561        Inv 38
+14        4060        Inv 13
+15        3653        Inv 37
+16        7188        Inv 41
+17        1096        Inv 39
+18        8212        Inv 8
+19        5051        Inv 4
+20        5086        Inv 9
+21        8419        Inv 7
+22        -1        
+23        9543        Inv 15
+24        2505        Inv 31
+25        5145        Inv 27
+26        6758        Inv 1
+27        3495        Inv 22
+28        5978        Inv 21
+29        9515        Inv 3
+30        1084        Inv 12
+31        6627        Inv 5
+32        8838        Inv 0
+33        2311        Inv 23
+34        8089        Inv 16
+35        6010        Inv 6
+36        8566        Inv 19
+37        7851        Inv 34
+38        4054        Inv 25
+39        9031        Inv 26
+40        2882        Inv 28
+41        -1        
+42        2394        Inv 32
+43        -1        
+44        -1        
+45        -1        
+46        8736        Inv 29
+47        2067        Inv 35
+48        -1        
+49        -1        
+50        -1        
+51        -1        
+52        4754        Inv 36
+
+New Hash With Double Hashing
+Hash Table Length: 53
+Numbe of Records Added: 42
+Most Collisions for Record: 7
+Average Collisions per Record: 1
+Total Number of Collisions: 55
+What item would you like to find? 8736
+Item does not exist
+sh: Pause: not found
+sh-4.3$ exit
+exit
+
+script done on Wed Apr 26 20:20:37 2017

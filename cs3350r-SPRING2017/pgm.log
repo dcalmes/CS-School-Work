@@ -1,0 +1,495 @@
+Script started on Thu Feb 09 00:21:06 2017
+sh-4.3$ ls -l
+total 152
+-rw-r--r--   1 dcalmes  ics3350r    2317 Feb  8 22:21 BagInterface.h
+-rwxr-xr-x   1 dcalmes  ics3350r   41928 Feb  8 22:22 a.out
+lrwxrwxrwx   1 dcalmes  ics3350r      25 Jan 18 07:19 lib -> /home/classes/cs3350r/Lib
+-rw-r--r--   1 dcalmes  user           0 Feb  9 00:21 pgm.log
+-rw-rwx---   1 dcalmes  ics3350r   10186 Jan 18 17:20 pgm1.log
+-rw-rwx---   1 dcalmes  ics3350r     724 Jan 18 17:17 pgm1BasicShape.h
+-rw-rwx---   1 dcalmes  ics3350r    1182 Jan 18 17:17 pgm1Circle.h
+-rw-rwx---   1 dcalmes  ics3350r    1103 Jan 18 17:17 pgm1Rectangle.h
+-rw-rwx---   1 dcalmes  ics3350r    3661 Jan 18 17:17 pgm1main.cpp
+-rw-r--r--   1 dcalmes  ics3350r    4149 Feb  9 00:16 pgm2bag.cpp
+-rw-r--r--   1 dcalmes  ics3350r    1460 Feb  9 00:15 pgm2bag.h
+-rw-r--r--   1 dcalmes  ics3350r    4180 Feb  9 00:19 pgm2main.cpp
+sh-4.3$ 
+sh-4.3$ 
+sh-4.3$ cat pgm2bag.h
+// Douglas G Calmes     Program 2       CS3350r
+// Created by Frank M. Carrano and Timothy M. Henry.
+// Copyright (c) 2017 Pearson Education, Hoboken, New Jersey.
+
+/** Header file for an array-based implementation of the ADT bag.
+ @file ArrayBag.h */
+
+#ifndef ARRAY_BAG_
+#define ARRAY_BAG_
+
+#include "lib/BagInterface.h"
+#include <iostream>
+using namespace std;
+
+template<class ItemType>
+class ArrayBag : public BagInterface<ItemType>
+{
+private:
+   static const int DEFAULT_CAPACITY = 10; // Small size to test full bag
+   ItemType items[DEFAULT_CAPACITY];      // Array of bag items
+   int itemCount;                         // Current count of bag items 
+   int maxItems;                          // Max capacity of the bag
+   
+   // Returns either the index of the element in the array items that
+   // contains the given target or -1, if the array does not contain 
+   // the target.
+   int getIndexOf(const ItemType& target) const;   
+
+public:
+        ArrayBag();
+        int getCurrentSize() const;
+        bool isEmpty() const;
+        bool add(const ItemType& newEntry);
+        bool remove(const ItemType& anEntry);
+        void clear();
+        bool contains(const ItemType& anEntry) const;
+        int getFrequencyOf(const ItemType& anEntry) const;
+   std::vector<ItemType> toVector() const;
+        void displayBag(int size);
+        ArrayBag<ItemType> Union(const ArrayBag<ItemType> &otherBag) const;
+        ArrayBag<ItemType> Intersection(const ArrayBag<ItemType> &otherBag) const;
+}; // end ArrayBag
+
+#include "pgm2bag.cpp"
+#endif
+sh-4.3$ p cat pgm2bag.cpp
+// Douglas G Calmes     Program 2       CS3350r
+// Created by Frank M. Carrano and Timothy M. Henry.
+// Copyright (c) 2017 Pearson Education, Hoboken, New Jersey.
+
+/** Implementation file for the class ArrayBag.
+ @file ArrayBag.cpp */
+
+#include "pgm2bag.h"
+#include <cstddef>
+#include <iostream>
+using namespace std;
+
+template<class ItemType>
+ArrayBag<ItemType>::ArrayBag(): itemCount(0), maxItems(DEFAULT_CAPACITY)
+{
+}  // end default constructor
+
+template<class ItemType>
+int ArrayBag<ItemType>::getCurrentSize() const
+{
+        return itemCount;
+}  // end getCurrentSize
+
+template<class ItemType>
+bool ArrayBag<ItemType>::isEmpty() const
+{
+        return itemCount == 0;
+}  // end isEmpty
+
+template<class ItemType>
+bool ArrayBag<ItemType>::add(const ItemType& newEntry)
+{
+        bool hasRoomToAdd = (itemCount < maxItems);
+        if (hasRoomToAdd)
+        {
+                items[itemCount] = newEntry;
+                itemCount++;
+        }  // end if
+    
+        return hasRoomToAdd;
+}  // end add
+
+template<class ItemType>
+bool ArrayBag<ItemType>::remove(const ItemType& anEntry)
+{
+   int locatedIndex = getIndexOf(anEntry);
+        bool canRemoveItem = !isEmpty() && (locatedIndex > -1);
+        if (canRemoveItem)
+        {
+                itemCount--;
+                items[locatedIndex] = items[itemCount];
+        }  // end if
+    
+        return canRemoveItem;
+}  // end remove
+
+template<class ItemType>
+void ArrayBag<ItemType>::clear()
+{
+        itemCount = 0;
+}  // end clear
+
+template<class ItemType>
+int ArrayBag<ItemType>::getFrequencyOf(const ItemType& anEntry) const
+{
+   int frequency = 0;
+   int curIndex = 0;       // Current array index
+   while (curIndex < itemCount)
+   {
+      if (items[curIndex] == anEntry)
+      {
+         frequency++;
+      }  // end if
+      
+      curIndex++;          // Increment to next entry
+   }  // end while
+   
+   return frequency;
+}  // end getFrequencyOf
+
+template<class ItemType>
+bool ArrayBag<ItemType>::contains(const ItemType& anEntry) const
+{
+        return getIndexOf(anEntry) > -1;
+}  // end contains
+
+
+template<class ItemType>
+std::vector<ItemType> ArrayBag<ItemType>::toVector() const
+{
+   std::vector<ItemType> bagContents;
+        for (int i = 0; i < itemCount; i++)
+                bagContents.push_back(items[i]);
+      
+   return bagContents;
+}  // end toVector
+
+// private
+template<class ItemType>
+int ArrayBag<ItemType>::getIndexOf(const ItemType& target) const
+{
+        bool found = false;
+   int result = -1;
+   int searchIndex = 0;
+   
+   // If the bag is empty, itemCount is zero, so loop is skipped
+   while (!found && (searchIndex < itemCount))
+   {
+      if (items[searchIndex] == target)
+      {
+         found = true;
+         result = searchIndex;
+      } 
+      else
+      {
+         searchIndex++;
+      }  // end if
+   }  // end while
+   
+   return result;
+}  // end getIndexOf
+
+template<class ItemType>
+void ArrayBag<ItemType>::displayBag(int size)
+{
+        if(size!= 0)
+                {
+                        std::cout << "The current bag size is : " << size << std::endl;
+                        
+                        for (int i = 0; i < size; i++)
+                                {
+                                        cout << items[i] << " " << endl;
+                                }
+                }
+        else
+        {
+                cout << "Empty Bag" << endl;
+        }
+}
+
+template<class ItemType>
+ArrayBag<ItemType> ArrayBag<ItemType>::Union(const ArrayBag<ItemType> & otherBag) const
+{
+        ArrayBag<int> newBag;
+        newBag = otherBag;
+
+        for (int i = 0; i < itemCount; i++)
+                {
+                        newBag.add(items[i]);
+                }
+        return newBag;
+}
+
+template<class ItemType>
+ArrayBag<ItemType> ArrayBag<ItemType>::Intersection(const ArrayBag<ItemType> & otherBag) const  
+{
+        ArrayBag<int> newBag;
+        for (int i = 0; i < itemCount; i++)
+                {
+                        if(otherBag.contains(items[i]))
+                                {
+                                        newBag.add(items[i]);
+                                }
+                }
+        return newBag;
+}
+
+/* ALTERNATE 1: First version
+template<class ItemType>
+bool ArrayBag<ItemType>::contains(const ItemType& target) const 
+{
+   return getFrequencyOf(target) > 0;
+}  // end contains
+
+// ALTERNATE 2: Second version 
+template<class ItemType>
+bool ArrayBag<ItemType>::contains(const ItemType& anEntry) const
+{
+   bool found = false;
+   int curIndex = 0;        // Current array index
+   while (!found && (curIndex < itemCount))
+   {
+      if (anEntry == items[curIndex])
+      {
+         found = true;
+      } // end if
+      
+      curIndex++;           // Increment to next entry
+   }  // end while   
+   
+   return found;
+}  // end contains
+*/
+
+sh-4.3$ cat pgm2main.cpp
+// Douglas G Calmes     Program 2       CS3350r
+#include <iostream>
+#include "pgm2bag.h"
+using namespace std;
+
+int main()
+{
+// Bag variables
+int bagChoice1, bagChoice2, bagsize1, bagsize2, bagsize3, bagsize4;
+ArrayBag<int> firstBag;
+ArrayBag<int> secondBag;
+ArrayBag<int> thirdBag;
+ArrayBag<int> fourthBag;
+
+// As user to input two bags he would like to hold values too
+cout << "Please input the two bags you would like to hold values, between 1 and 4: " << endl;
+cin >> bagChoice1;
+cin >> bagChoice2;
+
+// Error message if user inputs wrong numbers
+// Set the values of the bags chosen
+if (bagChoice1 < 1 || bagChoice1 > 4 || bagChoice2 < 1 || bagChoice2 > 4)
+        {
+                cout << "ERROR: YOU MUST CHOOSE A NUMBER BETWEEN 1 AND 4!" << endl;
+                cin >> bagChoice1;
+                cin >> bagChoice2;
+        }
+if (bagChoice1 == 1)
+        {
+                firstBag.add(8);
+                firstBag.add(15);
+                firstBag.add(12);
+                firstBag.add(5);
+                firstBag.add(9);
+        }
+else if (bagChoice1 == 2)
+        {
+                secondBag.add(8);
+                secondBag.add(15);
+                secondBag.add(12);
+                secondBag.add(5);
+                secondBag.add(9);
+        }
+else if (bagChoice1 == 3)
+        {
+                thirdBag.add(8);
+                thirdBag.add(15);
+                thirdBag.add(12);
+                thirdBag.add(5);
+                thirdBag.add(9);
+        }
+else if (bagChoice1 == 4)
+        {
+                fourthBag.add(8);
+                fourthBag.add(15);
+                fourthBag.add(12);
+                fourthBag.add(5);
+                fourthBag.add(9);
+        }
+if (bagChoice2 == 1)
+        {
+                firstBag.add(9);
+                firstBag.add(5);
+                firstBag.add(9);
+                firstBag.add(9);
+        }
+else if (bagChoice2 == 2)
+        {
+                secondBag.add(9);
+                secondBag.add(5);
+                secondBag.add(9);
+                secondBag.add(9);
+        }
+else if (bagChoice2 == 3)
+        {
+                thirdBag.add(9);
+                thirdBag.add(5);
+                thirdBag.add(9);
+                thirdBag.add(9);
+        }
+else if (bagChoice2 == 4)
+        {
+                fourthBag.add(9);
+                fourthBag.add(5);
+                fourthBag.add(9);
+                fourthBag.add(9);
+        }
+
+bagsize1 = firstBag.getCurrentSize();
+bagsize2 = secondBag.getCurrentSize();
+bagsize3 = thirdBag.getCurrentSize();
+bagsize4 = fourthBag.getCurrentSize();
+
+cout << "First Bag: " << endl;
+firstBag.displayBag(bagsize1);
+cout << "Second Bag: " << endl;
+secondBag.displayBag(bagsize2);
+cout << "Third Bag: " << endl;
+thirdBag.displayBag(bagsize3);
+cout << "Fourth Bag: " << endl;
+fourthBag.displayBag(bagsize4);
+
+if(secondBag.contains(9) == true || secondBag.contains(8) == true)
+{
+        cout << "The second bag contains " << secondBag.getFrequencyOf(9) << "9's!" << endl;
+        cout << "The second bag contains " << secondBag.getFrequencyOf(8) << "8's!" << endl;
+}
+else
+{
+        cout << "The second bag does not contain any 8's or 9's!";
+}
+
+thirdBag.Union(firstBag);
+thirdBag.Union(secondBag);
+
+bagsize1 = firstBag.getCurrentSize();
+bagsize2 = secondBag.getCurrentSize();
+bagsize3 = thirdBag.getCurrentSize();
+
+cout << "First Bag: " << endl;
+firstBag.displayBag(bagsize1);
+cout << "Second Bag: " << endl;
+secondBag.displayBag(bagsize2);
+cout << "Third Bag: " << endl;
+thirdBag.displayBag(bagsize3);
+
+if(thirdBag.contains(9) == true || thirdBag.contains(8) == true)
+{
+        cout << "The third bag contains " << thirdBag.getFrequencyOf(9) << "9's!" << endl;
+        cout << "The third bag contains " << thirdBag.getFrequencyOf(8) << "8's!" << endl;
+}
+else
+{
+        cout << "The third bag does not contain any 8's or 9's!";
+}
+
+if(thirdBag.contains(5) == true)
+{
+        cout << "The third bag contains " << thirdBag.getFrequencyOf(5) << "5's!" << endl;
+}
+else
+{
+        cout << "The third bag does not contain any 5's!";
+}
+
+fourthBag.Intersection(firstBag);
+fourthBag.Intersection(secondBag);
+
+bagsize1 = firstBag.getCurrentSize();
+bagsize2 = secondBag.getCurrentSize();
+bagsize4 = fourthBag.getCurrentSize();
+
+cout << "First Bag: " << endl;
+firstBag.displayBag(bagsize1);
+cout << "Second Bag: " << endl;
+secondBag.displayBag(bagsize2);
+cout << "Fourth Bag: " << endl;
+thirdBag.displayBag(bagsize4);
+
+if(fourthBag.contains(9) == true || fourthBag.contains(8) == true)
+{
+        cout << "The fourth bag contains " << fourthBag.getFrequencyOf(9) << "9's!" << endl;
+        cout << "The fourth bag contains " << fourthBag.getFrequencyOf(8) << "8's!" << endl;
+}
+else
+{
+        cout << "The fourth bag does not contain any 8's or 9's!";
+}
+
+fourthBag.clear();
+
+cout << "Bag 4 size: " << fourthBag.getCurrentSize() << endl;
+
+system("Pause");
+return 0;
+}
+sh-4.3$ g++ pgm2main.cpp
+sh-4.3$ alout    .out
+Please input the two bags you would like to hold values, between 1 and 4: 
+1
+2
+First Bag: 
+The current bag size is : 5
+8 
+15 
+12 
+5 
+9 
+Second Bag: 
+The current bag size is : 4
+9 
+5 
+9 
+9 
+Third Bag: 
+Empty Bag
+Fourth Bag: 
+Empty Bag
+The second bag contains 39's!
+The second bag contains 08's!
+First Bag: 
+The current bag size is : 5
+8 
+15 
+12 
+5 
+9 
+Second Bag: 
+The current bag size is : 4
+9 
+5 
+9 
+9 
+Third Bag: 
+Empty Bag
+The third bag does not contain any 8's or 9's!The third bag does not contain any 5's!First Bag: 
+The current bag size is : 5
+8 
+15 
+12 
+5 
+9 
+Second Bag: 
+The current bag size is : 4
+9 
+5 
+9 
+9 
+Fourth Bag: 
+Empty Bag
+The fourth bag does not contain any 8's or 9's!Bag 4 size: 0
+sh: Pause: not found
+sh-4.3$ exit
+exit
+
+script done on Thu Feb 09 00:22:12 2017
